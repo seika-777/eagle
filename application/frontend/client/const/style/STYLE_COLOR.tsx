@@ -1,8 +1,11 @@
 export const STYLE_COLOR = {
-    WHITE: "#FFFFFF",
-    BLACK: "#000000",
-    PRIMARY: "#0070f3",
-    SECONDARY: "#1A202C",
-    ACCENT: "#FBBF24",
-    ERROR: "#EF4444",
-}
+  PRIMARY: "#1E40AF",
+  SECONDARY: "#3B82F6",
+  ACCENT: "#06B6D4",
+  ERROR: "#EF4444",
+  LIGHT: "E0F2FE",
+  WHITE: "#FEFEFE",
+  BLACK: "#2D2D2D",
+  COMMON: "#F0FDFF",
+  MAIN: "#00E5FF",
+};
