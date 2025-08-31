@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.scss";
-import Header from "@/component/molecules/Header/Header";
+import Header from "@/component/molecules/Header";
+import AppWrapper from "./AppWrapper";
 import { eduNswActCursive, zenMaruGothic } from "@/const/font/font";
 
 export const dynamic = "force-dynamic";
@@ -20,8 +21,10 @@ export default function RootLayout({
       <body
         className={`${eduNswActCursive.variable} ${zenMaruGothic.variable}`}
       >
-        <Header />
-        {children}
+        <AppWrapper>
+          <Header />
+          {children}
+        </AppWrapper>
       </body>
     </html>
   );
