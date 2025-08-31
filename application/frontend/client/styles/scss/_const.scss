@@ -1,29 +1,42 @@
-$sm: 360px;
+$sm: 400px;
 $md: 648px;
 $lg: 950px;
 $xl: 1200px;
 
 @mixin sm {
-    @media (max-width: $sm) {
-        @content;
-    }
+  @media (max-width: $sm) {
+    @content;
+  }
 }
 
 @mixin md {
-    @media (max-width: $md) {
-        @content;
-    }
+  @media (max-width: $md) {
+    @content;
+  }
 }
 
 @mixin lg {
-    @media (max-width: $lg) {
-        @content;
-    }
+  @media (max-width: $lg) {
+    @content;
+  }
 }
 
 @mixin xl {
-    @media (max-width: $xl) {
-        @content;
-    }
+  @media (max-width: $xl) {
+    @content;
+  }
 }
 
+section {
+  padding: 10px 30px;
+  justify-content: center;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  line-height: 40px;
+  letter-spacing: 5%;
+}
