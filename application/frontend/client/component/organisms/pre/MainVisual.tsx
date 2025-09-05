@@ -42,7 +42,7 @@ export default function MainVisual() {
         textAlign={"center"}
         zIndex={2}
       >
-        Fabulas simul texamus.
+        Per aspera ad astra
       </Text>
     </Box>
   );
