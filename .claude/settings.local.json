@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude --version)",
+      "Bash(git config:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(git remote get-url:*)",
+      "Bash(start https://github.com/seika725/eagle/pulls?q=is%3Apr+head%3Afeature%2FE-1)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash(npx tsc:*)",
+      "Bash(ls:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(npm install:*)",
+      "Bash(gh release view:*)",
+      "Bash(npm run build:*)",
+      "Bash(echo:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

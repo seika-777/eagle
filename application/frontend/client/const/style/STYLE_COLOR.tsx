@@ -3,7 +3,7 @@ export const STYLE_COLOR = {
   SECONDARY: "#3B82F6",
   ACCENT: "#06B6D4",
   ERROR: "#EF4444",
-  LIGHT: "E0F2FE",
+  LIGHT: "#E0F2FE",
   WHITE: "#FEFEFE",
   BLACK: "#2D2D2D",
   COMMON: "#F0FDFF",
