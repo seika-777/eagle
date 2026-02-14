@@ -1,22 +1,42 @@
 "use client";
+import { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
-import About from "@/component/organisms/pre/About";
-import Contact from "@/component/organisms/pre/Contact";
-import MainVisual from "@/component/organisms/pre/MainVisual";
-import Recruitment from "@/component/organisms/pre/Recruitment";
-import Regulation from "@/component/organisms/pre/Regulation";
-import Stage from "@/component/organisms/pre/Stage";
-import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
-
+import { useErrorHandler } from "@/hooks/useErrorHandler";
+import { getLatestRegulationItem } from "@/api/variables/getRegulationItems";
+import About from "@/component/organisms/top/About";
+import Contact from "@/component/organisms/top/Contact";
+import MainVisual from "@/component/organisms/top/MainVisual";
+import Recruitment from "@/component/organisms/top/Recruitment";
+import Regulation from "@/component/organisms/top/Regulation";
+import Stage from "@/component/organisms/top/Stage";
+import { STYLE } from "@/const/common/STYLE";
+import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
+import type { ErrorType } from "@/const/type/error/ErrorType";
 export default function HomeTemplate() {
+  const [latestRegulation, setLatestRegulation] = useState<RegulationItemType | null>(null);
+  const { handleError, resetError } = useErrorHandler();
+  useEffect(() => {
+    resetError();
+    const fetchData = async () => {
+      try {
+        const item = await getLatestRegulationItem();
+        setLatestRegulation(item);
+      } catch (error) {
+        handleError(error as ErrorType);
+      }
+    };
+    fetchData();
+  }, []);
   return (
-    <Box bgColor={STYLE_COLOR.COMMON}>
+    <>
       <MainVisual />
-      <Stage />
-      <About />
-      <Recruitment />
-      <Regulation />
-      <Contact />
-    </Box>
+      <Box maxW={STYLE.WIDTH.SECTION} mx="auto" px={6} py={10}>
+        <Stage latestRegulation={latestRegulation} />
+        <About />
+        <Recruitment latestRegulation={latestRegulation} />
+        <Regulation latestRegulation={latestRegulation} />
+        <Contact />
+      </Box>
+    </>
   );
 }
