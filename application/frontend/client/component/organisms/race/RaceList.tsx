@@ -39,10 +39,7 @@ export default function RaceList({ period }: Props) {
     const fetchData = async () => {
       try {
         const data = await getRaceItems(period);
-        const filtered = period
-          ? data.filter((item) => item.regulationPeriod === period || item.isOriginal)
-          : data.filter((item) => item.isOriginal);
-        setItems(filtered);
+        setItems(data);
         setLoading(false);
       } catch (error) {
         handleError(error as ErrorType);
