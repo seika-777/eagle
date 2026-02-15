@@ -14,7 +14,7 @@ export default function Recruitment({ latestRegulation }: Props) {
       <HeadingThird title="募集要項" />
       {latestRegulation && (
         <Box>
-          {latestRegulation.recruitment.split("\n").map((line, index) => (
+          {latestRegulation.regulation.recruitment.split("\n").map((line: string, index: number) => (
             <Text key={index}>{line || "\u00A0"}</Text>
           ))}
         </Box>

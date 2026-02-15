@@ -13,9 +13,9 @@ export default function Stage({ latestRegulation }: Props) {
       <HeadingSecond title="STAGE" />
       {latestRegulation && (
         <>
-          <HeadingThird title={latestRegulation.name} />
+          <HeadingThird title={latestRegulation.regulation.name} />
           <Box>
-            {latestRegulation.description.split("\n").map((line, index) => (
+            {latestRegulation.regulation.description.split("\n").map((line: string, index: number) => (
               <Text key={index}>{line || "\u00A0"}</Text>
             ))}
           </Box>

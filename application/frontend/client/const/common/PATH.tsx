@@ -12,8 +12,8 @@ export const PATH = {
     HOME: "/",
     PERIOD: {
       ROOT: "/",
-      REGULATION: "/regulation",
       RACE: "/race",
+      SUPPLEMENT: "/supplement",
     },
     ORIGINAL: {
       RACE: "/original/race",

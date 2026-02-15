@@ -19,7 +19,7 @@ export default function Regulation({ latestRegulation }: Props) {
         <Text as="li">
           <Text
             as="a"
-            href={PATH.LINK.LVCB[latestRegulation?.levelCapBelt as keyof typeof PATH.LINK.LVCB]}
+            href={PATH.LINK.LVCB[latestRegulation?.regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]}
             target="_blank"
           >
             レベルキャップシステム
@@ -29,7 +29,7 @@ export default function Regulation({ latestRegulation }: Props) {
         <Text as="li">使用サプリはエピックトレジャリー、モンストラスロア他</Text>
         <Text as="li">使用可能種族は人族基本種・希少種(一部制限あり)</Text>
       </Box>
-      <Text as="a" href={`/${latestRegulation?.id}`}>
+      <Text as="a" href={`/${latestRegulation?.regulation.id}`}>
         詳しくはこちら
       </Text>
     </Box>

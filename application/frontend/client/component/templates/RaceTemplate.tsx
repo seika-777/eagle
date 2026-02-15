@@ -1,6 +1,6 @@
 "use client";
 import { Box } from "@chakra-ui/react";
-import MainVisual from "@/component/organisms/pre/MainVisual";
+import MainVisual from "@/component/organisms/top/MainVisual";
 import RaceList from "@/component/organisms/race/RaceList";
 import { STYLE } from "@/const/common/STYLE";
 

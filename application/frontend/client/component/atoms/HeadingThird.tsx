@@ -6,5 +6,9 @@ interface Props {
 }
 
 export default function HeadingThird({ title }: Props) {
-  return <Text as="h3">{title}</Text>;
+  return (
+    <Text as="h3" fontSize="20px">
+      {title}
+    </Text>
+  );
 }

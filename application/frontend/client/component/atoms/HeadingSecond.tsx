@@ -8,7 +8,7 @@ interface Props {
 
 export default function HeadingSecond({ title }: Props) {
   return (
-    <Text as="h2">
+    <Text as="h2" display="flex" alignItems="center" fontSize="30px">
       <Image src={PATH.IMG.COMMON.LOGO} alt="logo" width={"50px"} />
       {title}
     </Text>

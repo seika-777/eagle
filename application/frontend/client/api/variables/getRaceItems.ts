@@ -4,7 +4,9 @@ import {
   parseRaceTypes,
 } from "@/api/variables/csv/parseRaceItems";
 
-export const getRaceItems = async (): Promise<RaceItemType[]> => {
+export const getRaceItems = async (
+  period?: string,
+): Promise<RaceItemType[]> => {
   const [raceItemsRes, raceTypesRes] = await Promise.all([
     fetch("/csv/race-items.csv"),
     fetch("/csv/race-types.csv"),
@@ -14,5 +16,10 @@ export const getRaceItems = async (): Promise<RaceItemType[]> => {
   const raceTypesCsv = await raceTypesRes.text();
 
   const raceTypeMap = parseRaceTypes(raceTypesCsv);
-  return parseRaceItems(raceItemsCsv, raceTypeMap);
+  const items = parseRaceItems(raceItemsCsv, raceTypeMap);
+
+  if (period) {
+    return items.filter((item) => item.regulationPeriod.includes(period));
+  }
+  return items.filter((item) => item.isOriginal);
 };

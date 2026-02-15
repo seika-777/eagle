@@ -9,7 +9,6 @@ import type { RaceItemType } from "@/const/type/race/RaceItemType";
 import type { RaceGroupType } from "@/const/type/race/RaceGroupType";
 import type { RaceListType } from "@/const/type/race/RaceListType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
-import HeadingSecond from "@/component/atoms/HeadingSecond";
 import HeadingThird from "@/component/atoms/HeadingThird";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 type Props = {
@@ -39,7 +38,7 @@ export default function RaceList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getRaceItems();
+        const data = await getRaceItems(period);
         const filtered = period
           ? data.filter((item) => item.regulationPeriod === period || item.isOriginal)
           : data.filter((item) => item.isOriginal);
