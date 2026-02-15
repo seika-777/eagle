@@ -14,9 +14,13 @@ export default function RegulationSection({ regulationItem }: Props) {
     <SimpleGrid gap="4">
       <Box as="section">
         <HeadingSecond title={regulation.name || ""} />
-        <Link href={PATH.LINK.LVCB[regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]} target="_blank">
-          レベルキャップシステムは{regulation.levelCapBelt}を採用
-        </Link>
+        {PATH.LINK.LVCB[regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB] ? (
+          <Link href={PATH.LINK.LVCB[regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]} target="_blank" rel="noopener noreferrer">
+            レベルキャップシステムは{regulation.levelCapBelt}を採用
+          </Link>
+        ) : (
+          <Text>レベルキャップシステムは{regulation.levelCapBelt}を採用</Text>
+        )}
       </Box>
       <Box as="section">
         <HeadingThird title="舞台" />
@@ -25,13 +29,13 @@ export default function RegulationSection({ regulationItem }: Props) {
       <Box as="section">
         <HeadingThird title="使用可能種族" />
         <Text>基本種族、サプリ一部種族、オリジナル種族</Text>
-        <Link href={`/${regulation.id}${PATH.URL.PERIOD.RACE}`} target="_blank">
+        <Link href={`/${regulation.id}${PATH.URL.PERIOD.RACE}`} target="_blank" rel="noopener noreferrer">
           詳しくはこちら
         </Link>
       </Box>
       <Box as="section">
         <HeadingThird title="使用可能サプリ" />
-        <Link href={`/${regulation.id}${PATH.URL.PERIOD.SUPPLEMENT}`} target="_blank">
+        <Link href={`/${regulation.id}${PATH.URL.PERIOD.SUPPLEMENT}`} target="_blank" rel="noopener noreferrer">
           詳しくはこちら
         </Link>
       </Box>

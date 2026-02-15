@@ -1,9 +1,10 @@
 import HomeTemplate from "@/component/templates/HomeTemplate";
 import { COMMON } from "@/const/common/COMMON";
+import { METADATA } from "@/const/common/METADATA";
 
 export const metadata = {
   title: COMMON.SITE_NAME,
-  description: "Home page of the application",
+  description: METADATA.DESCRIPTION.HOME,
 };
 
 export default function Home() {

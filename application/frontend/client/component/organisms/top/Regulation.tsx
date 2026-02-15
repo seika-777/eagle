@@ -17,12 +17,17 @@ export default function Regulation({ latestRegulation }: Props) {
         <Text as="li">キャラクター作成は専用サーバーおよび、専用のココフォリアルームで作成</Text>
         <Text as="li">初期作成よりスタート</Text>
         <Text as="li">
-          <Link
-            href={PATH.LINK.LVCB[latestRegulation?.regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]}
-            target="_blank"
-          >
-            レベルキャップシステム
-          </Link>
+          {PATH.LINK.LVCB[latestRegulation?.regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB] ? (
+            <Link
+              href={PATH.LINK.LVCB[latestRegulation?.regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              レベルキャップシステム
+            </Link>
+          ) : (
+            <>レベルキャップシステム</>
+          )}
           を採用
         </Text>
         <Text as="li">使用サプリはエピックトレジャリー、モンストラスロア他</Text>
