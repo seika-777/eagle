@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { getLatestRegulationItem } from "@/api/variables/getRegulationItems";
 import About from "@/component/organisms/top/About";
@@ -30,13 +30,13 @@ export default function HomeTemplate() {
   return (
     <>
       <MainVisual />
-      <Box maxW={STYLE.WIDTH.SECTION} mx="auto" px={6} py={10}>
+      <SimpleGrid maxW={STYLE.WIDTH.SECTION} mx="auto" px={6} py={10} gap={6}>
         <Stage latestRegulation={latestRegulation} />
         <About />
         <Recruitment latestRegulation={latestRegulation} />
         <Regulation latestRegulation={latestRegulation} />
         <Contact />
-      </Box>
+      </SimpleGrid>
     </>
   );
 }

@@ -5,7 +5,7 @@ import AppWrapper from "./AppWrapper";
 import { eduNswActCursive, zenMaruGothic } from "@/const/font/font";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
 
 export const metadata: Metadata = {
   title: "Create Next App",
