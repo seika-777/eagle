@@ -81,17 +81,23 @@ export default function RaceList({ period }: Props) {
   };
   return (
     <Box as="section" textAlign="left" width="100%">
-      {Object.entries(groupedByRaceType).map(([key, group]) => (
-        <Box key={key} mb={6}>
-          <HeadingThird title={group.label} />
-          <RaceItemList items={group.items} />
-        </Box>
-      ))}
-      {originalItems.length > 0 && (
-        <Box mb={6}>
-          <HeadingThird title={RACE_PAGE.TEXT.originalRaceHeading} />
-          <RaceItemList items={originalItems} />
-        </Box>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          {Object.entries(groupedByRaceType).map(([key, group]) => (
+            <Box key={key} mb={6}>
+              <HeadingThird title={group.label} />
+              <RaceItemList items={group.items} />
+            </Box>
+          ))}
+          {originalItems.length > 0 && (
+            <Box mb={6}>
+              <HeadingThird title={RACE_PAGE.TEXT.originalRaceHeading} />
+              <RaceItemList items={originalItems} />
+            </Box>
+          )}
+        </>
       )}
     </Box>
   );

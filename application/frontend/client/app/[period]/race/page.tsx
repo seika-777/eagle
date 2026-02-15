@@ -1,10 +1,13 @@
+import { getStaticPeriodParams } from "@/api/variables/getStaticPeriodParams";
 import RaceTemplate from "@/component/templates/RaceTemplate";
 import { COMMON } from "@/const/common/COMMON";
 import { METADATA } from "@/const/common/METADATA";
 
+export const generateStaticParams = getStaticPeriodParams;
+
 export const metadata = {
   title: COMMON.SITE_NAME + "|" + METADATA.TITLE.RACE,
-  description: "Home page of the application",
+  description: METADATA.DESCRIPTION.RACE,
 };
 
 export default async function Race({

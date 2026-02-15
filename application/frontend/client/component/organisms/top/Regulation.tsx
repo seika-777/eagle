@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, Link } from "@chakra-ui/react";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import HeadingThird from "@/component/atoms/HeadingThird";
 import { PATH } from "@/const/common/PATH";
@@ -17,21 +17,25 @@ export default function Regulation({ latestRegulation }: Props) {
         <Text as="li">キャラクター作成は専用サーバーおよび、専用のココフォリアルームで作成</Text>
         <Text as="li">初期作成よりスタート</Text>
         <Text as="li">
-          <Text
-            as="a"
-            href={PATH.LINK.LVCB[latestRegulation?.regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]}
-            target="_blank"
-          >
-            レベルキャップシステム
-          </Text>
+          {PATH.LINK.LVCB[latestRegulation?.regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB] ? (
+            <Link
+              href={PATH.LINK.LVCB[latestRegulation?.regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              レベルキャップシステム
+            </Link>
+          ) : (
+            <>レベルキャップシステム</>
+          )}
           を採用
         </Text>
         <Text as="li">使用サプリはエピックトレジャリー、モンストラスロア他</Text>
         <Text as="li">使用可能種族は人族基本種・希少種(一部制限あり)</Text>
       </Box>
-      <Text as="a" href={`/${latestRegulation?.regulation.id}`}>
+      <Link href={`/${latestRegulation?.regulation.id}`}>
         詳しくはこちら
-      </Text>
+      </Link>
     </Box>
   );
 }
