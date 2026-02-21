@@ -2,7 +2,7 @@ import type { RaceItemType } from "@/const/type/race/RaceItemType";
 import {
   parseRaceItems,
   parseRaceTypes,
-} from "@/api/variables/csv/parseRaceItems";
+} from "@/const/function/csv/parseRaceItems";
 
 export const getRaceItems = async (
   period?: string,

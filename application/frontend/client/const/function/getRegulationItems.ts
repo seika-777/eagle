@@ -1,7 +1,7 @@
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
-import { parseRegulationItems } from "@/api/variables/csv/parseRegulationItems";
-import { getRaceItems } from "@/api/variables/getRaceItems";
-import { parseSupplementItems } from "@/api/variables/csv/parseSupplementItems";
+import { parseRegulationItems } from "@/const/function/csv/parseRegulationItems";
+import { getRaceItems } from "@/const/function/getRaceItems";
+import { parseSupplementItems } from "@/const/function/csv/parseSupplementItems";
 
 const getRegulationCsvRows = async () => {
   const res = await fetch("/csv/regulation-item.csv");
@@ -9,7 +9,7 @@ const getRegulationCsvRows = async () => {
   return parseRegulationItems(csvText);
 };
 
-const getSupplementItems = async () => {
+const getSupplementCsvRows = async () => {
   const res = await fetch("/csv/supplement-item.csv");
   const csvText = await res.text();
   return parseSupplementItems(csvText);
@@ -21,7 +21,7 @@ const buildRegulationItem = async (
   const [regulationRows, allRaceItems, supplementItems] = await Promise.all([
     getRegulationCsvRows(),
     getRaceItems(),
-    getSupplementItems(),
+    getSupplementCsvRows(),
   ]);
   const regulation = regulationRows.find((row) => row.id === Number(period));
   if (!regulation) return null;
