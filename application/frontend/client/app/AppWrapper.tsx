@@ -1,7 +1,22 @@
 "use client";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
-import React, { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import Header from "@/component/molecules/Header";
+import EmotionCacheProvider from "@/app/EmotionCacheProvider";
 
 export default function AppWrapper({ children }: { children: ReactNode }) {
-  return <ChakraProvider value={defaultSystem}>{children}</ChakraProvider>;
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  return (
+    <EmotionCacheProvider>
+      <ChakraProvider value={defaultSystem}>
+        {isMounted && <Header />}
+        {children}
+      </ChakraProvider>
+    </EmotionCacheProvider>
+  );
 }
