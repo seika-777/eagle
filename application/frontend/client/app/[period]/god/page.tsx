@@ -8,11 +8,6 @@ export const metadata = {
   description: METADATA.DESCRIPTION.GOD,
 };
 
-export default async function God({
-  params,
-}: {
-  params: Promise<{ period: string }>;
-}) {
-  const { period } = await params;
-  return <GodTemplate period={period} />;
+export default function God() {
+  return <GodTemplate />;
 }

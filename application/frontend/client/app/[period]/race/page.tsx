@@ -8,11 +8,6 @@ export const metadata = {
   description: METADATA.DESCRIPTION.RACE,
 };
 
-export default async function Race({
-  params,
-}: {
-  params: Promise<{ period: string }>;
-}) {
-  const { period } = await params;
-  return <RaceTemplate period={period} />;
+export default function Race() {
+  return <RaceTemplate />;
 }

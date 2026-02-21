@@ -8,11 +8,6 @@ export const metadata = {
   description: METADATA.DESCRIPTION.SUPPLEMENT,
 };
 
-export default async function Supplement({
-  params,
-}: {
-  params: Promise<{ period: string }>;
-}) {
-  const { period } = await params;
-  return <SupplementTemplate period={period} />;
+export default function Supplement() {
+  return <SupplementTemplate />;
 }

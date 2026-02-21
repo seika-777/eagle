@@ -1,10 +1,12 @@
 "use client";
+import { useParams } from "next/navigation";
 import { Box } from "@chakra-ui/react";
 import MainVisual from "@/component/organisms/top/MainVisual";
 import RaceList from "@/component/organisms/race/RaceList";
 import { STYLE } from "@/const/common/STYLE";
 
-export default function RaceTemplate({ period }: { period?: string }) {
+export default function RaceTemplate() {
+  const { period } = useParams<{ period: string }>();
   return (
     <>
       <MainVisual />

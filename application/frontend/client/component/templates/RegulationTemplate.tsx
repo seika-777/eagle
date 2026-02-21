@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import { Box } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { getRegulationItemByPeriod } from "@/api/variables/getRegulationItems";
@@ -8,10 +9,9 @@ import RegulationSection from "@/component/organisms/regulation/RegulationSectio
 import { STYLE } from "@/const/common/STYLE";
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
-type Props = {
-  period?: string;
-};
-export default function RegulationTemplate({ period }: Props) {
+
+export default function RegulationTemplate() {
+  const { period } = useParams<{ period: string }>();
   const [regulation, setRegulation] = useState<RegulationItemType>();
   const { handleError, resetError } = useErrorHandler();
   useEffect(() => {

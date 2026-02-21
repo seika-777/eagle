@@ -1,14 +1,12 @@
 "use client";
+import { useParams } from "next/navigation";
 import { Box } from "@chakra-ui/react";
 import MainVisual from "@/component/organisms/top/MainVisual";
 import SchoolList from "@/component/organisms/school/SchoolList";
 import { STYLE } from "@/const/common/STYLE";
 
-type Props = {
-  period?: string;
-};
-
-export default function SchoolTemplate({ period }: Props) {
+export default function SchoolTemplate() {
+  const { period } = useParams<{ period: string }>();
   return (
     <>
       <MainVisual />

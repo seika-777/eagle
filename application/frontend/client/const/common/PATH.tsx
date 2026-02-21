@@ -19,7 +19,6 @@ export const PATH = {
     },
     ORIGINAL: {
       ROOT: "/original",
-      RACE: "/original/race",
     },
     HOUSE_RULE: {
       ROOT: "/house-rule",

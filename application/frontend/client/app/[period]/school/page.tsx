@@ -8,11 +8,6 @@ export const metadata = {
   description: METADATA.DESCRIPTION.SCHOOL,
 };
 
-export default async function School({
-  params,
-}: {
-  params: Promise<{ period: string }>;
-}) {
-  const { period } = await params;
-  return <SchoolTemplate period={period} />;
+export default function School() {
+  return <SchoolTemplate />;
 }

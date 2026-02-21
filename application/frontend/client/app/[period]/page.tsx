@@ -8,11 +8,6 @@ export const metadata = {
   description: METADATA.DESCRIPTION.REGULATION,
 };
 
-export default async function Regulation({
-  params,
-}: {
-  params: Promise<{ period: string }>;
-}) {
-  const { period } = await params;
-  return <RegulationTemplate period={period} />;
+export default function Regulation() {
+  return <RegulationTemplate />;
 }
