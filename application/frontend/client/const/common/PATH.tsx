@@ -14,21 +14,22 @@ export const PATH = {
       ROOT: "/",
       RACE: "/race",
       SUPPLEMENT: "/supplement",
+      GOD: "/god",
+      SCHOOL: "/school",
     },
     ORIGINAL: {
+      ROOT: "/original",
       RACE: "/original/race",
-      METHOD: "/original/method",
-      ITEM: "/original/item",
     },
     HOUSE_RULE: {
       ROOT: "/house-rule",
+      PROHIBITION: "/house-rule/prohibition",
     },
   },
   LINK: {
     TWITTER: "https://x.com/sekiyoku_sw25",
     LVCB: {
       B: "https://lite.evernote.com/note/023359ca-fa3c-34e3-fffd-cafcece54a7c",
-      C: "",
     },
   },
 };
