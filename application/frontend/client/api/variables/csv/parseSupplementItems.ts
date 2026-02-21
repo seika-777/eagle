@@ -1,16 +1,15 @@
 import Papa from "papaparse";
-import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
+import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
 
 type SupplementCsvRow = {
   id: string;
   name: string;
+  regulationPeriod: string;
 };
 
-export type SupplementRow = RegulationItemType["supplement"];
-
 export const parseSupplementItems = (
-  csvText: string
-): SupplementRow[] => {
+  csvText: string,
+): SupplementItemType[] => {
   const result = Papa.parse<SupplementCsvRow>(csvText, {
     header: true,
     skipEmptyLines: true,
@@ -19,5 +18,6 @@ export const parseSupplementItems = (
   return result.data.map((row) => ({
     id: Number(row.id),
     name: row.name,
+    regulationPeriod: row.regulationPeriod ?? "",
   }));
 };
