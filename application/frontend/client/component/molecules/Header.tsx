@@ -78,11 +78,11 @@ export default function Header() {
         height={"60px"}
         zIndex={5}
         bg={STYLE_COLOR.MAIN}
-        color={STYLE_COLOR.WHITE}
+        color={STYLE_COLOR.PRIMARY}
         fontSize={"16px"}
         px={6}
       >
-        <Box>{COMMON.SITE_NAME}</Box>
+        <Link href="/">{COMMON.SITE_NAME}</Link>
         <Box
           as="button"
           onClick={() => setIsOpen(!isOpen)}
