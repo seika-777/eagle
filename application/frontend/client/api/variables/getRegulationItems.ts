@@ -9,7 +9,7 @@ const getRegulationCsvRows = async () => {
   return parseRegulationItems(csvText);
 };
 
-const getSupplementItems = async () => {
+const getSupplementCsvRows = async () => {
   const res = await fetch("/csv/supplement-item.csv");
   const csvText = await res.text();
   return parseSupplementItems(csvText);
@@ -21,7 +21,7 @@ const buildRegulationItem = async (
   const [regulationRows, allRaceItems, supplementItems] = await Promise.all([
     getRegulationCsvRows(),
     getRaceItems(),
-    getSupplementItems(),
+    getSupplementCsvRows(),
   ]);
   const regulation = regulationRows.find((row) => row.id === Number(period));
   if (!regulation) return null;
