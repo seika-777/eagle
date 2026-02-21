@@ -5,5 +5,6 @@ export const ORIGINAL_PAGE: {
     raceHeading: "オリジナル種族",
     godHeading: "オリジナル信仰",
     schoolHeading: "オリジナル流派",
+    itemHeading: "オリジナルアイテム",
   },
 } as const;
