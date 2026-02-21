@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getHouseRuleItems } from "@/api/variables/getHouseRuleItems";
+import { getHouseRuleItems } from "@/const/function/getHouseRuleItems";
 import { RULE } from "@/const/common/RULE";
 import type { HouseRuleItemType } from "@/const/type/houseRule/HouseRuleItemType";
 import type { RuleType } from "@/const/type/common/RuleType";

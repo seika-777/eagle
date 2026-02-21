@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getProhibitionItems } from "@/api/variables/getProhibitionItems";
+import { getProhibitionItems } from "@/const/function/getProhibitionItems";
 import type { ProhibitionItemType } from "@/const/type/houseRule/ProhibitionItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";

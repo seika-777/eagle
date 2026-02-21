@@ -2,9 +2,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRaceItems } from "@/api/variables/getRaceItems";
-import { getGodItems } from "@/api/variables/getGodItems";
-import { getSchoolItems } from "@/api/variables/getSchoolItems";
+import { getRaceItems } from "@/const/function/getRaceItems";
+import { getGodItems } from "@/const/function/getGodItems";
+import { getSchoolItems } from "@/const/function/getSchoolItems";
 import { ORIGINAL_PAGE } from "@/const/pages/ORIGINAL_PAGE";
 import { RACE } from "@/const/common/RACE";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";

@@ -1,5 +1,5 @@
 import type { HouseRuleItemType } from "@/const/type/houseRule/HouseRuleItemType";
-import { parseHouseRuleItems } from "@/api/variables/csv/parseHouseRuleItems";
+import { parseHouseRuleItems } from "@/const/function/csv/parseHouseRuleItems";
 
 export const getHouseRuleItems = async (): Promise<HouseRuleItemType[]> => {
   const res = await fetch("/csv/house-rule-item.csv");

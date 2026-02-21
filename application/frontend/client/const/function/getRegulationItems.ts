@@ -1,7 +1,7 @@
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
-import { parseRegulationItems } from "@/api/variables/csv/parseRegulationItems";
-import { getRaceItems } from "@/api/variables/getRaceItems";
-import { parseSupplementItems } from "@/api/variables/csv/parseSupplementItems";
+import { parseRegulationItems } from "@/const/function/csv/parseRegulationItems";
+import { getRaceItems } from "@/const/function/getRaceItems";
+import { parseSupplementItems } from "@/const/function/csv/parseSupplementItems";
 
 const getRegulationCsvRows = async () => {
   const res = await fetch("/csv/regulation-item.csv");

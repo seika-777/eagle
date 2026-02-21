@@ -1,5 +1,5 @@
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
-import { parseSchoolItems } from "@/api/variables/csv/parseSchoolItems";
+import { parseSchoolItems } from "@/const/function/csv/parseSchoolItems";
 
 export const getSchoolItems = async (
   period?: string,

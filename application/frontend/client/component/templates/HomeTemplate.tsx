@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getLatestRegulationItem } from "@/api/variables/getRegulationItems";
+import { getLatestRegulationItem } from "@/const/function/getRegulationItems";
 import About from "@/component/organisms/top/About";
 import Contact from "@/component/organisms/top/Contact";
 import MainVisual from "@/component/organisms/top/MainVisual";

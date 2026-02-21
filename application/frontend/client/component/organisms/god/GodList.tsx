@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getGodItems } from "@/api/variables/getGodItems";
+import { getGodItems } from "@/const/function/getGodItems";
 import type { GodItemType } from "@/const/type/god/GodItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingThird from "@/component/atoms/HeadingThird";

@@ -1,5 +1,5 @@
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
-import { parseSupplementItems } from "@/api/variables/csv/parseSupplementItems";
+import { parseSupplementItems } from "@/const/function/csv/parseSupplementItems";
 
 export const getSupplementItems = async (
   period?: string,

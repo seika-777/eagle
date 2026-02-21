@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Box, Text, Spinner, SimpleGrid, Link } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getSupplementItems } from "@/api/variables/getSupplementItems";
+import { getSupplementItems } from "@/const/function/getSupplementItems";
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";

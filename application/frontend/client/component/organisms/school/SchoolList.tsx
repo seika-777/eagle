@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getSchoolItems } from "@/api/variables/getSchoolItems";
+import { getSchoolItems } from "@/const/function/getSchoolItems";
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";

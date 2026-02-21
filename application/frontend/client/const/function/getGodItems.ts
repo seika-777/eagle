@@ -1,5 +1,5 @@
 import type { GodItemType } from "@/const/type/god/GodItemType";
-import { parseGodItems } from "@/api/variables/csv/parseGodItems";
+import { parseGodItems } from "@/const/function/csv/parseGodItems";
 
 export const getGodItems = async (
   period?: string,

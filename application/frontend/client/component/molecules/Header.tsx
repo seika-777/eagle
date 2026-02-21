@@ -6,7 +6,7 @@ import Link from "next/link";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import { COMMON } from "@/const/common/COMMON";
 import { NAV_ITEMS } from "@/const/common/NAV_ITEMS";
-import { getLatestPeriod } from "@/api/variables/getLatestPeriod";
+import { getLatestPeriod } from "@/const/function/getLatestPeriod";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);

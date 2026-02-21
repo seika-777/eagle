@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRaceItems } from "@/api/variables/getRaceItems";
+import { getRaceItems } from "@/const/function/getRaceItems";
 import { RACE } from "@/const/common/RACE";
 import { RACE_PAGE } from "@/const/pages/RACE_PAGE";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
