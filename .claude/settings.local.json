@@ -15,7 +15,21 @@
       "Bash(npm install:*)",
       "Bash(gh release view:*)",
       "Bash(npm run build:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "WebSearch",
+      "Bash(npm info:*)",
+      "WebFetch(domain:chakra-ui.com)",
+      "Bash(npm uninstall:*)",
+      "Bash(node -e:*)",
+      "Bash(find:*)",
+      "Bash(npm audit:*)",
+      "Bash(grep:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npx next lint:*)",
+      "Bash(npx eslint:*)",
+      "Bash(git stash:*)",
+      "Bash(cd C:\\\\Users\\\\725\\\\OneDrive\\\\デスクトップ\\\\プログラミング\\\\eagle:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
