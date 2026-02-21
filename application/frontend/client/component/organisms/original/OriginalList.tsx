@@ -5,12 +5,14 @@ import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { getRaceItems } from "@/const/function/getRaceItems";
 import { getGodItems } from "@/const/function/getGodItems";
 import { getSchoolItems } from "@/const/function/getSchoolItems";
+import { getOriginalItems } from "@/const/function/getOriginalItems";
 import { ORIGINAL_PAGE } from "@/const/pages/ORIGINAL_PAGE";
 import { RACE } from "@/const/common/RACE";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
 import type { RaceListType } from "@/const/type/race/RaceListType";
 import type { GodItemType } from "@/const/type/god/GodItemType";
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
+import type { OriginalItemType } from "@/const/type/original/OriginalItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
@@ -19,6 +21,7 @@ export default function OriginalList() {
   const [raceItems, setRaceItems] = useState<RaceItemType[]>([]);
   const [godItems, setGodItems] = useState<GodItemType[]>([]);
   const [schoolItems, setSchoolItems] = useState<SchoolItemType[]>([]);
+  const [originalItems, setOriginalItems] = useState<OriginalItemType[]>([]);
   const [loading, setLoading] = useState(true);
   const { handleError, resetError } = useErrorHandler();
 
@@ -27,14 +30,16 @@ export default function OriginalList() {
     resetError();
     const fetchData = async () => {
       try {
-        const [raceData, godData, schoolData] = await Promise.all([
+        const [raceData, godData, schoolData, originalData] = await Promise.all([
           getRaceItems(),
           getGodItems(),
           getSchoolItems(),
+          getOriginalItems(),
         ]);
         setRaceItems(raceData);
         setGodItems(godData);
         setSchoolItems(schoolData);
+        setOriginalItems(originalData);
         setLoading(false);
       } catch (error) {
         handleError(error as ErrorType);
@@ -85,6 +90,27 @@ export default function OriginalList() {
           </Link>
         ) : (
           <Text>{item.name}</Text>
+        )}
+      </Box>
+    );
+  };
+
+  const OriginalItem = ({ item }: { item: OriginalItemType }) => {
+    return (
+      <Box as="li" py={1}>
+        {item.url ? (
+          <Link
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            color={STYLE_COLOR.SECONDARY}
+            textDecoration="underline"
+            _hover={{ color: STYLE_COLOR.ACCENT }}
+          >
+            {item.name}({item.type})
+          </Link>
+        ) : (
+          <Text>{item.name}({item.type})</Text>
         )}
       </Box>
     );
@@ -143,6 +169,16 @@ export default function OriginalList() {
               <Box as="ul" listStyleType="none" p={0} mt={2}>
                 {originalSchoolItems.map((item) => (
                   <SchoolItem key={item.id} item={item} />
+                ))}
+              </Box>
+            </Box>
+          )}
+          {originalItems.length > 0 && (
+            <Box mb={8}>
+              <HeadingSecond title={ORIGINAL_PAGE.TEXT.itemHeading} />
+              <Box as="ul" listStyleType="none" p={0} mt={2}>
+                {originalItems.map((item) => (
+                  <OriginalItem key={item.id} item={item} />
                 ))}
               </Box>
             </Box>
