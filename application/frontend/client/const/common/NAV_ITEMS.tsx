@@ -2,6 +2,7 @@ import { PATH } from "@/const/common/PATH";
 
 export const NAV_ITEMS = (period: string) =>
   [
+    { label: "レギュレーション一覧", href: "/period" },
     { label: "現在のレギュレーション", href: `/${period}` },
     { label: "ハウスルール", href: PATH.URL.HOUSE_RULE.ROOT },
     { label: "禁止事項", href: PATH.URL.HOUSE_RULE.PROHIBITION },

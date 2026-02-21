@@ -9,6 +9,7 @@ export const METADATA = {
     HOUSE_RULE: "ハウスルール",
     PROHIBITION: "使用禁止アイテム",
     ORIGINAL: "オリジナルデータ",
+    PERIOD_LIST: "レギュレーション一覧",
   },
   DESCRIPTION: {
     HOME: "片翼の大鷲亭 - TRPGコミュニティポータル",
@@ -20,5 +21,6 @@ export const METADATA = {
     HOUSE_RULE: "片翼の大鷲亭 - ハウスルール",
     PROHIBITION: "片翼の大鷲亭 - 使用禁止アイテム",
     ORIGINAL: "片翼の大鷲亭 - オリジナルデータ",
+    PERIOD_LIST: "片翼の大鷲亭 - レギュレーション一覧",
   },
 };
