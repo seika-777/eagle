@@ -74,7 +74,13 @@ GitHub の OPEN マイルストーンから Issue を選択し、作業用ブラ
    git checkout -b {ブランチ名} origin/main
    ```
 
-5. **エッジケース**: 同名のブランチが既に存在する場合:
+5. リモートブランチを作成し、tracking 先を設定する:
+   ```bash
+   git push -u origin {ブランチ名}
+   ```
+   > **重要**: `origin/main` から作成すると tracking が main になるため、必ず `push -u` で正しい tracking 先に変更すること。
+
+6. **エッジケース**: 同名のブランチが既に存在する場合:
    - `AskUserQuestion` で以下の選択肢を提示する:
      - `既存ブランチに切り替える` → `git checkout {ブランチ名}`
      - `別名で作成する` → ユーザーにブランチ名を入力させる
