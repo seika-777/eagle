@@ -28,8 +28,7 @@
       "Bash(npx next lint:*)",
       "Bash(npx eslint:*)",
       "Bash(git stash:*)",
-      "Bash(cd C:\\\\Users\\\\725\\\\OneDrive\\\\デスクトップ\\\\プログラミング\\\\eagle:*)",
-      "Bash(cat:*)"
+      "Bash(cd:*)"
     ],
     "deny": [],
     "ask": []
