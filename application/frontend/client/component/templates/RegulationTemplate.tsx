@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Box } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRegulationItemByPeriod } from "@/const/function/getRegulationItems";
+import { getRegulationItems } from "@/const/function/getRegulationItems";
 import MainVisual from "@/component/organisms/top/MainVisual";
 import RegulationSection from "@/component/organisms/regulation/RegulationSection";
 import { STYLE } from "@/const/common/STYLE";
@@ -19,7 +19,7 @@ export default function RegulationTemplate() {
     const fetchData = async () => {
       try {
         if (period) {
-          const responseGetRegulationItem = await getRegulationItemByPeriod(period);
+          const responseGetRegulationItem = await getRegulationItems("detail", period);
           if (responseGetRegulationItem) {
             setRegulation(responseGetRegulationItem);
           }

@@ -23,7 +23,7 @@ export default function GodList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getGodItems(period);
+        const data = period ? await getGodItems("period", period) : await getGodItems("all");
         setItems(data);
         setLoading(false);
       } catch (error) {
@@ -34,12 +34,12 @@ export default function GodList({ period }: Props) {
     fetchData();
   }, [period]);
 
-  const originalItems = useMemo(() => items.filter((item) => item.isOriginal), [items]);
+  const originalItems = useMemo(() => items.filter((item) => item.url), [items]);
 
   const groupedByType = useMemo(() => {
     const groups: Record<number, GodItemType[]> = {};
     items
-      .filter((item) => !item.isOriginal)
+      .filter((item) => !item.url)
       .forEach((item) => {
         if (!groups[item.type]) {
           groups[item.type] = [];

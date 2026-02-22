@@ -1,25 +1,18 @@
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
-import {
-  parseRaceItems,
-  parseRaceTypes,
-} from "@/const/function/csv/parseRaceItems";
+import { parseRaceItems } from "@/const/function/csv/parseRaceItems";
 
-export const getRaceItems = async (
-  period?: string,
-): Promise<RaceItemType[]> => {
-  const [raceItemsRes, raceTypesRes] = await Promise.all([
-    fetch("/csv/race-items.csv"),
-    fetch("/csv/race-types.csv"),
-  ]);
+export async function getRaceItems(type: "period", id: string): Promise<RaceItemType[]>;
+export async function getRaceItems(type: "all"): Promise<RaceItemType[]>;
+export async function getRaceItems(
+  type: "period" | "all",
+  id?: string
+): Promise<RaceItemType[]> {
+  const res = await fetch("/csv/race-items.csv");
+  const csvText = await res.text();
+  const items = parseRaceItems(csvText);
 
-  const raceItemsCsv = await raceItemsRes.text();
-  const raceTypesCsv = await raceTypesRes.text();
-
-  const raceTypeMap = parseRaceTypes(raceTypesCsv);
-  const items = parseRaceItems(raceItemsCsv, raceTypeMap);
-
-  if (period) {
-    return items.filter((item) => item.regulationPeriod.includes(period));
+  if (type === "period") {
+    return items.filter((item) => item.regulationPeriod.includes(id!));
   }
-  return items.filter((item) => item.isOriginal);
-};
+  return items;
+}

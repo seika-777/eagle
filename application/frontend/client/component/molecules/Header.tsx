@@ -7,7 +7,7 @@ import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import { STYLE } from "@/const/common/STYLE";
 import { COMMON } from "@/const/common/COMMON";
 import { NAV_ITEMS } from "@/const/common/NAV_ITEMS";
-import { getLatestPeriod } from "@/const/function/getLatestPeriod";
+import { getRegulationItems } from "@/const/function/getRegulationItems";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +15,10 @@ export default function Header() {
 
   useEffect(() => {
     const fetchPeriod = async () => {
-      const latestPeriod = await getLatestPeriod();
-      setPeriod(latestPeriod);
+      const latest = await getRegulationItems("latest");
+      if (latest) {
+        setPeriod(String(latest.regulation.id));
+      }
     };
     fetchPeriod();
   }, []);

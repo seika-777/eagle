@@ -1,30 +1,26 @@
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
-import { parseRegulationItems } from "@/const/function/csv/parseRegulationItems";
+import { parseRegulationItems, type RegulationRow } from "@/const/function/csv/parseRegulationItems";
 import { getRaceItems } from "@/const/function/getRaceItems";
-import { parseSupplementItems } from "@/const/function/csv/parseSupplementItems";
+import { getSupplementItems } from "@/const/function/getSupplementItems";
 
-const getRegulationCsvRows = async () => {
+const fetchRegulationRows = async (): Promise<RegulationRow[]> => {
   const res = await fetch("/csv/regulation-item.csv");
   const csvText = await res.text();
   return parseRegulationItems(csvText);
 };
 
-const getSupplementCsvRows = async () => {
-  const res = await fetch("/csv/supplement-item.csv");
-  const csvText = await res.text();
-  return parseSupplementItems(csvText);
-};
-
 const buildRegulationItem = async (
-  period: string
+  period: string,
+  rows: RegulationRow[]
 ): Promise<RegulationItemType | null> => {
-  const [regulationRows, allRaceItems, supplementItems] = await Promise.all([
-    getRegulationCsvRows(),
-    getRaceItems(),
-    getSupplementCsvRows(),
-  ]);
-  const regulation = regulationRows.find((row) => row.id === Number(period));
+  const regulation = rows.find((row) => row.id === Number(period));
   if (!regulation) return null;
+
+  const [allRaceItems, supplementItems] = await Promise.all([
+    getRaceItems("all"),
+    getSupplementItems("all"),
+  ]);
+
   const raceItems = allRaceItems
     .filter((item) =>
       item.regulationPeriod
@@ -35,11 +31,13 @@ const buildRegulationItem = async (
     .map((item) => ({
       id: item.id,
       name: item.name,
-      raceType: item.raceType.map((rt) => rt.name).join(","),
+      raceType: item.raceType.join(","),
     }));
+
   const supplement = supplementItems.find(
     (s) => s.id === Number(regulation.supplement)
   ) ?? { id: 0, name: "" };
+
   return {
     regulation,
     race: raceItems,
@@ -47,15 +45,22 @@ const buildRegulationItem = async (
   };
 };
 
-export const getLatestRegulationItem = async (): Promise<RegulationItemType | null> => {
-  const rows = await getRegulationCsvRows();
-  if (rows.length === 0) return null;
-  const latest = rows[rows.length - 1];
-  return buildRegulationItem(String(latest.id));
-};
+export async function getRegulationItems(type: "list"): Promise<RegulationRow[]>;
+export async function getRegulationItems(type: "latest"): Promise<RegulationItemType | null>;
+export async function getRegulationItems(type: "detail", id: string): Promise<RegulationItemType | null>;
+export async function getRegulationItems(
+  type: "list" | "latest" | "detail",
+  id?: string
+): Promise<RegulationRow[] | RegulationItemType | null> {
+  const rows = await fetchRegulationRows();
 
-export const getRegulationItemByPeriod = async (
-  period: string
-): Promise<RegulationItemType | null> => {
-  return buildRegulationItem(period);
-};
+  if (type === "list") {
+    return rows.sort((a, b) => a.id - b.id);
+  }
+
+  const period = type === "latest"
+    ? String(rows[rows.length - 1]?.id)
+    : id!;
+
+  return buildRegulationItem(period, rows);
+}

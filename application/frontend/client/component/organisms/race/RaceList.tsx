@@ -21,14 +21,13 @@ export default function RaceList({ period }: Props) {
   const groupByRaceType = (items: RaceItemType[]): Record<string, RaceGroupType> => {
     return items.reduce<Record<string, RaceGroupType>>((acc, item) => {
       item.raceType.forEach((rt) => {
-        const key = rt.name;
-        if (!acc[key]) {
-          acc[key] = {
-            label: key in RACE.TEXT ? RACE.TEXT[key as RaceListType] : key,
+        if (!acc[rt]) {
+          acc[rt] = {
+            label: rt in RACE.TEXT ? RACE.TEXT[rt as RaceListType] : rt,
             items: [],
           };
         }
-        acc[key].items.push(item);
+        acc[rt].items.push(item);
       });
       return acc;
     }, {});
@@ -38,7 +37,7 @@ export default function RaceList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getRaceItems(period);
+        const data = period ? await getRaceItems("period", period) : await getRaceItems("all");
         setItems(data);
         setLoading(false);
       } catch (error) {
@@ -48,8 +47,8 @@ export default function RaceList({ period }: Props) {
     };
     fetchData();
   }, [period]);
-  const originalItems = useMemo(() => items.filter((item) => item.isOriginal), [items]);
-  const groupedByRaceType = useMemo(() => groupByRaceType(items.filter((item) => !item.isOriginal)), [items]);
+  const originalItems = useMemo(() => items.filter((item) => item.url), [items]);
+  const groupedByRaceType = useMemo(() => groupByRaceType(items.filter((item) => !item.url)), [items]);
   const RaceItem = ({ item }: { item: RaceItemType }) => {
     return (
       <Box as="li" py={1}>
@@ -62,7 +61,7 @@ export default function RaceList({ period }: Props) {
             textDecoration="underline"
             _hover={{ color: STYLE_COLOR.ACCENT }}
           >
-            {item.name}({item.raceType.map((rt) => RACE.TEXT[rt.name as RaceListType]).join("/")})
+            {item.name}({item.raceType.map((rt) => RACE.TEXT[rt as RaceListType]).join("/")})
           </Link>
         ) : (
           <Text>{item.name}</Text>

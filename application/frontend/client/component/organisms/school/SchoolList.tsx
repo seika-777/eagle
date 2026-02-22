@@ -23,7 +23,7 @@ export default function SchoolList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getSchoolItems(period);
+        const data = period ? await getSchoolItems("period", period) : await getSchoolItems("all");
         setItems(data);
         setLoading(false);
       } catch (error) {
@@ -35,12 +35,12 @@ export default function SchoolList({ period }: Props) {
   }, [period]);
 
   const standardItems = useMemo(
-    () => items.filter((item) => !item.isOriginal),
+    () => items.filter((item) => !item.url),
     [items],
   );
 
   const originalItems = useMemo(
-    () => items.filter((item) => item.isOriginal),
+    () => items.filter((item) => item.url),
     [items],
   );
 

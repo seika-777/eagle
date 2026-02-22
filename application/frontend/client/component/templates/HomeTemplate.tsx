@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getLatestRegulationItem } from "@/const/function/getRegulationItems";
+import { getRegulationItems } from "@/const/function/getRegulationItems";
 import About from "@/component/organisms/top/About";
 import Contact from "@/component/organisms/top/Contact";
 import MainVisual from "@/component/organisms/top/MainVisual";
@@ -19,7 +19,7 @@ export default function HomeTemplate() {
     resetError();
     const fetchData = async () => {
       try {
-        const item = await getLatestRegulationItem();
+        const item = await getRegulationItems("latest");
         setLatestRegulation(item);
       } catch (error) {
         handleError(error as ErrorType);
