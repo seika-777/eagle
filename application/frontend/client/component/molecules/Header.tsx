@@ -4,6 +4,7 @@ import { Box } from "@chakra-ui/react";
 import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
 import Link from "next/link";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
+import { STYLE } from "@/const/common/STYLE";
 import { COMMON } from "@/const/common/COMMON";
 import { NAV_ITEMS } from "@/const/common/NAV_ITEMS";
 import { getLatestPeriod } from "@/const/function/getLatestPeriod";
@@ -70,29 +71,36 @@ export default function Header() {
     <>
       <Box
         as="header"
-        display={"flex"}
+        position={"fixed"}
         width={"100%"}
         top={0}
-        alignItems={"center"}
-        justifyContent={"space-between"}
         height={"60px"}
         zIndex={5}
         bg={STYLE_COLOR.MAIN}
         color={STYLE_COLOR.PRIMARY}
         fontSize={"16px"}
-        px={6}
       >
-        <Link href="/">{COMMON.SITE_NAME}</Link>
         <Box
-          as="button"
-          onClick={() => setIsOpen(!isOpen)}
-          cursor={"pointer"}
           display={"flex"}
           alignItems={"center"}
-          justifyContent={"center"}
-          aria-label={isOpen ? "メニューを閉じる" : "メニューを開く"}
+          justifyContent={"space-between"}
+          maxW={STYLE.WIDTH.SECTION}
+          mx={"auto"}
+          px={6}
+          height={"100%"}
         >
-          {isOpen ? <RxCross1 size={24} /> : <RxHamburgerMenu size={24} />}
+          <Link href="/">{COMMON.SITE_NAME}</Link>
+          <Box
+            as="button"
+            onClick={() => setIsOpen(!isOpen)}
+            cursor={"pointer"}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"center"}
+            aria-label={isOpen ? "メニューを閉じる" : "メニューを開く"}
+          >
+            {isOpen ? <RxCross1 size={24} /> : <RxHamburgerMenu size={24} />}
+          </Box>
         </Box>
       </Box>
       {isOpen && (
