@@ -1,1 +1,1 @@
-export type RuleType = "common" | "item" | "race" | "skill" | "battleSkill" | "school";
+export type RuleType = "common" | "item" | "race" | "skill" | "battleSkill" | "school" | "supplement";
