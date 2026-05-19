@@ -4,5 +4,4 @@ export type GodItemType = {
   name: string;
   regulationPeriod: string;
   url: string;
-  isOriginal: boolean;
 };

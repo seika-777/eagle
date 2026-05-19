@@ -4,15 +4,15 @@ import { Box, Spinner } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRegulationListItems } from "@/const/function/getRegulationListItems";
+import { getRegulationItems } from "@/const/function/getRegulationItems";
 import { PERIOD_PAGE } from "@/const/pages/PERIOD_PAGE";
-import type { RegulationListItemType } from "@/const/type/regulation/RegulationListItemType";
+import type { RegulationRow } from "@/const/function/csv/parseRegulationItems";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 
 export default function PeriodList() {
-  const [items, setItems] = useState<RegulationListItemType[]>([]);
+  const [items, setItems] = useState<RegulationRow[]>([]);
   const [loading, setLoading] = useState(true);
   const { handleError, resetError } = useErrorHandler();
 
@@ -21,7 +21,7 @@ export default function PeriodList() {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getRegulationListItems();
+        const data = await getRegulationItems("list");
         setItems(data);
         setLoading(false);
       } catch (error) {
@@ -32,7 +32,7 @@ export default function PeriodList() {
     fetchData();
   }, []);
 
-  const PeriodItem = ({ item }: { item: RegulationListItemType }) => {
+  const PeriodItem = ({ item }: { item: RegulationRow }) => {
     return (
       <Box as="li" py={1}>
         <Link

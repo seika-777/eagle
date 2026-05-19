@@ -12,6 +12,7 @@ export const RULE: {
     skill: "技能",
     battleSkill: "戦闘特技",
     school: "流派",
+    supplement: "サプリ",
   },
   VALUE: {
     COMMON: "common",
@@ -20,13 +21,7 @@ export const RULE: {
     SKILL: "skill",
     BATTLE_SKILL: "battleSkill",
     SCHOOL: "school",
+    SUPPLEMENT: "supplement",
   },
-  TYPE_ORDER: [
-    "common",
-    "item",
-    "race",
-    "skill",
-    "battleSkill",
-    "school",
-  ],
+  TYPE_ORDER: ["common", "item", "race", "skill", "battleSkill", "school", "supplement"],
 } as const;

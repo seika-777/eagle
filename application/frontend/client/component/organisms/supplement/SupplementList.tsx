@@ -24,7 +24,7 @@ export default function SupplementList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getSupplementItems(period);
+        const data = period ? await getSupplementItems("period", period) : await getSupplementItems("all");
         setItems(data);
         setLoading(false);
       } catch (error) {

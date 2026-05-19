@@ -31,9 +31,9 @@ export default function OriginalList() {
     const fetchData = async () => {
       try {
         const [raceData, godData, schoolData, originalData] = await Promise.all([
-          getRaceItems(),
-          getGodItems(),
-          getSchoolItems(),
+          getRaceItems("all"),
+          getGodItems("all"),
+          getSchoolItems("all"),
           getOriginalItems(),
         ]);
         setRaceItems(raceData);
@@ -49,9 +49,9 @@ export default function OriginalList() {
     fetchData();
   }, []);
 
-  const originalRaceItems = useMemo(() => raceItems.filter((item) => item.isOriginal), [raceItems]);
-  const originalGodItems = useMemo(() => godItems.filter((item) => item.isOriginal), [godItems]);
-  const originalSchoolItems = useMemo(() => schoolItems.filter((item) => item.isOriginal), [schoolItems]);
+  const originalRaceItems = useMemo(() => raceItems.filter((item) => item.url), [raceItems]);
+  const originalGodItems = useMemo(() => godItems.filter((item) => item.url), [godItems]);
+  const originalSchoolItems = useMemo(() => schoolItems.filter((item) => item.url), [schoolItems]);
 
   const RaceItem = ({ item }: { item: RaceItemType }) => {
     return (
@@ -65,7 +65,7 @@ export default function OriginalList() {
             textDecoration="underline"
             _hover={{ color: STYLE_COLOR.ACCENT }}
           >
-            {item.name}({item.raceType.map((rt) => RACE.TEXT[rt.name as RaceListType]).join("/")})
+            {item.name}({item.raceType.map((rt) => RACE.TEXT[rt as RaceListType]).join("/")})
           </Link>
         ) : (
           <Text>{item.name}</Text>
