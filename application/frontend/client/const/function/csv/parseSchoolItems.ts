@@ -5,7 +5,8 @@ type SchoolCsvRow = {
   id: string;
   name: string;
   URL: string;
-  regulationPeriod: string;
+  isAlways: string;
+  notes: string;
 };
 
 export const parseSchoolItems = (
@@ -20,6 +21,7 @@ export const parseSchoolItems = (
     id: Number(row.id),
     name: row.name,
     url: row.URL ?? "",
-    regulationPeriod: row.regulationPeriod ?? "",
+    isAlways: row.isAlways === "true",
+    notes: row.notes ?? "",
   }));
 };

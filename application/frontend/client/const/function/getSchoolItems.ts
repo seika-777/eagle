@@ -1,5 +1,6 @@
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
 import { parseSchoolItems } from "@/const/function/csv/parseSchoolItems";
+import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
 export async function getSchoolItems(type: "period", id: string): Promise<SchoolItemType[]>;
 export async function getSchoolItems(type: "all"): Promise<SchoolItemType[]>;
@@ -12,7 +13,8 @@ export async function getSchoolItems(
   const items = parseSchoolItems(csvText);
 
   if (type === "period") {
-    return items.filter((item) => item.regulationPeriod.includes(id!));
+    const allowedIds = await getItemRegulationIds("school", Number(id!));
+    return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
   return items;
 }

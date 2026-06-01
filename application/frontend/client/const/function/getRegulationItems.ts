@@ -2,6 +2,7 @@ import type { RegulationItemType } from "@/const/type/regulation/RegulationItemT
 import { parseRegulationItems, type RegulationRow } from "@/const/function/csv/parseRegulationItems";
 import { getRaceItems } from "@/const/function/getRaceItems";
 import { getSupplementItems } from "@/const/function/getSupplementItems";
+import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
 const fetchRegulationRows = async (): Promise<RegulationRow[]> => {
   const res = await fetch("/csv/regulation-item.csv");
@@ -10,24 +11,20 @@ const fetchRegulationRows = async (): Promise<RegulationRow[]> => {
 };
 
 const buildRegulationItem = async (
-  period: string,
+  period: number,
   rows: RegulationRow[]
 ): Promise<RegulationItemType | null> => {
-  const regulation = rows.find((row) => row.id === Number(period));
+  const regulation = rows.find((row) => row.id === period);
   if (!regulation) return null;
 
-  const [allRaceItems, supplementItems] = await Promise.all([
+  const [allRaceItems, allowedRaceIds, supplementItems] = await Promise.all([
     getRaceItems("all"),
+    getItemRegulationIds("race", period),
     getSupplementItems("all"),
   ]);
 
   const raceItems = allRaceItems
-    .filter((item) =>
-      item.regulationPeriod
-        .split(",")
-        .map((p) => p.trim())
-        .includes(period)
-    )
+    .filter((item) => allowedRaceIds.has(item.id))
     .map((item) => ({
       id: item.id,
       name: item.name,
@@ -58,9 +55,11 @@ export async function getRegulationItems(
     return rows.sort((a, b) => a.id - b.id);
   }
 
+  if (rows.length === 0) return null;
+
   const period = type === "latest"
-    ? String(rows[rows.length - 1]?.id)
-    : id!;
+    ? rows[rows.length - 1].id
+    : Number(id!);
 
   return buildRegulationItem(period, rows);
 }

@@ -5,8 +5,8 @@ type GodCsvRow = {
   id: string;
   type: string;
   name: string;
-  regulationPeriod: string;
   URL: string;
+  isAlways: string;
 };
 
 export const parseGodItems = (
@@ -21,7 +21,7 @@ export const parseGodItems = (
     id: Number(row.id),
     type: Number(row.type),
     name: row.name,
-    regulationPeriod: row.regulationPeriod ?? "",
     url: row.URL ?? "",
+    isAlways: row.isAlways === "true",
   }));
 };
