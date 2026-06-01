@@ -13,7 +13,7 @@ export async function getGodItems(
   const items = parseGodItems(csvText);
 
   if (type === "period") {
-    const allowedIds = await getItemRegulationIds("god", id!);
+    const allowedIds = await getItemRegulationIds("god", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
   return items;

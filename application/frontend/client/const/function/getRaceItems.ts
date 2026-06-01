@@ -13,7 +13,7 @@ export async function getRaceItems(
   const items = parseRaceItems(csvText);
 
   if (type === "period") {
-    const allowedIds = await getItemRegulationIds("race", id!);
+    const allowedIds = await getItemRegulationIds("race", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
   return items;

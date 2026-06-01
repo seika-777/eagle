@@ -13,7 +13,7 @@ export async function getSupplementItems(
   const items = parseSupplementItems(csvText);
 
   if (type === "period") {
-    const allowedIds = await getItemRegulationIds("supplement", id!);
+    const allowedIds = await getItemRegulationIds("supplement", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
   return items;

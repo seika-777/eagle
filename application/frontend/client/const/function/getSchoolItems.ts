@@ -13,7 +13,7 @@ export async function getSchoolItems(
   const items = parseSchoolItems(csvText);
 
   if (type === "period") {
-    const allowedIds = await getItemRegulationIds("school", id!);
+    const allowedIds = await getItemRegulationIds("school", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
   return items;
