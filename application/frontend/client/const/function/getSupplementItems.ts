@@ -1,5 +1,6 @@
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
 import { parseSupplementItems } from "@/const/function/csv/parseSupplementItems";
+import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
 export async function getSupplementItems(type: "period", id: string): Promise<SupplementItemType[]>;
 export async function getSupplementItems(type: "all"): Promise<SupplementItemType[]>;
@@ -12,7 +13,8 @@ export async function getSupplementItems(
   const items = parseSupplementItems(csvText);
 
   if (type === "period") {
-    return items.filter((item) => item.regulationPeriod.includes(id!));
+    const allowedIds = await getItemRegulationIds("supplement", id!);
+    return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
   return items;
 }

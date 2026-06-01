@@ -3,5 +3,5 @@ export type RaceItemType = {
   name: string;
   raceType: string[];
   url: string;
-  regulationPeriod: string;
+  isAlways: boolean;
 };

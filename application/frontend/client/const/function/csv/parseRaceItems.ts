@@ -6,7 +6,7 @@ type RaceItemCsvRow = {
   name: string;
   raceType: string;
   url: string;
-  regulationPeriod: string;
+  isAlways: string;
 };
 
 export const parseRaceItems = (csvText: string): RaceItemType[] => {
@@ -20,6 +20,6 @@ export const parseRaceItems = (csvText: string): RaceItemType[] => {
     name: row.name,
     raceType: row.raceType.split(",").map((name) => name.trim()),
     url: row.url,
-    regulationPeriod: row.regulationPeriod,
+    isAlways: row.isAlways === "true",
   }));
 };

@@ -4,7 +4,8 @@ import type { SupplementItemType } from "@/const/type/supplement/SupplementItemT
 type SupplementCsvRow = {
   id: string;
   name: string;
-  regulationPeriod: string;
+  isAlways: string;
+  notes: string;
 };
 
 export const parseSupplementItems = (
@@ -18,6 +19,7 @@ export const parseSupplementItems = (
   return result.data.map((row) => ({
     id: Number(row.id),
     name: row.name,
-    regulationPeriod: row.regulationPeriod ?? "",
+    isAlways: row.isAlways === "true",
+    notes: row.notes ?? "",
   }));
 };
