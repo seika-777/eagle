@@ -1,13 +1,28 @@
+import { supabase } from "@/lib/supabase";
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
-import { parseRegulationItems, type RegulationRow } from "@/const/function/csv/parseRegulationItems";
 import { getRaceItems } from "@/const/function/getRaceItems";
 import { getSupplementItems } from "@/const/function/getSupplementItems";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
+export type RegulationRow = RegulationItemType["regulation"];
+
 const fetchRegulationRows = async (): Promise<RegulationRow[]> => {
-  const res = await fetch("/csv/regulation-item.csv");
-  const csvText = await res.text();
-  return parseRegulationItems(csvText);
+  const { data, error } = await supabase
+    .from("regulation_items")
+    .select("id, name, description, recruitment, stage, race, supplement, notes, level_cap_belt");
+  if (error) throw error;
+
+  return data.map((row) => ({
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    recruitment: row.recruitment,
+    stage: row.stage,
+    race: row.race,
+    supplement: row.supplement,
+    notes: row.notes,
+    levelCapBelt: row.level_cap_belt,
+  }));
 };
 
 const buildRegulationItem = async (

@@ -1,5 +1,5 @@
+import { supabase } from "@/lib/supabase";
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
-import { parseSupplementItems } from "@/const/function/csv/parseSupplementItems";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
 export async function getSupplementItems(type: "period", id: string): Promise<SupplementItemType[]>;
@@ -8,9 +8,17 @@ export async function getSupplementItems(
   type: "period" | "all",
   id?: string
 ): Promise<SupplementItemType[]> {
-  const res = await fetch("/csv/supplement-item.csv");
-  const csvText = await res.text();
-  const items = parseSupplementItems(csvText);
+  const { data, error } = await supabase
+    .from("supplement_items")
+    .select("id, name, is_always, notes");
+  if (error) throw error;
+
+  const items: SupplementItemType[] = data.map((row) => ({
+    id: row.id,
+    name: row.name,
+    isAlways: row.is_always,
+    notes: row.notes,
+  }));
 
   if (type === "period") {
     const allowedIds = await getItemRegulationIds("supplement", Number(id!));

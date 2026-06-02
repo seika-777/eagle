@@ -1,8 +1,18 @@
+import { supabase } from "@/lib/supabase";
 import type { HouseRuleItemType } from "@/const/type/houseRule/HouseRuleItemType";
-import { parseHouseRuleItems } from "@/const/function/csv/parseHouseRuleItems";
+import type { RuleType } from "@/const/type/common/RuleType";
 
 export const getHouseRuleItems = async (): Promise<HouseRuleItemType[]> => {
-  const res = await fetch("/csv/house-rule-item.csv");
-  const csvText = await res.text();
-  return parseHouseRuleItems(csvText);
+  const { data, error } = await supabase
+    .from("house_rule_items")
+    .select("id, rule_type, supplement_id, about, description");
+  if (error) throw error;
+
+  return data.map((row) => ({
+    id: row.id,
+    ruleType: row.rule_type as RuleType,
+    supplementId: row.supplement_id,
+    about: row.about,
+    description: row.description,
+  }));
 };

@@ -6,7 +6,7 @@ import { Link } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
 import { PERIOD_PAGE } from "@/const/pages/PERIOD_PAGE";
-import type { RegulationRow } from "@/const/function/csv/parseRegulationItems";
+import type { RegulationRow } from "@/const/function/getRegulationItems";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";

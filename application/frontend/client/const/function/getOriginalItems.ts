@@ -1,10 +1,16 @@
+import { supabase } from "@/lib/supabase";
 import type { OriginalItemType } from "@/const/type/original/OriginalItemType";
-import { parseOriginalItems } from "@/const/function/csv/parseOriginalItems";
 
 export const getOriginalItems = async (): Promise<OriginalItemType[]> => {
-  const res = await fetch("/csv/original-item.csv");
-  const csvText = await res.text();
-  const items = parseOriginalItems(csvText);
+  const { data, error } = await supabase
+    .from("original_items")
+    .select("id, type, name, url");
+  if (error) throw error;
 
-  return items;
+  return data.map((row) => ({
+    id: row.id,
+    type: row.type,
+    name: row.name,
+    url: row.url,
+  }));
 };
