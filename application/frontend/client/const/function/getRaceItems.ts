@@ -1,5 +1,5 @@
+import { supabase } from "@/lib/supabase";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
-import { parseRaceItems } from "@/const/function/csv/parseRaceItems";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
 export async function getRaceItems(type: "period", id: string): Promise<RaceItemType[]>;
@@ -8,9 +8,18 @@ export async function getRaceItems(
   type: "period" | "all",
   id?: string
 ): Promise<RaceItemType[]> {
-  const res = await fetch("/csv/race-items.csv");
-  const csvText = await res.text();
-  const items = parseRaceItems(csvText);
+  const { data, error } = await supabase
+    .from("race_items")
+    .select("id, name, race_type, url, is_always");
+  if (error) throw error;
+
+  const items: RaceItemType[] = data.map((row) => ({
+    id: row.id,
+    name: row.name,
+    raceType: row.race_type as string[],
+    url: row.url,
+    isAlways: row.is_always,
+  }));
 
   if (type === "period") {
     const allowedIds = await getItemRegulationIds("race", Number(id!));

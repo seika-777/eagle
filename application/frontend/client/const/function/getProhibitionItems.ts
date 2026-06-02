@@ -1,8 +1,15 @@
+import { supabase } from "@/lib/supabase";
 import type { ProhibitionItemType } from "@/const/type/houseRule/ProhibitionItemType";
-import { parseProhibitionItems } from "@/const/function/csv/parseProhibitionItems";
 
 export const getProhibitionItems = async (): Promise<ProhibitionItemType[]> => {
-  const res = await fetch("/csv/prohibition-item.csv");
-  const csvText = await res.text();
-  return parseProhibitionItems(csvText);
+  const { data, error } = await supabase
+    .from("prohibition_items")
+    .select("id, about, name");
+  if (error) throw error;
+
+  return data.map((row) => ({
+    id: row.id,
+    about: row.about,
+    name: row.name,
+  }));
 };
