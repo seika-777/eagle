@@ -34,14 +34,15 @@ export default function WordList() {
   return (
     <Box as="section" textAlign="left" width="100%">
       <style>{`
-        .word-description p { margin-bottom: 0.5em; }
-        .word-description ul, .word-description ol { padding-left: 1.5em; margin-bottom: 0.5em; }
-        .word-description strong { font-weight: bold; }
-        .word-description em { font-style: italic; }
-        .word-description h2 { font-size: 1.25em; font-weight: bold; margin-bottom: 0.5em; }
-        .word-description h3 { font-size: 1.1em; font-weight: bold; margin-bottom: 0.5em; }
-        .word-description a { color: ${STYLE_COLOR.SECONDARY}; text-decoration: underline; }
-        .word-description ruby rt { font-size: 0.5em; }
+        div.word-description p { margin-top: 0 !important; margin-bottom: 0.75em !important; white-space: pre-wrap; }
+        div.word-description p:last-child { margin-bottom: 0 !important; }
+        div.word-description ul, div.word-description ol { padding-left: 1.5em; margin-bottom: 0.75em; }
+        div.word-description strong { font-weight: bold; }
+        div.word-description em { font-style: italic; }
+        div.word-description h2 { font-size: 1.25em; font-weight: bold; margin: 0.5em 0; }
+        div.word-description h3 { font-size: 1.1em; font-weight: bold; margin: 0.5em 0; }
+        div.word-description a { color: ${STYLE_COLOR.SECONDARY}; text-decoration: underline; }
+        div.word-description ruby rt { font-size: 0.5em; }
       `}</style>
       <HeadingSecond title={WORD_PAGE.TEXT.heading} />
       {loading ? (
