@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
+import { isPublicRegulation } from "@/const/function/isPublicRegulation";
 
 export async function getRaceItems(type: "period", id: string): Promise<RaceItemType[]>;
 export async function getRaceItems(type: "all"): Promise<RaceItemType[]>;
@@ -23,6 +24,8 @@ export async function getRaceItems(
   }));
 
   if (type === "period") {
+    const isPublic = await isPublicRegulation(Number(id!));
+    if (!isPublic) return [];
     const allowedIds = await getItemRegulationIds("race", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
