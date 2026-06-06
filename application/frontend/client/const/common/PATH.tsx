@@ -24,6 +24,7 @@ export const PATH = {
       ROOT: "/house-rule",
       PROHIBITION: "/house-rule/prohibition",
     },
+    WORD: "/word",
   },
   LINK: {
     TWITTER: "https://x.com/sekiyoku_sw25",
