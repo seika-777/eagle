@@ -1,0 +1,7 @@
+export const WORD_PAGE: {
+  TEXT: { [key: string]: string };
+} = {
+  TEXT: {
+    heading: "語録",
+  },
+} as const;

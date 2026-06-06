@@ -41,6 +41,7 @@ export default function MainVisual() {
         left={"0"}
         textAlign={"center"}
         zIndex={2}
+        fontFamily={"var(--font-edu-nsw-act-cursive), var(--font-zen-maru-gothic)"}
       >
         Per aspera ad astra
       </Text>

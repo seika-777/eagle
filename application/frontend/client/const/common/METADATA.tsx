@@ -10,6 +10,7 @@ export const METADATA = {
     PROHIBITION: "使用禁止アイテム",
     ORIGINAL: "オリジナルデータ",
     PERIOD_LIST: "レギュレーション一覧",
+    WORD: "語録",
   },
   DESCRIPTION: {
     HOME: "片翼の大鷲亭 - TRPGコミュニティポータル",
@@ -22,5 +23,6 @@ export const METADATA = {
     PROHIBITION: "片翼の大鷲亭 - 使用禁止アイテム",
     ORIGINAL: "片翼の大鷲亭 - オリジナルデータ",
     PERIOD_LIST: "片翼の大鷲亭 - レギュレーション一覧",
+    WORD: "片翼の大鷲亭 - 語録",
   },
 };

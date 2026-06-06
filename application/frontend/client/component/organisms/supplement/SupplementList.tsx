@@ -46,6 +46,9 @@ export default function SupplementList({ period }: Props) {
           {items.map((item) => (
             <Box as="li" key={item.id} py={1}>
               <Text>{item.name}</Text>
+              {item.notes && (
+                <Text fontSize="sm" color="gray.500" mt={0.5} pl={4} wordBreak="break-all">{item.notes}</Text>
+              )}
             </Box>
           ))}
         </Box>

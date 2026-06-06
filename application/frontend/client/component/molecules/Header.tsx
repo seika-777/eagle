@@ -28,45 +28,17 @@ export default function Header() {
   const Backdrop = () => (
     <Box
       position={"fixed"}
-      top={"60px"}
+      top={0}
       left={0}
       width={"100%"}
       height={"100%"}
       bg={"rgba(0,0,0,0.4)"}
-      zIndex={3}
+      zIndex={6}
+      opacity={isOpen ? 1 : 0}
+      pointerEvents={isOpen ? "auto" : "none"}
+      transition={"opacity 0.3s ease"}
       onClick={() => setIsOpen(false)}
     />
-  );
-
-  const MenuPanel = () => (
-    <Box
-      position={"fixed"}
-      top={"60px"}
-      left={0}
-      width={"100%"}
-      bg={STYLE_COLOR.COMMON}
-      zIndex={4}
-      boxShadow={"0 4px 12px rgba(0,0,0,0.1)"}
-      py={4}
-      px={6}
-    >
-      <Box as="nav">
-        {navItems.map((item, index) => (
-          <Box
-            key={item.href}
-            py={3}
-            fontSize={"15px"}
-            color={STYLE_COLOR.BLACK}
-            borderBottom={index < navItems.length - 1 ? `1px solid ${STYLE_COLOR.LIGHT}` : undefined}
-            _hover={{ color: STYLE_COLOR.PRIMARY }}
-          >
-            <Link href={item.href} onClick={() => setIsOpen(false)}>
-              {item.label}
-            </Link>
-          </Box>
-        ))}
-      </Box>
-    </Box>
   );
 
   return (
@@ -105,12 +77,51 @@ export default function Header() {
           </Box>
         </Box>
       </Box>
-      {isOpen && (
-        <>
-          <Backdrop />
-          <MenuPanel />
-        </>
-      )}
+      <Backdrop />
+      <Box
+        position={"fixed"}
+        top={0}
+        right={0}
+        width={"280px"}
+        height={"100%"}
+        bg={STYLE_COLOR.COMMON}
+        zIndex={7}
+        boxShadow={"-4px 0 12px rgba(0,0,0,0.15)"}
+        transform={isOpen ? "translateX(0)" : "translateX(100%)"}
+        transition={"transform 0.3s ease"}
+      >
+        <Box display={"flex"} justifyContent={"flex-end"} px={4} pt={4}>
+          <Box
+            as="button"
+            onClick={() => setIsOpen(false)}
+            cursor={"pointer"}
+            color={STYLE_COLOR.PRIMARY}
+            aria-label="メニューを閉じる"
+          >
+            <RxCross1 size={24} />
+          </Box>
+        </Box>
+        <Box as="nav" py={4} px={6}>
+          {navItems.map((item, index) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+              style={{ display: "block" }}
+            >
+              <Box
+                py={3}
+                fontSize={"15px"}
+                color={STYLE_COLOR.BLACK}
+                borderBottom={index < navItems.length - 1 ? `1px solid ${STYLE_COLOR.LIGHT}` : undefined}
+                _hover={{ color: STYLE_COLOR.PRIMARY }}
+              >
+                {item.label}
+              </Box>
+            </Link>
+          ))}
+        </Box>
+      </Box>
     </>
   );
 }
