@@ -10,7 +10,8 @@ export async function getSupplementItems(
 ): Promise<SupplementItemType[]> {
   const { data, error } = await supabase
     .from("supplement_items")
-    .select("id, name, is_always, notes");
+    .select("id, name, is_always, notes")
+    .order("id", { ascending: true });
   if (error) throw error;
 
   const items: SupplementItemType[] = data.map((row) => ({

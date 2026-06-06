@@ -3,6 +3,9 @@ paths:
   - "application/frontend/client/component/**/*.{ts,tsx}"
   - "application/frontend/client/app/**/*.{ts,tsx}"
   - "application/frontend/client/const/**/*.{ts,tsx}"
+  - "application/frontend/admin/component/**/*.{ts,tsx}"
+  - "application/frontend/admin/app/**/*.{ts,tsx}"
+  - "application/frontend/admin/const/**/*.{ts,tsx}"
 ---
 
 # コーディング規約
@@ -380,6 +383,23 @@ export default function MyComponent({ period }: Props) {
 }
 ```
 
+### 例外: API Route ファイル
+
+`app/api/**/route.ts` ファイルはコンポーネントファイルではないため、ハンドラー外にユーティリティ関数を定義することができます。
+
+```typescript
+// ✅ API Route ファイルでは function の外にユーティリティ関数を定義可能
+import { NextRequest, NextResponse } from "next/server";
+
+// ハンドラー外のユーティリティ関数（API Route のみ許可）
+function buildInsertData(type: string, fields: Record<string, unknown>): Record<string, unknown> {
+  // ...
+}
+
+export async function GET(request: NextRequest) { /* ... */ }
+export async function POST(request: NextRequest) { /* ... */ }
+```
+
 ---
 
 ## 9. コンポーネントの return 文
@@ -501,7 +521,17 @@ useEffect(() => {
 
 ---
 
-## 11. チェックリスト
+## 11. 設計ドキュメント・バージョン記載のルール
+
+設計ドキュメント（`docs/`）にバージョンや技術スタック情報を記載・修正する際は、**必ず実際の `package.json` を参照してから記述すること**。
+
+- バージョンを「修正」する場合は、まず対象プロジェクトの `package.json` を Read して正確な値を確認する
+- 推測・知識ベースでバージョンを書き換えない
+- 対象：`application/frontend/admin/package.json`、`application/frontend/client/package.json` など
+
+---
+
+## 12. チェックリスト
 
 新しいコードを書く際は、以下を確認してください。
 

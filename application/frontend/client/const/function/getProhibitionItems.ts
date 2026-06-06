@@ -4,7 +4,8 @@ import type { ProhibitionItemType } from "@/const/type/houseRule/ProhibitionItem
 export const getProhibitionItems = async (): Promise<ProhibitionItemType[]> => {
   const { data, error } = await supabase
     .from("prohibition_items")
-    .select("id, about, name");
+    .select("id, about, name")
+    .order("id", { ascending: true });
   if (error) throw error;
 
   return data.map((row) => ({

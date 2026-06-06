@@ -1,0 +1,20 @@
+import type { EntityConfigType } from "@/const/type/config/EntityConfigType";
+import { regulationConfig } from "@/const/config/regulation";
+import { godConfig } from "@/const/config/god";
+import { schoolConfig } from "@/const/config/school";
+import { raceConfig } from "@/const/config/race";
+import { houseRuleConfig } from "@/const/config/houseRule";
+import { prohibitionConfig } from "@/const/config/prohibition";
+import { supplementConfig } from "@/const/config/supplement";
+import { originalConfig } from "@/const/config/original";
+
+export const configMap: Record<string, EntityConfigType> = {
+  regulation: regulationConfig,
+  god: godConfig,
+  school: schoolConfig,
+  race: raceConfig,
+  "house-rule": houseRuleConfig,
+  prohibition: prohibitionConfig,
+  supplement: supplementConfig,
+  original: originalConfig,
+};
