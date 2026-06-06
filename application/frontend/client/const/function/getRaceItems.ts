@@ -10,7 +10,8 @@ export async function getRaceItems(
 ): Promise<RaceItemType[]> {
   const { data, error } = await supabase
     .from("race_items")
-    .select("id, name, race_type, url, is_always");
+    .select("id, name, race_type, url, is_always")
+    .order("id", { ascending: true });
   if (error) throw error;
 
   const items: RaceItemType[] = data.map((row) => ({

@@ -10,7 +10,8 @@ export async function getSchoolItems(
 ): Promise<SchoolItemType[]> {
   const { data, error } = await supabase
     .from("school_items")
-    .select("id, name, url, is_always, notes");
+    .select("id, name, url, is_always, notes")
+    .order("id", { ascending: true });
   if (error) throw error;
 
   const items: SchoolItemType[] = data.map((row) => ({

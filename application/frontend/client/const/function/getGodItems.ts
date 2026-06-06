@@ -10,7 +10,8 @@ export async function getGodItems(
 ): Promise<GodItemType[]> {
   const { data, error } = await supabase
     .from("god_items")
-    .select("id, type, name, url, is_always");
+    .select("id, type, name, url, is_always")
+    .order("id", { ascending: true });
   if (error) throw error;
 
   const items: GodItemType[] = data.map((row) => ({
