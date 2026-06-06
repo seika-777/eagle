@@ -73,4 +73,5 @@ export const regulationConfig: EntityConfigType = {
     notes: data.notes,
   }),
   toBody: (form) => form,
+  previewBasePath: "/regulation",
 };

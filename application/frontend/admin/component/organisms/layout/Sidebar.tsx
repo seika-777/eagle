@@ -14,6 +14,7 @@ const MENU_ITEMS = [
   { label: "禁止事項管理", href: "/prohibition", adminOnly: true },
   { label: "サプリメント管理", href: "/supplement", adminOnly: true },
   { label: "オリジナルアイテム管理", href: "/original", adminOnly: true },
+  { label: "語録管理", href: "/word", adminOnly: true },
 ] as const;
 
 export default function Sidebar() {

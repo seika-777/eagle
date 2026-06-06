@@ -2,6 +2,7 @@
 import { Box, Heading, Button, HStack, Alert } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useStateMachine } from "little-state-machine";
 import AdminLayoutTemplate from "@/component/templates/AdminLayoutTemplate";
 import ItemForm from "@/component/organisms/ItemForm";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
@@ -9,6 +10,7 @@ import { configMap } from "@/const/config/index";
 import { getItem } from "@/const/function/getItem";
 import { createItem } from "@/const/function/createItem";
 import { updateItem } from "@/const/function/updateItem";
+import { updateStore } from "@/const/store/previewStore";
 import type { FormRecord } from "@/const/type/config/EntityConfigType";
 import type { TableRow } from "@/const/type/table/TableColumnType";
 
@@ -26,6 +28,7 @@ export default function ItemEditTemplate({ type, id, dynamicOptions }: Props) {
   const [isSaving, setIsSaving] = useState(false);
   const { error, handleError, clearError } = useErrorHandler();
   const router = useRouter();
+  const { actions } = useStateMachine({ actions: { updateStore } });
 
   useEffect(() => {
     if (!isNew && config) {
@@ -64,6 +67,11 @@ export default function ItemEditTemplate({ type, id, dynamicOptions }: Props) {
     }
   };
 
+  const handlePreview = () => {
+    actions.updateStore({ preview: { regulationPreview: { id, form } } });
+    router.push(`/${type}/${id}/preview`);
+  };
+
   const title = isNew ? (config?.addLabel ?? "") : (config?.editTitle ?? "");
   const listPath = `/${type}`;
 
@@ -89,6 +97,11 @@ export default function ItemEditTemplate({ type, id, dynamicOptions }: Props) {
           <Button variant="outline" onClick={() => router.push(listPath)}>
             キャンセル
           </Button>
+          {config?.previewBasePath && (
+            <Button variant="outline" colorPalette="green" onClick={handlePreview}>
+              プレビュー
+            </Button>
+          )}
           <Button colorPalette="blue" onClick={handleSave} loading={isSaving} disabled={!config}>
             保存
           </Button>

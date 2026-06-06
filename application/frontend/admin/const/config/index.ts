@@ -7,6 +7,7 @@ import { houseRuleConfig } from "@/const/config/houseRule";
 import { prohibitionConfig } from "@/const/config/prohibition";
 import { supplementConfig } from "@/const/config/supplement";
 import { originalConfig } from "@/const/config/original";
+import { wordConfig } from "@/const/config/word";
 
 export const configMap: Record<string, EntityConfigType> = {
   regulation: regulationConfig,
@@ -17,4 +18,5 @@ export const configMap: Record<string, EntityConfigType> = {
   prohibition: prohibitionConfig,
   supplement: supplementConfig,
   original: originalConfig,
+  word: wordConfig,
 };
