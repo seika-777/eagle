@@ -17,4 +17,5 @@ export const DASHBOARD_CARDS = [
   { label: "禁止事項管理", href: "/prohibition", description: "禁止事項の追加・編集・削除" },
   { label: "サプリメント管理", href: "/supplement", description: "サプリメントの追加・編集・削除" },
   { label: "オリジナルアイテム管理", href: "/original", description: "オリジナルアイテムの追加・編集・削除" },
+  { label: "語録管理", href: "/word", description: "語録の追加・編集・削除" },
 ] as const;

@@ -1,9 +1,13 @@
 "use client";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { ReactNode, useEffect, useState } from "react";
+import { createStore } from "little-state-machine";
 import EmotionCacheProvider from "@/app/EmotionCacheProvider";
 import { UserContext } from "@/app/UserContext";
+import { initialStoreState } from "@/const/store/previewStore";
 import type { UserMetaType } from "@/const/type/auth/UserMetaType";
+
+createStore(initialStoreState);
 
 export default function AppWrapper({ children }: { children: ReactNode }) {
   const [isMounted, setIsMounted] = useState(false);

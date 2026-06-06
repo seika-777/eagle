@@ -15,4 +15,5 @@ export type EntityConfigType = {
   initialForm: FormRecord;
   toForm: (data: TableRow) => FormRecord;
   toBody: (form: FormRecord) => FormRecord;
+  previewBasePath?: string;
 };

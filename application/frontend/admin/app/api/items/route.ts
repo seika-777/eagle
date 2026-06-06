@@ -44,6 +44,7 @@ const TABLE_MAP: Record<string, string> = {
   prohibition: "prohibition_items",
   supplement: "supplement_items",
   original: "original_items",
+  word: "word_items",
 };
 
 export async function GET(request: NextRequest) {
@@ -89,6 +90,10 @@ export async function GET(request: NextRequest) {
 
   if (isAlways === "false" && ["god", "school", "race", "supplement"].includes(type)) {
     query = query.eq("is_always", false) as typeof query;
+  }
+
+  if (type === "regulation") {
+    query = query.order("id", { ascending: false }) as typeof query;
   }
 
   if (type === "house-rule") {
@@ -306,6 +311,9 @@ function buildInsertData(
   }
   if (type === "original") {
     return { type: fields.type, name: fields.name, url: fields.url ?? "", ...base };
+  }
+  if (type === "word") {
+    return { title: fields.title, description: fields.description ?? "", ...base };
   }
   return { ...fields, ...base };
 }
