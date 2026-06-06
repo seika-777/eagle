@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { GodItemType } from "@/const/type/god/GodItemType";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
+import { isPublicRegulation } from "@/const/function/isPublicRegulation";
 
 export async function getGodItems(type: "period", id: string): Promise<GodItemType[]>;
 export async function getGodItems(type: "all"): Promise<GodItemType[]>;
@@ -23,6 +24,8 @@ export async function getGodItems(
   }));
 
   if (type === "period") {
+    const isPublic = await isPublicRegulation(Number(id!));
+    if (!isPublic) return [];
     const allowedIds = await getItemRegulationIds("god", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }

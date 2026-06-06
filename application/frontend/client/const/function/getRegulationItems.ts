@@ -10,6 +10,7 @@ const fetchRegulationRows = async (): Promise<RegulationRow[]> => {
   const { data, error } = await supabase
     .from("regulation_items")
     .select("id, name, description, recruitment, stage, race, supplement, notes, level_cap_belt")
+    .eq("publish_type", "public")
     .order("id", { ascending: true });
   if (error) throw error;
 
