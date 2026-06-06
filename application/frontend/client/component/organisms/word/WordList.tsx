@@ -47,30 +47,37 @@ export default function WordList() {
       {loading ? (
         <Spinner mt={4} />
       ) : (
-        <Accordion.Root mt={4} multiple collapsible variant="plain">
+        <Accordion.Root mt={4} multiple collapsible variant="plain" display="flex" flexDirection="column" gap={3}>
           {items.map((item) => (
             <Accordion.Item
               key={item.id}
               value={String(item.id)}
-              borderBottom={`1px solid ${STYLE_COLOR.LIGHT}`}
+              borderWidth="1px"
+              borderColor={STYLE_COLOR.LIGHT}
+              borderRadius="md"
+              overflow="hidden"
+              boxShadow="sm"
             >
               <Accordion.ItemTrigger
+                px={4}
                 py={3}
                 fontWeight="bold"
                 color={STYLE_COLOR.BLACK}
-                _hover={{ color: STYLE_COLOR.PRIMARY }}
+                borderLeft={`4px solid ${STYLE_COLOR.SECONDARY}`}
+                _hover={{ bg: STYLE_COLOR.LIGHT, color: STYLE_COLOR.PRIMARY }}
                 cursor={item.description ? "pointer" : "default"}
                 disabled={!item.description}
+                transition="background 0.15s"
               >
                 {item.title}
                 {item.description && (
-                  <Accordion.ItemIndicator ml="auto">
+                  <Accordion.ItemIndicator ml="auto" color={STYLE_COLOR.SECONDARY}>
                     <LuChevronDown />
                   </Accordion.ItemIndicator>
                 )}
               </Accordion.ItemTrigger>
               {item.description && (
-                <Accordion.ItemContent pb={3}>
+                <Accordion.ItemContent px={4} pt={3} pb={4} bg={STYLE_COLOR.LIGHT}>
                   <Box
                     color={STYLE_COLOR.BLACK}
                     className="word-description"
