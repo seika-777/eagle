@@ -2,6 +2,7 @@
 import { VStack } from "@chakra-ui/react";
 import TextInputField from "@/component/molecules/field/TextInputField";
 import TextareaField from "@/component/molecules/field/TextareaField";
+import RichTextField from "@/component/molecules/field/RichTextField";
 import SelectField from "@/component/molecules/field/SelectField";
 import CheckboxField from "@/component/molecules/field/CheckboxField";
 import CheckboxGroupField from "@/component/molecules/field/CheckboxGroupField";
@@ -37,6 +38,17 @@ export default function ItemForm({ formItems, form, onChange, dynamicOptions }: 
         if (item.type === "textarea") {
           return (
             <TextareaField
+              key={item.column}
+              label={item.label}
+              value={String(value ?? "")}
+              onChange={(v) => onChange(item.column, v)}
+              required={item.rule?.required}
+            />
+          );
+        }
+        if (item.type === "rich-text") {
+          return (
+            <RichTextField
               key={item.column}
               label={item.label}
               value={String(value ?? "")}

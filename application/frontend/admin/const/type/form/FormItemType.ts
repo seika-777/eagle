@@ -1,7 +1,7 @@
 export type FormItemType = {
   column: string;
   label: string;
-  type: "text" | "textarea" | "password" | "number" | "checkbox" | "checkbox-group" | "select";
+  type: "text" | "textarea" | "rich-text" | "password" | "number" | "checkbox" | "checkbox-group" | "select";
   rule?: {
     required?: boolean;
     minLength?: number;
