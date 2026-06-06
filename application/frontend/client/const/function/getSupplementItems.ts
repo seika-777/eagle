@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
+import { isPublicRegulation } from "@/const/function/isPublicRegulation";
 
 export async function getSupplementItems(type: "period", id: string): Promise<SupplementItemType[]>;
 export async function getSupplementItems(type: "all"): Promise<SupplementItemType[]>;
@@ -22,6 +23,8 @@ export async function getSupplementItems(
   }));
 
   if (type === "period") {
+    const isPublic = await isPublicRegulation(Number(id!));
+    if (!isPublic) return [];
     const allowedIds = await getItemRegulationIds("supplement", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }

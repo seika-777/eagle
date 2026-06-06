@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
+import { isPublicRegulation } from "@/const/function/isPublicRegulation";
 
 export async function getSchoolItems(type: "period", id: string): Promise<SchoolItemType[]>;
 export async function getSchoolItems(type: "all"): Promise<SchoolItemType[]>;
@@ -23,6 +24,8 @@ export async function getSchoolItems(
   }));
 
   if (type === "period") {
+    const isPublic = await isPublicRegulation(Number(id!));
+    if (!isPublic) return [];
     const allowedIds = await getItemRegulationIds("school", Number(id!));
     return items.filter((item) => item.isAlways || allowedIds.has(item.id));
   }
