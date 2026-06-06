@@ -41,7 +41,19 @@ export default function WordList() {
             <Box key={item.id} borderBottom={`1px solid ${STYLE_COLOR.LIGHT}`} pb={4}>
               <Text fontWeight="bold">{item.title}</Text>
               {item.description && (
-                <Text mt={1} color={STYLE_COLOR.BLACK}>{item.description}</Text>
+                <Box mt={1} color={STYLE_COLOR.BLACK} className="word-description">
+                  <style>{`
+                    .word-description p { margin-bottom: 0.5em; }
+                    .word-description ul, .word-description ol { padding-left: 1.5em; margin-bottom: 0.5em; }
+                    .word-description strong { font-weight: bold; }
+                    .word-description em { font-style: italic; }
+                    .word-description h2 { font-size: 1.25em; font-weight: bold; margin-bottom: 0.5em; }
+                    .word-description h3 { font-size: 1.1em; font-weight: bold; margin-bottom: 0.5em; }
+                    .word-description a { color: #3182ce; text-decoration: underline; }
+                    .word-description ruby rt { font-size: 0.5em; }
+                  `}</style>
+                  <div dangerouslySetInnerHTML={{ __html: item.description }} />
+                </Box>
               )}
             </Box>
           ))}

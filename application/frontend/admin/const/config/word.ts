@@ -16,7 +16,7 @@ export const wordConfig: EntityConfigType = {
   ],
   formItems: [
     { column: "title", label: "タイトル", type: "text", rule: { required: true } },
-    { column: "description", label: "内容", type: "textarea" },
+    { column: "description", label: "内容", type: "rich-text" },
   ],
   toForm: (data) => ({
     title: data.title,
