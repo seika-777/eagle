@@ -1,40 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Box, Text, Spinner, SimpleGrid, Link } from "@chakra-ui/react";
-import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getSupplementItems } from "@/const/function/getSupplementItems";
+import { Box, Text, SimpleGrid, Link } from "@chakra-ui/react";
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
-import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import NextLink from "next/link";
 import { PATH } from "@/const/common/PATH";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 
 type Props = {
-  period?: string;
+  items: SupplementItemType[];
 };
 
-export default function SupplementList({ period }: Props) {
-  const [items, setItems] = useState<SupplementItemType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { handleError, resetError } = useErrorHandler();
-
-  useEffect(() => {
-    setLoading(true);
-    resetError();
-    const fetchData = async () => {
-      try {
-        const data = period ? await getSupplementItems("period", period) : await getSupplementItems("all");
-        setItems(data);
-        setLoading(false);
-      } catch (error) {
-        handleError(error as ErrorType);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [period]);
-
+export default function SupplementList({ items }: Props) {
   return (
     <Box as="section" textAlign="left" width="100%">
       <HeadingSecond title="使用サプリメント" />

@@ -1,6 +1,7 @@
 import PeriodListTemplate from "@/component/templates/PeriodListTemplate";
 import { COMMON } from "@/const/common/COMMON";
 import { METADATA } from "@/const/common/METADATA";
+import { getRegulationItems } from "@/const/function/getRegulationItems";
 
 export const dynamic = "force-static";
 
@@ -9,6 +10,7 @@ export const metadata = {
   description: METADATA.DESCRIPTION.PERIOD_LIST,
 };
 
-export default function Period() {
-  return <PeriodListTemplate />;
+export default async function Period() {
+  const items = await getRegulationItems("list");
+  return <PeriodListTemplate items={items} />;
 }

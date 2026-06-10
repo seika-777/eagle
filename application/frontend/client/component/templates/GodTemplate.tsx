@@ -1,17 +1,20 @@
 "use client";
-import { useParams } from "next/navigation";
 import { Box } from "@chakra-ui/react";
 import MainVisual from "@/component/organisms/top/MainVisual";
 import GodList from "@/component/organisms/god/GodList";
 import { STYLE } from "@/const/common/STYLE";
+import type { GodItemType } from "@/const/type/god/GodItemType";
 
-export default function GodTemplate() {
-  const { period } = useParams<{ period: string }>();
+type Props = {
+  items: GodItemType[];
+};
+
+export default function GodTemplate({ items }: Props) {
   return (
     <>
       <MainVisual />
       <Box maxW={STYLE.WIDTH.SECTION} mx="auto" px={6} py={10}>
-        <GodList period={period} />
+        <GodList items={items} />
       </Box>
     </>
   );

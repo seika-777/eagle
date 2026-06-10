@@ -3,5 +3,6 @@ export const WORD_PAGE: {
 } = {
   TEXT: {
     heading: "語録",
+    empty: "準備中",
   },
 } as const;

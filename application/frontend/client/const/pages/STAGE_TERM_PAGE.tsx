@@ -3,5 +3,6 @@ export const STAGE_TERM_PAGE: {
 } = {
   TEXT: {
     heading: "舞台/用語",
+    empty: "準備中",
   },
 } as const;

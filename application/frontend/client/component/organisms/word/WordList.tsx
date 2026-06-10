@@ -1,36 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Box, Spinner } from "@chakra-ui/react";
-import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getWordItems } from "@/const/function/getWordItems";
+import { Box, Text } from "@chakra-ui/react";
 import { WORD_PAGE } from "@/const/pages/WORD_PAGE";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import type { WordItemType } from "@/const/type/word/WordItemType";
-import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import AccordionList from "@/component/molecules/AccordionList";
 
-export default function WordList() {
-  const [items, setItems] = useState<WordItemType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { handleError, resetError } = useErrorHandler();
+type Props = {
+  items: WordItemType[];
+};
 
-  useEffect(() => {
-    setLoading(true);
-    resetError();
-    const fetchData = async () => {
-      try {
-        const data = await getWordItems();
-        setItems(data);
-        setLoading(false);
-      } catch (error) {
-        handleError(error as ErrorType);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
+export default function WordList({ items }: Props) {
   return (
     <Box as="section" textAlign="left" width="100%">
       <style>{`
@@ -45,8 +25,8 @@ export default function WordList() {
         div.word-description ruby rt { font-size: 0.5em; }
       `}</style>
       <HeadingSecond title={WORD_PAGE.TEXT.heading} />
-      {loading ? (
-        <Spinner mt={4} />
+      {items.length === 0 ? (
+        <Text mt={4}>{WORD_PAGE.TEXT.empty}</Text>
       ) : (
         <Box mt={4}>
           <AccordionList

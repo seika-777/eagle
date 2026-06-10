@@ -1,39 +1,16 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import { Box, Text, Link, Spinner } from "@chakra-ui/react";
-import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getGodItems } from "@/const/function/getGodItems";
+import { useMemo } from "react";
+import { Box, Text, Link } from "@chakra-ui/react";
 import type { GodItemType } from "@/const/type/god/GodItemType";
-import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingThird from "@/component/atoms/HeadingThird";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import { GOD } from "@/const/common/GOD";
 
 type Props = {
-  period?: string;
+  items: GodItemType[];
 };
 
-export default function GodList({ period }: Props) {
-  const [items, setItems] = useState<GodItemType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { handleError, resetError } = useErrorHandler();
-
-  useEffect(() => {
-    setLoading(true);
-    resetError();
-    const fetchData = async () => {
-      try {
-        const data = period ? await getGodItems("period", period) : await getGodItems("all");
-        setItems(data);
-        setLoading(false);
-      } catch (error) {
-        handleError(error as ErrorType);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [period]);
-
+export default function GodList({ items }: Props) {
   const originalItems = useMemo(() => items.filter((item) => item.url), [items]);
 
   const groupedByType = useMemo(() => {
@@ -82,24 +59,20 @@ export default function GodList({ period }: Props) {
 
   return (
     <Box as="section" textAlign="left" width="100%">
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          {GOD.TYPE_ORDER.filter((type) => groupedByType[type]).map((type) => (
-            <Box key={type} mb={6}>
-              <HeadingThird title={GOD.TYPE_TEXT[type]} />
-              <GodItemList items={groupedByType[type]} />
-            </Box>
-          ))}
-          {originalItems.length > 0 && (
-            <Box mb={6}>
-              <HeadingThird title="オリジナル信仰" />
-              <GodItemList items={originalItems} />
-            </Box>
-          )}
-        </>
-      )}
+      <>
+        {GOD.TYPE_ORDER.filter((type) => groupedByType[type]).map((type) => (
+          <Box key={type} mb={6}>
+            <HeadingThird title={GOD.TYPE_TEXT[type]} />
+            <GodItemList items={groupedByType[type]} />
+          </Box>
+        ))}
+        {originalItems.length > 0 && (
+          <Box mb={6}>
+            <HeadingThird title="オリジナル信仰" />
+            <GodItemList items={originalItems} />
+          </Box>
+        )}
+      </>
     </Box>
   );
 }

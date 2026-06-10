@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
-import { getRaceItems } from "@/const/function/getRaceItems";
-import { getSupplementItems } from "@/const/function/getSupplementItems";
+import type { RaceItemType } from "@/const/type/race/RaceItemType";
+import { getItems } from "@/const/function/getItems";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
 export type RegulationRow = RegulationItemType["regulation"];
@@ -34,11 +34,16 @@ const buildRegulationItem = async (
   const regulation = rows.find((row) => row.id === period);
   if (!regulation) return null;
 
-  const [allRaceItems, allowedRaceIds, supplementItems] = await Promise.all([
-    getRaceItems("all"),
+  const supplementId = Number(regulation.supplement);
+
+  const [allRaceItems, allowedRaceIds, supplementResult] = await Promise.all([
+    getItems<RaceItemType>("race"),
     getItemRegulationIds("race", period),
-    getSupplementItems("all"),
+    supplementId
+      ? supabase.from("supplement_items").select("id, name").eq("id", supplementId).maybeSingle()
+      : Promise.resolve({ data: null, error: null }),
   ]);
+  if (supplementResult.error) throw supplementResult.error;
 
   const raceItems = allRaceItems
     .filter((item) => allowedRaceIds.has(item.id))
@@ -48,9 +53,7 @@ const buildRegulationItem = async (
       raceType: item.raceType.join(","),
     }));
 
-  const supplement = supplementItems.find(
-    (s) => s.id === Number(regulation.supplement)
-  ) ?? { id: 0, name: "" };
+  const supplement = supplementResult.data ?? { id: 0, name: "" };
 
   return {
     regulation,
