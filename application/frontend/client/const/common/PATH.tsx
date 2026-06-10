@@ -26,11 +26,11 @@ export const PATH = {
     },
     WORD: "/word",
     STAGE_TERM: "/stage-term",
+    LEVEL_CAP: {
+      ROOT: "/level-cap",
+    },
   },
   LINK: {
     TWITTER: "https://x.com/sekiyoku_sw25",
-    LVCB: {
-      B: "https://lite.evernote.com/note/023359ca-fa3c-34e3-fffd-cafcece54a7c",
-    },
   },
 };

@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="ja" suppressHydrationWarning>
       <body
         className={`${eduNswActCursive.variable} ${zenMaruGothic.variable}`}
-        style={{ backgroundColor: STYLE_COLOR.LIGHT }}
+        style={{ backgroundColor: STYLE_COLOR.LIGHT, overflowX: "hidden" }}
       >
         <AppWrapper>
           {children}

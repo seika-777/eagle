@@ -15,20 +15,14 @@ export default function RegulationSection({ regulationItem }: Props) {
     <SimpleGrid gap="4">
       <Box as="section">
         <HeadingSecond title={regulation.name || ""} />
-        {PATH.LINK.LVCB[regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB] ? (
-          <Link
-            href={PATH.LINK.LVCB[regulation.levelCapBelt as keyof typeof PATH.LINK.LVCB]}
-            target="_blank"
-            rel="noopener noreferrer"
-            color={STYLE_COLOR.SECONDARY}
-            textDecoration="underline"
-            _hover={{ color: STYLE_COLOR.ACCENT }}
-          >
-            レベルキャップシステムは{regulation.levelCapBelt}を採用
-          </Link>
-        ) : (
-          <Text>レベルキャップシステムは{regulation.levelCapBelt}を採用</Text>
-        )}
+        <Link
+          href={`${PATH.URL.LEVEL_CAP.ROOT}/${regulation.levelCapBelt}`}
+          color={STYLE_COLOR.SECONDARY}
+          textDecoration="underline"
+          _hover={{ color: STYLE_COLOR.ACCENT }}
+        >
+          レベルキャップシステムは{regulation.levelCapBelt}を採用
+        </Link>
       </Box>
       <Box as="section">
         <HeadingThird title="舞台" />

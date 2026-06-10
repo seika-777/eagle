@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
-import { RxHamburgerMenu, RxCross1 } from "react-icons/rx";
+import { RxHamburgerMenu, RxCross1, RxChevronDown, RxChevronUp } from "react-icons/rx";
 import Link from "next/link";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import { STYLE } from "@/const/common/STYLE";
@@ -12,6 +12,7 @@ import { getRegulationItems } from "@/const/function/getRegulationItems";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [period, setPeriod] = useState("");
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPeriod = async () => {
@@ -105,22 +106,73 @@ export default function Header() {
         </Box>
         <Box as="nav" py={4} px={6}>
           {navItems.map((item, index) => (
-            <Link
+            <Box
               key={item.label}
-              href={item.href}
-              onClick={() => setIsOpen(false)}
-              style={{ display: "block" }}
+              borderBottom={`1px solid ${STYLE_COLOR.LIGHT}`}
             >
-              <Box
-                py={3}
-                fontSize={"15px"}
-                color={STYLE_COLOR.BLACK}
-                borderBottom={index < navItems.length - 1 ? `1px solid ${STYLE_COLOR.LIGHT}` : undefined}
-                _hover={{ color: STYLE_COLOR.PRIMARY }}
-              >
-                {item.label}
-              </Box>
-            </Link>
+              {item.children ? (
+                <>
+                  <Box
+                    as="button"
+                    width="100%"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    py={3}
+                    fontSize={"15px"}
+                    color={openAccordion === item.label ? STYLE_COLOR.PRIMARY : STYLE_COLOR.BLACK}
+                    fontWeight={openAccordion === item.label ? "bold" : "normal"}
+                    cursor="pointer"
+                    onClick={() => setOpenAccordion(openAccordion === item.label ? null : item.label)}
+                  >
+                    {item.label}
+                    {openAccordion === item.label ? <RxChevronUp size={16} /> : <RxChevronDown size={16} />}
+                  </Box>
+                  <Box
+                    overflow="hidden"
+                    maxH={openAccordion === item.label ? "200px" : "0"}
+                    transition="max-height 0.3s ease"
+                  >
+                    <Box borderTop={`1px solid ${STYLE_COLOR.LIGHT}`}>
+                      {item.children.map((child, ci) => (
+                        <Link
+                          key={child.label}
+                          href={child.href}
+                          onClick={() => setIsOpen(false)}
+                          style={{ display: "block" }}
+                        >
+                          <Box
+                            py={2}
+                            pl={5}
+                            fontSize={"14px"}
+                            color={STYLE_COLOR.BLACK}
+                            borderTop={ci > 0 ? `1px solid ${STYLE_COLOR.LIGHT}` : undefined}
+                            _hover={{ color: STYLE_COLOR.PRIMARY }}
+                          >
+                            {child.label}
+                          </Box>
+                        </Link>
+                      ))}
+                    </Box>
+                  </Box>
+                </>
+              ) : (
+                <Link
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  style={{ display: "block" }}
+                >
+                  <Box
+                    py={3}
+                    fontSize={"15px"}
+                    color={STYLE_COLOR.BLACK}
+                    _hover={{ color: STYLE_COLOR.PRIMARY }}
+                  >
+                    {item.label}
+                  </Box>
+                </Link>
+              )}
+            </Box>
           ))}
         </Box>
       </Box>
