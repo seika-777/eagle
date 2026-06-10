@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getProhibitionItems } from "@/const/function/getProhibitionItems";
+import { getItems } from "@/const/function/getItems";
 import type { ProhibitionItemType } from "@/const/type/houseRule/ProhibitionItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
@@ -18,7 +18,7 @@ export default function ProhibitionList() {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getProhibitionItems();
+        const data = await getItems<ProhibitionItemType>("prohibition");
         setItems(data);
         setLoading(false);
       } catch (error) {

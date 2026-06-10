@@ -2,10 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRaceItems } from "@/const/function/getRaceItems";
-import { getGodItems } from "@/const/function/getGodItems";
-import { getSchoolItems } from "@/const/function/getSchoolItems";
-import { getOriginalItems } from "@/const/function/getOriginalItems";
+import { getItems } from "@/const/function/getItems";
 import { ORIGINAL_PAGE } from "@/const/pages/ORIGINAL_PAGE";
 import { RACE } from "@/const/common/RACE";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
@@ -31,10 +28,10 @@ export default function OriginalList() {
     const fetchData = async () => {
       try {
         const [raceData, godData, schoolData, originalData] = await Promise.all([
-          getRaceItems("all"),
-          getGodItems("all"),
-          getSchoolItems("all"),
-          getOriginalItems(),
+          getItems<RaceItemType>("race"),
+          getItems<GodItemType>("god"),
+          getItems<SchoolItemType>("school"),
+          getItems<OriginalItemType>("original"),
         ]);
         setRaceItems(raceData);
         setGodItems(godData);

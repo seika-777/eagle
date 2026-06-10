@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getGodItems } from "@/const/function/getGodItems";
+import { getItems } from "@/const/function/getItems";
 import type { GodItemType } from "@/const/type/god/GodItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingThird from "@/component/atoms/HeadingThird";
@@ -23,7 +23,7 @@ export default function GodList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = period ? await getGodItems("period", period) : await getGodItems("all");
+        const data = await getItems<GodItemType>("god", period ? { period } : undefined);
         setItems(data);
         setLoading(false);
       } catch (error) {

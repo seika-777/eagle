@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Link, Spinner, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getHouseRuleItems } from "@/const/function/getHouseRuleItems";
+import { getItems } from "@/const/function/getItems";
 import { RULE } from "@/const/common/RULE";
 import type { HouseRuleItemType } from "@/const/type/houseRule/HouseRuleItemType";
 import type { RuleType } from "@/const/type/common/RuleType";
@@ -22,7 +22,7 @@ export default function HouseRuleList() {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getHouseRuleItems();
+        const data = await getItems<HouseRuleItemType>("house-rule");
         setItems(data);
         setLoading(false);
       } catch (error) {

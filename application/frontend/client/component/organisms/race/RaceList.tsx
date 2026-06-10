@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRaceItems } from "@/const/function/getRaceItems";
+import { getItems } from "@/const/function/getItems";
 import { RACE } from "@/const/common/RACE";
 import { RACE_PAGE } from "@/const/pages/RACE_PAGE";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
@@ -37,7 +37,7 @@ export default function RaceList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = period ? await getRaceItems("period", period) : await getRaceItems("all");
+        const data = await getItems<RaceItemType>("race", period ? { period } : undefined);
         setItems(data);
         setLoading(false);
       } catch (error) {

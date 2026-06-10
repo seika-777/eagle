@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Box, Text, Spinner, SimpleGrid, Link } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getSupplementItems } from "@/const/function/getSupplementItems";
+import { getItems } from "@/const/function/getItems";
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
@@ -24,7 +24,7 @@ export default function SupplementList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = period ? await getSupplementItems("period", period) : await getSupplementItems("all");
+        const data = await getItems<SupplementItemType>("supplement", period ? { period } : undefined);
         setItems(data);
         setLoading(false);
       } catch (error) {

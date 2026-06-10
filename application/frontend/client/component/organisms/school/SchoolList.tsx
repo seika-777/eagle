@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Text, Link, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getSchoolItems } from "@/const/function/getSchoolItems";
+import { getItems } from "@/const/function/getItems";
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
@@ -23,7 +23,7 @@ export default function SchoolList({ period }: Props) {
     resetError();
     const fetchData = async () => {
       try {
-        const data = period ? await getSchoolItems("period", period) : await getSchoolItems("all");
+        const data = await getItems<SchoolItemType>("school", period ? { period } : undefined);
         setItems(data);
         setLoading(false);
       } catch (error) {

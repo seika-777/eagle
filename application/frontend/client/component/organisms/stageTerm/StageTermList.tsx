@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Box, Spinner, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getStageTermItems } from "@/const/function/getStageTermItems";
+import { getItems } from "@/const/function/getItems";
 import { STAGE_TERM_PAGE } from "@/const/pages/STAGE_TERM_PAGE";
 import type { StageTermItemType } from "@/const/type/stageTerm/StageTermItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
@@ -37,7 +37,7 @@ export default function StageTermList() {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getStageTermItems();
+        const data = await getItems<StageTermItemType>("stage-term");
         setItems(data);
         setLoading(false);
       } catch (error) {
@@ -79,6 +79,8 @@ export default function StageTermList() {
       <HeadingSecond title={STAGE_TERM_PAGE.TEXT.heading} />
       {loading ? (
         <Spinner />
+      ) : items.length === 0 ? (
+        <Text mt={4}>{STAGE_TERM_PAGE.TEXT.empty}</Text>
       ) : (
         <SimpleGrid gap={10} mt={4}>
           {orderedContinents.map(({ continent, label, types }) => (

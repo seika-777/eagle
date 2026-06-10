@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Box, Spinner } from "@chakra-ui/react";
+import { Box, Spinner, Text } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getWordItems } from "@/const/function/getWordItems";
+import { getItems } from "@/const/function/getItems";
 import { WORD_PAGE } from "@/const/pages/WORD_PAGE";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import type { WordItemType } from "@/const/type/word/WordItemType";
@@ -20,7 +20,7 @@ export default function WordList() {
     resetError();
     const fetchData = async () => {
       try {
-        const data = await getWordItems();
+        const data = await getItems<WordItemType>("word");
         setItems(data);
         setLoading(false);
       } catch (error) {
@@ -47,6 +47,8 @@ export default function WordList() {
       <HeadingSecond title={WORD_PAGE.TEXT.heading} />
       {loading ? (
         <Spinner mt={4} />
+      ) : items.length === 0 ? (
+        <Text mt={4}>{WORD_PAGE.TEXT.empty}</Text>
       ) : (
         <Box mt={4}>
           <AccordionList

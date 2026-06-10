@@ -1,7 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
-import { getRaceItems } from "@/const/function/getRaceItems";
-import { getSupplementItems } from "@/const/function/getSupplementItems";
+import type { RaceItemType } from "@/const/type/race/RaceItemType";
+import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
+import { getItems } from "@/const/function/getItems";
 import { getItemRegulationIds } from "@/const/function/getItemRegulations";
 
 export type RegulationRow = RegulationItemType["regulation"];
@@ -35,9 +36,9 @@ const buildRegulationItem = async (
   if (!regulation) return null;
 
   const [allRaceItems, allowedRaceIds, supplementItems] = await Promise.all([
-    getRaceItems("all"),
+    getItems<RaceItemType>("race"),
     getItemRegulationIds("race", period),
-    getSupplementItems("all"),
+    getItems<SupplementItemType>("supplement"),
   ]);
 
   const raceItems = allRaceItems
