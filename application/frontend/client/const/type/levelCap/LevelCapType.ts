@@ -1,0 +1,22 @@
+export type LevelCapItemType = {
+  id: number;
+  beltType: string;
+  level: string;
+  sortOrder: number;
+  minExp: number;
+  minGrowth: number | null;
+  minReward: number;
+  minHonor: number | null;
+  maxAdventurerRank: string;
+  rewardAmount: number;
+  offBalanceReward: number;
+  honor: number;
+  distribution: number | null;
+  rewardPerSession: string;
+  swordFragments: string;
+  growthCount: number;
+  growthLimit: number;
+  fCountLimit: number;
+  rewardLimit: number;
+  excessGrowth: string;
+};
