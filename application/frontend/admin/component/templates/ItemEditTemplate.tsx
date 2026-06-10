@@ -1,5 +1,5 @@
 "use client";
-import { Box, Heading, Button, HStack, Alert } from "@chakra-ui/react";
+import { Box, Heading, Button, HStack, Alert, Separator } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useStateMachine } from "little-state-machine";
@@ -10,6 +10,7 @@ import { configMap } from "@/const/config/index";
 import { getItem } from "@/const/function/getItem";
 import { createItem } from "@/const/function/createItem";
 import { updateItem } from "@/const/function/updateItem";
+import { deleteItem } from "@/const/function/deleteItem";
 import { updateStore } from "@/const/store/previewStore";
 import type { FormRecord } from "@/const/type/config/EntityConfigType";
 import type { TableRow } from "@/const/type/table/TableColumnType";
@@ -67,6 +68,17 @@ export default function ItemEditTemplate({ type, id, dynamicOptions }: Props) {
     }
   };
 
+  const handleAuthDelete = async () => {
+    if (!config || !window.confirm("このユーザーのアカウントを削除しますか？この操作は取り消せません。")) return;
+    clearError();
+    try {
+      await deleteItem(config.apiType, id);
+      router.push(`/${config.apiType}`);
+    } catch (err) {
+      handleError(err);
+    }
+  };
+
   const handlePreview = () => {
     actions.updateStore({ preview: { regulationPreview: { id, form } } });
     router.push(`/${type}/${id}/preview`);
@@ -93,18 +105,28 @@ export default function ItemEditTemplate({ type, id, dynamicOptions }: Props) {
             dynamicOptions={dynamicOptions}
           />
         )}
-        <HStack mt={6} justify="flex-end" gap={3}>
-          <Button variant="outline" onClick={() => router.push(listPath)}>
-            キャンセル
-          </Button>
-          {config?.previewBasePath && (
-            <Button variant="outline" colorPalette="green" onClick={handlePreview}>
-              プレビュー
+        <Separator mt={8} mb={4} />
+        <HStack justify="space-between">
+          <Box>
+            {config?.showAuthDelete && !isNew && (
+              <Button colorPalette="red" variant="outline" onClick={handleAuthDelete}>
+                削除
+              </Button>
+            )}
+          </Box>
+          <HStack gap={3}>
+            <Button variant="outline" onClick={() => router.push(listPath)}>
+              キャンセル
             </Button>
-          )}
-          <Button colorPalette="blue" onClick={handleSave} loading={isSaving} disabled={!config}>
-            保存
-          </Button>
+            {config?.previewBasePath && (
+              <Button variant="outline" colorPalette="green" onClick={handlePreview}>
+                プレビュー
+              </Button>
+            )}
+            <Button colorPalette="blue" onClick={handleSave} loading={isSaving} disabled={!config}>
+              保存
+            </Button>
+          </HStack>
         </HStack>
       </Box>
     </AdminLayoutTemplate>

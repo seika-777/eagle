@@ -1,4 +1,4 @@
-export const deleteItem = async (type: string, id: number): Promise<void> => {
+export const deleteItem = async (type: string, id: number | string): Promise<void> => {
   const res = await fetch(`/api/items?type=${type}&id=${id}`, { method: "DELETE" });
   if (!res.ok) {
     const body = await res.json().catch(() => ({ error: "" })) as { error: string };
