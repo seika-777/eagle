@@ -85,6 +85,18 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ...data, godIds, schoolIds, raceIds, supplementIds });
     }
 
+    if (type === "stage-term") {
+      const { data: itemRegs } = await supabaseAdmin
+        .from("item_regulations")
+        .select("regulation_id")
+        .eq("item_type", "stage-term")
+        .eq("item_id", id);
+
+      const regulationIds = (itemRegs ?? []).map((r) => r.regulation_id);
+
+      return NextResponse.json({ ...data, regulationIds });
+    }
+
     return NextResponse.json(data);
   }
 
@@ -167,6 +179,41 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json(newReg, { status: 201 });
+  }
+
+  if (type === "stage-term") {
+    const { regulationIds, ...fields } = body;
+
+    const insertData: Record<string, unknown> = {
+      title: fields.title,
+      category: fields.category ?? "",
+      continent: fields.continent ?? "",
+      description: fields.description ?? "",
+      updated_by: user.id,
+      updated_at: now,
+    };
+
+    const { data: newItem, error } = await supabaseAdmin
+      .from(table)
+      .insert(insertData)
+      .select()
+      .single();
+
+    if (error || !newItem) {
+      return errorResponse("作成に失敗しました", "INTERNAL_ERROR", 500);
+    }
+
+    if (Array.isArray(regulationIds) && regulationIds.length > 0) {
+      await supabaseAdmin.from("item_regulations").insert(
+        regulationIds.map((regId: number) => ({
+          regulation_id: regId,
+          item_type: "stage-term",
+          item_id: newItem.id,
+        }))
+      );
+    }
+
+    return NextResponse.json(newItem, { status: 201 });
   }
 
   const insertData = buildInsertData(type, body, user.id, now);
@@ -255,6 +302,46 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ success: true });
   }
 
+  if (type === "stage-term") {
+    const { regulationIds, ...stageTermFields } = fields;
+
+    const updateData: Record<string, unknown> = {
+      title: stageTermFields.title,
+      category: stageTermFields.category ?? "",
+      continent: stageTermFields.continent ?? "",
+      description: stageTermFields.description ?? "",
+      updated_by: user.id,
+      updated_at: now,
+    };
+
+    const { error } = await supabaseAdmin
+      .from(table)
+      .update(updateData)
+      .eq("id", id);
+
+    if (error) {
+      return errorResponse("更新に失敗しました", "INTERNAL_ERROR", 500);
+    }
+
+    await supabaseAdmin
+      .from("item_regulations")
+      .delete()
+      .eq("item_type", "stage-term")
+      .eq("item_id", id);
+
+    if (Array.isArray(regulationIds) && regulationIds.length > 0) {
+      await supabaseAdmin.from("item_regulations").insert(
+        regulationIds.map((regId: number) => ({
+          regulation_id: regId,
+          item_type: "stage-term",
+          item_id: Number(id),
+        }))
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  }
+
   const updateData = buildInsertData(type, fields, user.id, now);
   const { error } = await supabaseAdmin
     .from(table)
@@ -329,7 +416,7 @@ function buildInsertData(
     return { title: fields.title, description: fields.description ?? "", ...base };
   }
   if (type === "stage-term") {
-    return { title: fields.title, continent: fields.continent ?? "", description: fields.description ?? "", ...base };
+    return { title: fields.title, category: fields.category ?? "", continent: fields.continent ?? "", description: fields.description ?? "", ...base };
   }
   if (type === "user-role") {
     const data: Record<string, unknown> = { updated_at: now };
