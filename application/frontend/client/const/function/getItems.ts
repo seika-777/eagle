@@ -61,7 +61,7 @@ const getStageTerm = async (): Promise<RawRow[]> => {
   const itemRegulationMap: Record<number, string[]> = {};
   relationsResult.data.forEach((r) => {
     if (!itemRegulationMap[r.item_id]) itemRegulationMap[r.item_id] = [];
-    const name = (r.regulation_items as { name: string } | null)?.name;
+    const name = (r.regulation_items as { name: string }[] | null)?.[0]?.name;
     if (name) itemRegulationMap[r.item_id].push(name);
   });
 

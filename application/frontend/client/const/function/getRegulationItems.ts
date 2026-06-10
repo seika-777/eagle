@@ -34,14 +34,14 @@ const buildRegulationItem = async (
   const regulation = rows.find((row) => row.id === period);
   if (!regulation) return null;
 
+  const supplementId = Number(regulation.supplement);
+
   const [allRaceItems, allowedRaceIds, supplementResult] = await Promise.all([
     getItems<RaceItemType>("race"),
     getItemRegulationIds("race", period),
-    supabase
-      .from("supplement_items")
-      .select("id, name")
-      .eq("id", Number(regulation.supplement))
-      .maybeSingle(),
+    supplementId
+      ? supabase.from("supplement_items").select("id, name").eq("id", supplementId).maybeSingle()
+      : Promise.resolve({ data: null, error: null }),
   ]);
   if (supplementResult.error) throw supplementResult.error;
 
