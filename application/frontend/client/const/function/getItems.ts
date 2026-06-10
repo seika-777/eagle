@@ -51,31 +51,17 @@ const getStageTerm = async (): Promise<RawRow[]> => {
       .order("id", { ascending: true }),
     supabase
       .from("item_regulations")
-      .select("item_id, regulation_id")
-      .eq("item_type", "stage-term"),
+      .select("item_id, regulation_items!inner(name)")
+      .eq("item_type", "stage-term")
+      .eq("regulation_items.publish_type", "public"),
   ]);
   if (stageTermResult.error) throw stageTermResult.error;
   if (relationsResult.error) throw relationsResult.error;
 
-  const regulationIds = [...new Set(relationsResult.data.map((r) => r.regulation_id))];
-  const regulationNames: Record<number, string> = {};
-
-  if (regulationIds.length > 0) {
-    const { data: regulations, error } = await supabase
-      .from("regulation_items")
-      .select("id, name")
-      .in("id", regulationIds)
-      .eq("publish_type", "public");
-    if (error) throw error;
-    regulations.forEach((r) => {
-      regulationNames[r.id] = r.name;
-    });
-  }
-
   const itemRegulationMap: Record<number, string[]> = {};
   relationsResult.data.forEach((r) => {
     if (!itemRegulationMap[r.item_id]) itemRegulationMap[r.item_id] = [];
-    const name = regulationNames[r.regulation_id];
+    const name = (r.regulation_items as { name: string } | null)?.name;
     if (name) itemRegulationMap[r.item_id].push(name);
   });
 
@@ -97,6 +83,23 @@ export const getItems = async <T extends RawRow>(
     return getStageTerm() as Promise<T[]>;
   }
 
+  if (params?.period && PERIOD_TYPES.has(type)) {
+    const [result, isPublic, allowedIds] = await Promise.all([
+      supabase
+        .from(TABLE_MAP[type])
+        .select(SELECT_MAP[type])
+        .order("id", { ascending: true })
+        .returns<RawRow[]>(),
+      isPublicRegulation(Number(params.period)),
+      getItemRegulationIds(type as ItemRegulationItemType, Number(params.period)),
+    ]);
+    if (result.error) throw result.error;
+    if (!isPublic) return [];
+    return (result.data ?? [])
+      .map((row) => mapRow(type, row))
+      .filter((item) => (item.isAlways as boolean) || allowedIds.has(item.id as number)) as T[];
+  }
+
   const { data, error } = await supabase
     .from(TABLE_MAP[type])
     .select(SELECT_MAP[type])
@@ -104,16 +107,5 @@ export const getItems = async <T extends RawRow>(
     .returns<RawRow[]>();
   if (error) throw error;
 
-  const items = (data ?? []).map((row) => mapRow(type, row));
-
-  if (params?.period && PERIOD_TYPES.has(type)) {
-    const isPublic = await isPublicRegulation(Number(params.period));
-    if (!isPublic) return [];
-    const allowedIds = await getItemRegulationIds(type as ItemRegulationItemType, Number(params.period));
-    return items.filter((item) =>
-      (item.isAlways as boolean) || allowedIds.has(item.id as number)
-    ) as T[];
-  }
-
-  return items as T[];
+  return (data ?? []).map((row) => mapRow(type, row)) as T[];
 };

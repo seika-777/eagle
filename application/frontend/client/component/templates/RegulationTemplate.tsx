@@ -1,40 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { Box } from "@chakra-ui/react";
-import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRegulationItems } from "@/const/function/getRegulationItems";
 import MainVisual from "@/component/organisms/top/MainVisual";
 import RegulationSection from "@/component/organisms/regulation/RegulationSection";
 import { STYLE } from "@/const/common/STYLE";
 import type { RegulationItemType } from "@/const/type/regulation/RegulationItemType";
-import type { ErrorType } from "@/const/type/error/ErrorType";
 
-export default function RegulationTemplate() {
-  const { period } = useParams<{ period: string }>();
-  const [regulation, setRegulation] = useState<RegulationItemType>();
-  const { handleError, resetError } = useErrorHandler();
-  useEffect(() => {
-    resetError();
-    const fetchData = async () => {
-      try {
-        if (period) {
-          const responseGetRegulationItem = await getRegulationItems("detail", period);
-          if (responseGetRegulationItem) {
-            setRegulation(responseGetRegulationItem);
-          }
-        }
-      } catch (error) {
-        handleError(error as ErrorType);
-      }
-    };
-    fetchData();
-  }, [period]);
+type Props = {
+  regulation: RegulationItemType;
+};
+
+export default function RegulationTemplate({ regulation }: Props) {
   return (
     <>
       <MainVisual />
       <Box maxW={STYLE.WIDTH.SECTION} mx="auto" px={6} py={10}>
-        {regulation && <RegulationSection regulationItem={regulation} />}
+        <RegulationSection regulationItem={regulation} />
       </Box>
     </>
   );

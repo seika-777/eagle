@@ -1,11 +1,8 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
-import { Box, Spinner, SimpleGrid } from "@chakra-ui/react";
-import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getItems } from "@/const/function/getItems";
+import { useMemo } from "react";
+import { Box, SimpleGrid } from "@chakra-ui/react";
 import { STAGE_TERM_PAGE } from "@/const/pages/STAGE_TERM_PAGE";
 import type { StageTermItemType } from "@/const/type/stageTerm/StageTermItemType";
-import type { ErrorType } from "@/const/type/error/ErrorType";
 import { Text } from "@chakra-ui/react";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import AccordionList from "@/component/molecules/AccordionList";
@@ -27,27 +24,11 @@ const ITEM_TYPE_LABEL: Record<string, string> = {
   npc: "NPC",
 };
 
-export default function StageTermList() {
-  const [items, setItems] = useState<StageTermItemType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { handleError, resetError } = useErrorHandler();
+type Props = {
+  items: StageTermItemType[];
+};
 
-  useEffect(() => {
-    setLoading(true);
-    resetError();
-    const fetchData = async () => {
-      try {
-        const data = await getItems<StageTermItemType>("stage-term");
-        setItems(data);
-        setLoading(false);
-      } catch (error) {
-        handleError(error as ErrorType);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
+export default function StageTermList({ items }: Props) {
   const grouped = useMemo(() => {
     const continentMap: Partial<Record<string, Partial<Record<string, StageTermItemType[]>>>> = {};
     items.forEach((item) => {
@@ -77,9 +58,7 @@ export default function StageTermList() {
   return (
     <Box as="section" textAlign="left" width="100%">
       <HeadingSecond title={STAGE_TERM_PAGE.TEXT.heading} />
-      {loading ? (
-        <Spinner />
-      ) : items.length === 0 ? (
+      {items.length === 0 ? (
         <Text mt={4}>{STAGE_TERM_PAGE.TEXT.empty}</Text>
       ) : (
         <SimpleGrid gap={10} mt={4}>

@@ -1,36 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Box, Spinner } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { Link } from "@chakra-ui/react";
-import { useErrorHandler } from "@/hooks/useErrorHandler";
-import { getRegulationItems } from "@/const/function/getRegulationItems";
 import { PERIOD_PAGE } from "@/const/pages/PERIOD_PAGE";
 import type { RegulationRow } from "@/const/function/getRegulationItems";
-import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 
-export default function PeriodList() {
-  const [items, setItems] = useState<RegulationRow[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { handleError, resetError } = useErrorHandler();
+type Props = {
+  items: RegulationRow[];
+};
 
-  useEffect(() => {
-    setLoading(true);
-    resetError();
-    const fetchData = async () => {
-      try {
-        const data = await getRegulationItems("list");
-        setItems(data);
-        setLoading(false);
-      } catch (error) {
-        handleError(error as ErrorType);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+export default function PeriodList({ items }: Props) {
 
   const PeriodItem = ({ item }: { item: RegulationRow }) => {
     return (
@@ -50,18 +31,14 @@ export default function PeriodList() {
 
   return (
     <Box as="section" textAlign="left" width="100%">
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Box>
-          <HeadingSecond title={PERIOD_PAGE.TEXT.heading} />
-          <Box as="ul" listStyleType="none" p={0} mt={2}>
-            {items.map((item) => (
-              <PeriodItem key={item.id} item={item} />
-            ))}
-          </Box>
+      <Box>
+        <HeadingSecond title={PERIOD_PAGE.TEXT.heading} />
+        <Box as="ul" listStyleType="none" p={0} mt={2}>
+          {items.map((item) => (
+            <PeriodItem key={item.id} item={item} />
+          ))}
         </Box>
-      )}
+      </Box>
     </Box>
   );
 }

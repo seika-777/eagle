@@ -1,6 +1,8 @@
 import HouseRuleTemplate from "@/component/templates/HouseRuleTemplate";
 import { COMMON } from "@/const/common/COMMON";
 import { METADATA } from "@/const/common/METADATA";
+import { getItems } from "@/const/function/getItems";
+import type { HouseRuleItemType } from "@/const/type/houseRule/HouseRuleItemType";
 
 export const dynamic = "force-static";
 
@@ -9,6 +11,7 @@ export const metadata = {
   description: METADATA.DESCRIPTION.HOUSE_RULE,
 };
 
-export default function HouseRule() {
-  return <HouseRuleTemplate />;
+export default async function HouseRule() {
+  const items = await getItems<HouseRuleItemType>("house-rule");
+  return <HouseRuleTemplate items={items} />;
 }
