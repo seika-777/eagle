@@ -1,7 +1,7 @@
 "use client";
 import { Table, Button, HStack, useBreakpointValue } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import type { TableColumnType, TableRow } from "@/const/type/table/TableColumnType";
+import type { TableColumnType, TableRow, RowValue } from "@/const/type/table/TableColumnType";
 
 type Props = {
   columns: TableColumnType[];
