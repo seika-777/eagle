@@ -1,13 +1,12 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { Box, Text, Link, Spinner, SimpleGrid } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { getProhibitionItems } from "@/const/function/getProhibitionItems";
 import type { ProhibitionItemType } from "@/const/type/houseRule/ProhibitionItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
-import HeadingThird from "@/component/atoms/HeadingThird";
-import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
+import AccordionList from "@/component/molecules/AccordionList";
 
 export default function ProhibitionList() {
   const [items, setItems] = useState<ProhibitionItemType[]>([]);
@@ -49,37 +48,15 @@ export default function ProhibitionList() {
       {loading ? (
         <Spinner />
       ) : (
-        <SimpleGrid gap={8} mt={4}>
-          <Box as="nav">
-            <HeadingThird title="目次" />
-            <Box as="ul" listStyleType="none" p={0} mt={2}>
-              {groupedByAbout.map(({ about }) => (
-                <Box as="li" key={about} py={1}>
-                  <Link
-                    href={`#prohibition-${about}`}
-                    color={STYLE_COLOR.SECONDARY}
-                    textDecoration="underline"
-                    _hover={{ color: STYLE_COLOR.ACCENT }}
-                  >
-                    {about}
-                  </Link>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-          {groupedByAbout.map(({ about, items: groupItems }) => (
-            <Box key={about} id={`prohibition-${about}`}>
-              <HeadingThird title={about} />
-              <SimpleGrid gap={4} mt={2}>
-                {groupItems.map((item) => (
-                  <Box key={item.id} p={4} borderWidth="1px" borderRadius="md">
-                    <Text whiteSpace="pre-wrap">{item.name}</Text>
-                  </Box>
-                ))}
-              </SimpleGrid>
-            </Box>
-          ))}
-        </SimpleGrid>
+        <Box mt={4}>
+          <AccordionList
+            items={groupedByAbout.map(({ about, items: groupItems }) => ({
+              id: about,
+              title: about,
+              description: groupItems.map((item) => item.name).join("\n"),
+            }))}
+          />
+        </Box>
       )}
     </Box>
   );

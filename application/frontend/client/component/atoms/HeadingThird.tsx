@@ -7,7 +7,7 @@ type Props = {
 
 export default function HeadingThird({ title }: Props) {
   return (
-    <Text as="h3" fontSize="20px" fontFamily="var(--font-edu-nsw-act-cursive), var(--font-zen-maru-gothic)">
+    <Text as="h3" fontSize="20px" fontWeight="bold" fontFamily="var(--font-edu-nsw-act-cursive), var(--font-zen-maru-gothic)">
       {title}
     </Text>
   );

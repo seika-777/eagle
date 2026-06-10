@@ -1,4 +1,4 @@
-export type ItemRegulationItemType = "race" | "god" | "school" | "supplement";
+export type ItemRegulationItemType = "race" | "god" | "school" | "supplement" | "stage-term";
 
 export type ItemRegulationType = {
   itemType: ItemRegulationItemType;

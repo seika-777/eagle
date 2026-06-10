@@ -9,4 +9,5 @@ export const NAV_ITEMS = (period: string) =>
     { label: "禁止事項", href: PATH.URL.HOUSE_RULE.PROHIBITION },
     { label: "オリジナルデータ", href: PATH.URL.ORIGINAL.ROOT },
     { label: "語録", href: PATH.URL.WORD },
+    { label: "舞台/用語", href: PATH.URL.STAGE_TERM },
   ] as const;

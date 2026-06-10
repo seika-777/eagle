@@ -11,6 +11,7 @@ export const METADATA = {
     ORIGINAL: "オリジナルデータ",
     PERIOD_LIST: "レギュレーション一覧",
     WORD: "語録",
+    STAGE_TERM: "舞台/用語",
   },
   DESCRIPTION: {
     HOME: "片翼の大鷲亭 - TRPGコミュニティポータル",
@@ -24,5 +25,6 @@ export const METADATA = {
     ORIGINAL: "片翼の大鷲亭 - オリジナルデータ",
     PERIOD_LIST: "片翼の大鷲亭 - レギュレーション一覧",
     WORD: "片翼の大鷲亭 - 語録",
+    STAGE_TERM: "片翼の大鷲亭 - 舞台/用語",
   },
 };

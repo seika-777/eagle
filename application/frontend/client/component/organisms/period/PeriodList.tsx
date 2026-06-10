@@ -42,7 +42,7 @@ export default function PeriodList() {
           textDecoration="underline"
           _hover={{ color: STYLE_COLOR.ACCENT }}
         >
-          第{item.id}期 {item.name}
+          {item.name}
         </Link>
       </Box>
     );
