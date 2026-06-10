@@ -45,6 +45,8 @@ const TABLE_MAP: Record<string, string> = {
   supplement: "supplement_items",
   original: "original_items",
   word: "word_items",
+  "stage-term": "stage_term_items",
+  "user-role": "user_meta",
 };
 
 export async function GET(request: NextRequest) {
@@ -94,12 +96,17 @@ export async function GET(request: NextRequest) {
 
   if (type === "regulation") {
     query = query.order("id", { ascending: false }) as typeof query;
+  } else if (type === "user-role") {
+    query = query.order("created_at", { ascending: true }) as typeof query;
+  } else {
+    query = query.order("id", { ascending: true }) as typeof query;
   }
 
   if (type === "house-rule") {
     const { data, error } = await supabaseAdmin
       .from(table)
-      .select("*, supplement_items(name)");
+      .select("*, supplement_items(name)")
+      .order("id", { ascending: true });
     if (error) return errorResponse("データ取得に失敗しました", "INTERNAL_ERROR", 500);
     return NextResponse.json(data);
   }
@@ -202,7 +209,7 @@ export async function PUT(request: NextRequest) {
     return errorResponse("データが見つかりません", "BAD_REQUEST", 400);
   }
 
-  if (current.updated_at !== updatedAt) {
+  if (type !== "user-role" && current.updated_at !== updatedAt) {
     return NextResponse.json(
       { error: "他のユーザーにより更新されました。ページを再読み込みしてください。", code: "CONFLICT" },
       { status: 409 }
@@ -273,6 +280,12 @@ export async function DELETE(request: NextRequest) {
     return errorResponse("パラメータが不正です", "BAD_REQUEST", 400);
   }
 
+  if (type === "user-role") {
+    const { error } = await supabaseAdmin.auth.admin.deleteUser(id);
+    if (error) return errorResponse("削除に失敗しました", "INTERNAL_ERROR", 500);
+    return NextResponse.json({ success: true });
+  }
+
   const table = TABLE_MAP[type];
   const { error } = await supabaseAdmin.from(table).delete().eq("id", id);
 
@@ -314,6 +327,16 @@ function buildInsertData(
   }
   if (type === "word") {
     return { title: fields.title, description: fields.description ?? "", ...base };
+  }
+  if (type === "stage-term") {
+    return { title: fields.title, continent: fields.continent ?? "", description: fields.description ?? "", ...base };
+  }
+  if (type === "user-role") {
+    const data: Record<string, unknown> = { updated_at: now };
+    if (fields.role !== undefined) data.role = fields.role;
+    if (fields.displayName !== undefined) data.display_name = fields.displayName;
+    if (fields.isEditable !== undefined) data.is_editable = fields.isEditable;
+    return data;
   }
   return { ...fields, ...base };
 }

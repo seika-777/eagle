@@ -9,6 +9,10 @@ export type EntityConfigType = {
   addLabel: string;
   editTitle: string;
   deleteConfirm: string;
+  hideAdd?: boolean;
+  hideDelete?: boolean;
+  showAuthDelete?: boolean;
+  inlineCellChange?: boolean;
   columns: TableColumnType[];
   spColumns?: TableColumnType[];
   formItems: FormItemType[];

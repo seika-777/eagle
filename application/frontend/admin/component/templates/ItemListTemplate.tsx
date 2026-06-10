@@ -8,7 +8,8 @@ import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { configMap } from "@/const/config/index";
 import { getItems } from "@/const/function/getItems";
 import { deleteItem } from "@/const/function/deleteItem";
-import type { TableRow } from "@/const/type/table/TableColumnType";
+import { updateItem } from "@/const/function/updateItem";
+import type { TableRow, RowValue } from "@/const/type/table/TableColumnType";
 
 type Props = {
   type: string;
@@ -33,7 +34,18 @@ export default function ItemListTemplate({ type }: Props) {
     fetchItems();
   }, [type, refreshKey]);
 
-  const handleDelete = async (id: number) => {
+  const handleCellChange = async (id: number | string, key: string, value: RowValue) => {
+    const row = rows.find((r) => r.id === id);
+    if (!row) return;
+    try {
+      await updateItem(config.apiType, String(id), { [key]: value }, (row.updated_at as string) ?? null);
+      setRows((prev) => prev.map((r) => (r.id === id ? { ...r, [key]: value } : r)));
+    } catch (err) {
+      handleError(err);
+    }
+  };
+
+  const handleDelete = async (id: number | string) => {
     if (!window.confirm(config.deleteConfirm)) return;
     try {
       await deleteItem(config.apiType, id);
@@ -47,13 +59,15 @@ export default function ItemListTemplate({ type }: Props) {
     <AdminLayoutTemplate title={config.listTitle}>
       <Flex justify="space-between" align="center" mb={4}>
         <Heading size="md">{config.listTitle}</Heading>
-        <Button
-          colorPalette="blue"
-          size="sm"
-          onClick={() => router.push(`/${config.apiType}/new`)}
-        >
-          {config.addLabel}
-        </Button>
+        {!config.hideAdd && (
+          <Button
+            colorPalette="blue"
+            size="sm"
+            onClick={() => router.push(`/${config.apiType}/new`)}
+          >
+            {config.addLabel}
+          </Button>
+        )}
       </Flex>
       {error && (
         <Alert.Root status="error" mb={4}>
@@ -68,6 +82,8 @@ export default function ItemListTemplate({ type }: Props) {
           rows={rows}
           editBasePath={`/${config.apiType}`}
           onDelete={handleDelete}
+          onCellChange={config.inlineCellChange ? handleCellChange : undefined}
+          hideDelete={config.hideDelete}
         />
       </Box>
     </AdminLayoutTemplate>

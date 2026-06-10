@@ -1,17 +1,19 @@
 "use client";
 import { Table, Button, HStack, useBreakpointValue } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import type { TableColumnType, TableRow } from "@/const/type/table/TableColumnType";
+import type { TableColumnType, TableRow, RowValue } from "@/const/type/table/TableColumnType";
 
 type Props = {
   columns: TableColumnType[];
   spColumns?: TableColumnType[];
   rows: TableRow[];
   editBasePath: string;
-  onDelete: (id: number) => void;
+  onDelete: (id: number | string) => void;
+  onCellChange?: (id: number | string, key: string, value: RowValue) => void;
+  hideDelete?: boolean;
 };
 
-export default function ItemTable({ columns, spColumns, rows, editBasePath, onDelete }: Props) {
+export default function ItemTable({ columns, spColumns, rows, editBasePath, onDelete, onCellChange, hideDelete }: Props) {
   const router = useRouter();
   const isSP = useBreakpointValue({ base: true, md: false }) ?? false;
   const visibleColumns = isSP && spColumns ? spColumns : columns;
@@ -32,7 +34,11 @@ export default function ItemTable({ columns, spColumns, rows, editBasePath, onDe
             {visibleColumns.map((col) => (
               <Table.Cell key={col.key}>
                 {col.render
-                  ? col.render(row[col.key], row)
+                  ? col.render(
+                      row[col.key],
+                      row,
+                      onCellChange ? (v) => onCellChange(row.id as number | string, col.key, v) : undefined
+                    )
                   : String(row[col.key] ?? "")}
               </Table.Cell>
             ))}
@@ -45,14 +51,16 @@ export default function ItemTable({ columns, spColumns, rows, editBasePath, onDe
                 >
                   編集
                 </Button>
-                <Button
-                  size="sm"
-                  colorPalette="red"
-                  variant="outline"
-                  onClick={() => onDelete(Number(row.id))}
-                >
-                  削除
-                </Button>
+                {!hideDelete && (
+                  <Button
+                    size="sm"
+                    colorPalette="red"
+                    variant="outline"
+                    onClick={() => onDelete(row.id as number | string)}
+                  >
+                    削除
+                  </Button>
+                )}
               </HStack>
             </Table.Cell>
           </Table.Row>

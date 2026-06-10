@@ -6,5 +6,5 @@ export type TableRow = Record<string, RowValue>;
 export type TableColumnType = {
   key: string;
   label: string;
-  render?: (value: RowValue, row: TableRow) => ReactNode;
+  render?: (value: RowValue, row: TableRow, onChange?: (value: RowValue) => void) => ReactNode;
 };
