@@ -47,6 +47,13 @@ export default function ItemEditPage({ params }: Props) {
           ],
         });
       }
+
+      if (type === "stage-term") {
+        const regulations = await getItems<NamedItem>("regulation");
+        setDynamicOptions({
+          regulationIds: regulations.map((r) => ({ label: r.name, value: r.id })),
+        });
+      }
     };
 
     loadDynamicOptions();

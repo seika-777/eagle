@@ -66,6 +66,7 @@ export default function ItemForm({ formItems, form, onChange, dynamicOptions }: 
               onChange={(v) => onChange(item.column, v)}
               options={options}
               required={item.rule?.required}
+              placeholder={item.placeholder}
             />
           );
         }

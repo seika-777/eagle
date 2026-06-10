@@ -8,4 +8,5 @@ export type FormItemType = {
     pattern?: string;
   };
   option?: readonly { label: string; value: string | number }[];
+  placeholder?: string;
 };
