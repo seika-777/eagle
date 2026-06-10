@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { Box, Text, Link, Spinner, SimpleGrid } from "@chakra-ui/react";
+import { Box, Link, Spinner, SimpleGrid } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { getHouseRuleItems } from "@/const/function/getHouseRuleItems";
 import { RULE } from "@/const/common/RULE";
@@ -9,6 +9,7 @@ import type { RuleType } from "@/const/type/common/RuleType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import HeadingThird from "@/component/atoms/HeadingThird";
+import AccordionList from "@/component/molecules/AccordionList";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 
 export default function HouseRuleList() {
@@ -78,16 +79,15 @@ export default function HouseRuleList() {
           {orderedEntries.map(({ ruleType, label, items: groupItems }) => (
             <Box key={ruleType} id={`house-rule-${ruleType}`}>
               <HeadingThird title={label} />
-              <SimpleGrid gap={4} mt={2}>
-                {groupItems.map((item) => (
-                  <Box key={item.id} p={4} borderWidth="1px" borderRadius="md">
-                    <Text fontWeight="bold" mb={2}>
-                      {item.about}
-                    </Text>
-                    <Text whiteSpace="pre-wrap">{item.description}</Text>
-                  </Box>
-                ))}
-              </SimpleGrid>
+              <Box mt={2}>
+                <AccordionList
+                  items={groupItems.map((item) => ({
+                    id: item.id,
+                    title: item.about,
+                    description: item.description,
+                  }))}
+                />
+              </Box>
             </Box>
           ))}
         </SimpleGrid>

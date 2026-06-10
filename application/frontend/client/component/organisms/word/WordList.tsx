@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Box, Spinner, Accordion } from "@chakra-ui/react";
-import { LuChevronDown } from "react-icons/lu";
+import { Box, Spinner } from "@chakra-ui/react";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { getWordItems } from "@/const/function/getWordItems";
 import { WORD_PAGE } from "@/const/pages/WORD_PAGE";
@@ -9,6 +8,7 @@ import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import type { WordItemType } from "@/const/type/word/WordItemType";
 import type { ErrorType } from "@/const/type/error/ErrorType";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
+import AccordionList from "@/component/molecules/AccordionList";
 
 export default function WordList() {
   const [items, setItems] = useState<WordItemType[]>([]);
@@ -48,47 +48,13 @@ export default function WordList() {
       {loading ? (
         <Spinner mt={4} />
       ) : (
-        <Accordion.Root mt={4} multiple collapsible variant="plain" display="flex" flexDirection="column" gap={3}>
-          {items.map((item) => (
-            <Accordion.Item
-              key={item.id}
-              value={String(item.id)}
-              borderWidth="1px"
-              borderColor={STYLE_COLOR.LIGHT}
-              borderRadius="md"
-              overflow="hidden"
-              boxShadow="sm"
-            >
-              <Accordion.ItemTrigger
-                px={4}
-                py={3}
-                fontWeight="bold"
-                color={STYLE_COLOR.BLACK}
-                borderLeft={`4px solid ${STYLE_COLOR.SECONDARY}`}
-                _hover={{ bg: STYLE_COLOR.LIGHT, color: STYLE_COLOR.PRIMARY }}
-                cursor={item.description ? "pointer" : "default"}
-                disabled={!item.description}
-                transition="background 0.15s"
-              >
-                {item.title}
-                {item.description && (
-                  <Accordion.ItemIndicator ml="auto" color={STYLE_COLOR.SECONDARY}>
-                    <LuChevronDown />
-                  </Accordion.ItemIndicator>
-                )}
-              </Accordion.ItemTrigger>
-              {item.description && (
-                <Accordion.ItemContent px={4} pt={3} pb={4} bg={STYLE_COLOR.LIGHT}>
-                  <Box
-                    color={STYLE_COLOR.BLACK}
-                    className="word-description"
-                    dangerouslySetInnerHTML={{ __html: item.description }}
-                  />
-                </Accordion.ItemContent>
-              )}
-            </Accordion.Item>
-          ))}
-        </Accordion.Root>
+        <Box mt={4}>
+          <AccordionList
+            items={items}
+            descriptionClassName="word-description"
+            htmlDescription={true}
+          />
+        </Box>
       )}
     </Box>
   );

@@ -64,17 +64,19 @@ export default function Header() {
           height={"100%"}
         >
           <Link href="/">{COMMON.SITE_NAME}</Link>
-          <Box
-            as="button"
-            onClick={() => setIsOpen(!isOpen)}
-            cursor={"pointer"}
-            display={"flex"}
-            alignItems={"center"}
-            justifyContent={"center"}
-            aria-label={isOpen ? "メニューを閉じる" : "メニューを開く"}
-          >
-            {isOpen ? <RxCross1 size={24} /> : <RxHamburgerMenu size={24} />}
-          </Box>
+          {!isOpen && (
+            <Box
+              as="button"
+              onClick={() => setIsOpen(true)}
+              cursor={"pointer"}
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"center"}
+              aria-label="メニューを開く"
+            >
+              <RxHamburgerMenu size={24} />
+            </Box>
+          )}
         </Box>
       </Box>
       <Backdrop />
