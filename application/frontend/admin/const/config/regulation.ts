@@ -77,7 +77,13 @@ export const regulationConfig: EntityConfigType = {
     charCreationStartDate: (data.char_creation_start_date as string) ?? "",
     epilogueStartDate: (data.epilogue_start_date as string) ?? "",
     epilogueEndDate: (data.epilogue_end_date as string) ?? "",
-    levelCapSchedule: (data.level_cap_schedule as unknown as LevelCapScheduleItem[]) ?? [],
+    levelCapSchedule: Array.isArray(data.level_cap_schedule)
+      ? (data.level_cap_schedule as Record<string, string | number | boolean | null>[]).map((item) => ({
+          levelCapId: item.levelCapId as number,
+          level: item.level as string,
+          date: item.date as string,
+        }))
+      : [],
     godIds: data.godIds ?? [],
     schoolIds: data.schoolIds ?? [],
     raceIds: data.raceIds ?? [],
