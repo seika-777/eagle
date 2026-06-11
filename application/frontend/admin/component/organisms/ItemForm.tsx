@@ -1,13 +1,16 @@
 "use client";
-import { VStack } from "@chakra-ui/react";
+import { VStack, Box, Text, Separator } from "@chakra-ui/react";
 import TextInputField from "@/component/molecules/field/TextInputField";
 import TextareaField from "@/component/molecules/field/TextareaField";
 import RichTextField from "@/component/molecules/field/RichTextField";
 import SelectField from "@/component/molecules/field/SelectField";
 import CheckboxField from "@/component/molecules/field/CheckboxField";
 import CheckboxGroupField from "@/component/molecules/field/CheckboxGroupField";
+import DateInputField from "@/component/molecules/field/DateInputField";
+import LevelCapScheduleSection from "@/component/molecules/field/LevelCapScheduleSection";
+import EpiloguePeriodField from "@/component/molecules/field/EpiloguePeriodField";
 import type { FormItemType } from "@/const/type/form/FormItemType";
-import type { FormRecord } from "@/const/type/config/EntityConfigType";
+import type { FormRecord, LevelCapScheduleItem } from "@/const/type/config/EntityConfigType";
 
 type Props = {
   formItems: FormItemType[];
@@ -91,6 +94,54 @@ export default function ItemForm({ formItems, form, onChange, dynamicOptions }: 
             />
           );
         }
+        if (item.type === "date") {
+          return (
+            <DateInputField
+              key={item.column}
+              label={item.label}
+              value={String(form[item.column] ?? "")}
+              onChange={(v) => onChange(item.column, v)}
+              required={item.rule?.required}
+            />
+          );
+        }
+
+        if (item.type === "level-cap-schedule") {
+          return (
+            <LevelCapScheduleSection
+              key={item.column}
+              label={item.label}
+              belt={String(form["levelCapBelt"] ?? "B")}
+              values={(form[item.column] as LevelCapScheduleItem[]) ?? []}
+              onChange={(v) => onChange(item.column, v)}
+              epilogueStartDate={String(form["epilogueStartDate"] ?? "")}
+            />
+          );
+        }
+
+        if (item.type === "epilogue-period") {
+          return (
+            <EpiloguePeriodField
+              key={item.column}
+              startDate={String(form["epilogueStartDate"] ?? "")}
+              endDate={String(form["epilogueEndDate"] ?? "")}
+              onStartChange={(v) => onChange("epilogueStartDate", v)}
+              onEndChange={(v) => onChange("epilogueEndDate", v)}
+            />
+          );
+        }
+
+        if (item.type === "section-heading") {
+          return (
+            <Box key={item.column} pt={4} pb={1}>
+              <Separator />
+              <Text fontWeight="bold" mt={3} fontSize="sm" color="gray.600">
+                {item.label}
+              </Text>
+            </Box>
+          );
+        }
+
         return null;
       })}
     </VStack>
