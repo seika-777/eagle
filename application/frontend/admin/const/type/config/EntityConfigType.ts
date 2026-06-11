@@ -16,6 +16,7 @@ export type FormRecord = Record<
   | number[]
   | (string | number)[]
   | Record<string, string | number | boolean | null>
+  | Record<string, string | number | boolean | null>[]
   | LevelCapScheduleItem[]
   | null
 >;
