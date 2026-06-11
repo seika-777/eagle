@@ -156,6 +156,11 @@ export async function POST(request: NextRequest) {
       notes: fields.notes ?? "",
       level_cap_belt: fields.levelCapBelt,
       publish_type: fields.publishType ?? "draft",
+      char_creation_start_date: fields.charCreationStartDate || null,
+      level_cap_start_date: (fields.levelCapSchedule as { date?: string }[])?.[0]?.date || null,
+      epilogue_start_date: fields.epilogueStartDate || null,
+      epilogue_end_date: fields.epilogueEndDate || null,
+      level_cap_schedule: fields.levelCapSchedule ?? [],
       updated_by: user.id,
       updated_at: now,
     };
@@ -278,6 +283,11 @@ export async function PUT(request: NextRequest) {
       notes: regulationFields.notes ?? "",
       level_cap_belt: regulationFields.levelCapBelt,
       publish_type: regulationFields.publishType,
+      char_creation_start_date: regulationFields.charCreationStartDate || null,
+      level_cap_start_date: (regulationFields.levelCapSchedule as { date?: string }[])?.[0]?.date || null,
+      epilogue_start_date: regulationFields.epilogueStartDate || null,
+      epilogue_end_date: regulationFields.epilogueEndDate || null,
+      level_cap_schedule: regulationFields.levelCapSchedule ?? [],
       updated_by: user.id,
       updated_at: now,
     };

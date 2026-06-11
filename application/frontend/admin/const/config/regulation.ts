@@ -1,4 +1,4 @@
-import type { EntityConfigType } from "@/const/type/config/EntityConfigType";
+import type { EntityConfigType, LevelCapScheduleItem } from "@/const/type/config/EntityConfigType";
 
 export const regulationConfig: EntityConfigType = {
   apiType: "regulation",
@@ -12,6 +12,10 @@ export const regulationConfig: EntityConfigType = {
     recruitment: "",
     stage: "",
     levelCapBelt: "B",
+    charCreationStartDate: "",
+    epilogueStartDate: "",
+    epilogueEndDate: "",
+    levelCapSchedule: [],
     publishType: "draft",
     godIds: [],
     schoolIds: [],
@@ -58,6 +62,10 @@ export const regulationConfig: EntityConfigType = {
     { column: "raceIds", label: "使用可能種族", type: "checkbox-group" },
     { column: "supplementIds", label: "使用可能サプリメント", type: "checkbox-group" },
     { column: "notes", label: "備考", type: "textarea" },
+    { column: "_schedule", label: "スケジュール", type: "section-heading" },
+    { column: "charCreationStartDate", label: "キャラ作成開始日", type: "date" },
+    { column: "levelCapSchedule", label: "レベルキャップ日程", type: "level-cap-schedule" },
+    { column: "epilogueStartDate", label: "エピローグ期間", type: "epilogue-period" },
   ],
   toForm: (data) => ({
     publishType: data.publish_type,
@@ -66,6 +74,16 @@ export const regulationConfig: EntityConfigType = {
     recruitment: data.recruitment,
     stage: data.stage,
     levelCapBelt: data.level_cap_belt,
+    charCreationStartDate: (data.char_creation_start_date as string) ?? "",
+    epilogueStartDate: (data.epilogue_start_date as string) ?? "",
+    epilogueEndDate: (data.epilogue_end_date as string) ?? "",
+    levelCapSchedule: Array.isArray(data.level_cap_schedule)
+      ? (data.level_cap_schedule as Record<string, string | number | boolean | null>[]).map((item) => ({
+          levelCapId: item.levelCapId as number,
+          level: item.level as string,
+          date: item.date as string,
+        }))
+      : [],
     godIds: data.godIds ?? [],
     schoolIds: data.schoolIds ?? [],
     raceIds: data.raceIds ?? [],

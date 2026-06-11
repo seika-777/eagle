@@ -531,7 +531,38 @@ useEffect(() => {
 
 ---
 
-## 12. チェックリスト
+## 12. `any` / `unknown` の禁止
+
+`any` と `unknown` は **絶対に使用しない**。型が合わない場合は型定義を修正して根本解決すること。
+
+### 禁止される対応
+
+```typescript
+// ❌ unknown を経由した強制キャスト
+const items = data.items as unknown as MyType[];
+
+// ❌ any で型チェックを回避
+const value: any = data.field;
+```
+
+### 根本的な解決の例
+
+JSONB フィールドの型が合わない場合は `RowValue` / `FormRecord` に `Record<string, string | number | boolean | null>[]` を追加し、`Array.isArray` でランタイムチェックしてから各フィールドをマッピングする。
+
+```typescript
+// ✅ 型を拡張してランタイムチェック
+levelCapSchedule: Array.isArray(data.level_cap_schedule)
+  ? (data.level_cap_schedule as Record<string, string | number | boolean | null>[]).map((item) => ({
+      levelCapId: item.levelCapId as number,
+      level: item.level as string,
+      date: item.date as string,
+    }))
+  : [],
+```
+
+---
+
+## 13. チェックリスト
 
 新しいコードを書く際は、以下を確認してください。
 
@@ -547,3 +578,4 @@ useEffect(() => {
 - [ ] コンポーネントの return 文は1つだけか
 - [ ] エラー処理は `useErrorHandler` を使用しているか
 - [ ] `let ignore` パターンを使用していないか
+- [ ] `any` / `unknown` を使用していないか

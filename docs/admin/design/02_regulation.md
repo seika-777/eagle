@@ -21,6 +21,10 @@
 | supplement | text | サプリメントに関する自由記述テキスト（`item_regulations` の `supplementIds` による紐付けとは独立した補足説明欄） |
 | notes | text | 備考 |
 | level_cap_belt | text | レベルキャップ・ベルト情報（"B" = 標準キャップ / "C" = 上限解放キャップ。必須。CHECK制約あり） |
+| char_creation_start_date | date (nullable) | キャラ作成開始日 |
+| level_cap_start_date | date (nullable) | レベルキャップ開始日（Lv.2の日付） |
+| epilogue_end_date | date (nullable) | エピローグ終了日 |
+| level_cap_schedule | jsonb | レベルキャップ日程（`[{"levelCapId":number,"level":string,"date":"YYYY-MM-DD"}]`）。デフォルト: `[]` |
 | publish_type | text | 公開状態（"public"=公開 / "draft"=下書き） |
 | updated_by | uuid (nullable) | 最終更新者ID（auth.users.id） |
 | updated_at | timestamptz (nullable) | 最終更新日時 |
@@ -108,11 +112,23 @@ component/
 | supplement | `TextareaField` | - |
 | notes | `TextareaField` | - |
 | level_cap_belt | `SelectField` | 必須（B / C） |
+| char_creation_start_date | `DateInputField` | - |
+| level_cap_start_date | `DateInputField` | - |
+| level_cap_schedule | `LevelCapScheduleSection` | - |
+| epilogue_end_date | `DateInputField` | - |
 | publish_type | `SelectField` | 必須（"public"=公開 / "draft"=下書き）デフォルト: "draft"。公開後も自由に変更可 |
 | 使用可能神格 | `CheckboxGroupField` | `is_always = false` の god_items を選択肢に表示 |
 | 使用可能流派 | `CheckboxGroupField` | `is_always = false` の school_items を選択肢に表示 |
 | 使用可能種族 | `CheckboxGroupField` | `is_always = false` の race_items を選択肢に表示 |
 | 使用可能サプリメント | `CheckboxGroupField` | `is_always = false` の supplement_items を選択肢に表示 |
+
+### LevelCapScheduleSection の動作仕様
+
+- `levelCapStartDate` が入力されると `/api/level-cap?belt=X` を呼び出し、選択ベルトの全レベルを取得する
+- `levelCapStartDate` を起点に15日間隔で各レベルの日付を自動生成して表示する
+- 保存済みの日程がある場合は自動計算より保存済み日付を優先して表示する
+- 各行は `DateInputField` で個別に手動変更可能
+- `levelCapStartDate` が空のときはセクションを非表示にする
 
 ### CheckboxGroupField の動作仕様
 
@@ -258,6 +274,15 @@ export const REGULATION_FORM_ITEM: { [key: string]: FormItemType } = {
 ---
 
 ## 型定義
+
+```typescript
+// const/type/config/EntityConfigType.ts
+export type LevelCapScheduleItem = {
+  levelCapId: number;
+  level: string;
+  date: string; // "YYYY-MM-DD"
+};
+```
 
 ```typescript
 // const/type/regulation/RegulationFormType.ts

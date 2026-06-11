@@ -1,7 +1,25 @@
 import type { TableColumnType, TableRow } from "@/const/type/table/TableColumnType";
 import type { FormItemType } from "@/const/type/form/FormItemType";
 
-export type FormRecord = Record<string, string | number | boolean | string[] | number[] | (string | number)[] | Record<string, string | number | boolean | null> | null>;
+export type LevelCapScheduleItem = {
+  levelCapId: number;
+  level: string;
+  date: string;
+};
+
+export type FormRecord = Record<
+  string,
+  | string
+  | number
+  | boolean
+  | string[]
+  | number[]
+  | (string | number)[]
+  | Record<string, string | number | boolean | null>
+  | Record<string, string | number | boolean | null>[]
+  | LevelCapScheduleItem[]
+  | null
+>;
 
 export type EntityConfigType = {
   apiType: string;
