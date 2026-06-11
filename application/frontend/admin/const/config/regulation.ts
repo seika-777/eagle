@@ -77,7 +77,7 @@ export const regulationConfig: EntityConfigType = {
     charCreationStartDate: (data.char_creation_start_date as string) ?? "",
     epilogueStartDate: (data.epilogue_start_date as string) ?? "",
     epilogueEndDate: (data.epilogue_end_date as string) ?? "",
-    levelCapSchedule: (data.level_cap_schedule as LevelCapScheduleItem[]) ?? [],
+    levelCapSchedule: (data.level_cap_schedule as unknown as LevelCapScheduleItem[]) ?? [],
     godIds: data.godIds ?? [],
     schoolIds: data.schoolIds ?? [],
     raceIds: data.raceIds ?? [],
