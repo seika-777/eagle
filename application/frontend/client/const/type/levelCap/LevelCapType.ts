@@ -7,6 +7,7 @@ export type LevelCapItemType = {
   minGrowth: number | null;
   minReward: number;
   minHonor: number | null;
+  expDiff: number | null;
   maxAdventurerRank: string;
   rewardAmount: number;
   offBalanceReward: number;

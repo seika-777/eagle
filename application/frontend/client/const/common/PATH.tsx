@@ -10,6 +10,8 @@ export const PATH = {
   },
   URL: {
     HOME: "/",
+    MYPAGE: "/mypage",
+    LOGIN: "/login",
     PERIOD: {
       ROOT: "/",
       RACE: "/race",

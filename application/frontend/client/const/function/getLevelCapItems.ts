@@ -17,6 +17,7 @@ export const getLevelCapItems = async (beltType: string): Promise<LevelCapItemTy
     minGrowth: row.min_growth !== null ? Number(row.min_growth) : null,
     minReward: Number(row.min_reward),
     minHonor: row.min_honor !== null ? Number(row.min_honor) : null,
+    expDiff: row.exp_diff !== null ? Number(row.exp_diff) : null,
     maxAdventurerRank: row.max_adventurer_rank,
     rewardAmount: Number(row.reward_amount),
     offBalanceReward: Number(row.off_balance_reward),

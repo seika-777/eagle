@@ -3,16 +3,21 @@ import { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { RxHamburgerMenu, RxCross1, RxChevronDown, RxChevronUp } from "react-icons/rx";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import { STYLE } from "@/const/common/STYLE";
 import { COMMON } from "@/const/common/COMMON";
+import { PATH } from "@/const/common/PATH";
 import { NAV_ITEMS } from "@/const/common/NAV_ITEMS";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
+import { supabase } from "@/lib/supabase";
 
 export default function Header() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [period, setPeriod] = useState("");
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const fetchPeriod = async () => {
@@ -23,6 +28,28 @@ export default function Header() {
     };
     fetchPeriod();
   }, []);
+
+  useEffect(() => {
+    const initSession = async () => {
+      const { data } = await supabase.auth.getUser();
+      setIsLoggedIn(data.user !== null);
+    };
+    initSession();
+
+    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(session !== null);
+    });
+
+    return () => {
+      subscription.subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push(PATH.URL.LOGIN);
+    setIsOpen(false);
+  };
 
   const navItems = NAV_ITEMS(period);
 
@@ -174,6 +201,41 @@ export default function Header() {
               )}
             </Box>
           ))}
+          {isLoggedIn === true && (
+            <>
+              <Box borderBottom={`1px solid ${STYLE_COLOR.LIGHT}`}>
+                <Link
+                  href={PATH.URL.MYPAGE}
+                  onClick={() => setIsOpen(false)}
+                  style={{ display: "block" }}
+                >
+                  <Box
+                    py={3}
+                    fontSize={"15px"}
+                    color={STYLE_COLOR.BLACK}
+                    _hover={{ color: STYLE_COLOR.PRIMARY }}
+                  >
+                    {COMMON.MYPAGE_LABEL}
+                  </Box>
+                </Link>
+              </Box>
+              <Box borderBottom={`1px solid ${STYLE_COLOR.LIGHT}`}>
+                <Box
+                  as="button"
+                  width="100%"
+                  textAlign="left"
+                  py={3}
+                  fontSize={"15px"}
+                  color={STYLE_COLOR.BLACK}
+                  cursor="pointer"
+                  _hover={{ color: STYLE_COLOR.PRIMARY }}
+                  onClick={handleLogout}
+                >
+                  {COMMON.LOGOUT_LABEL}
+                </Box>
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
     </>
