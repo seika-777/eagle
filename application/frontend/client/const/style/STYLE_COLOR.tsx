@@ -8,4 +8,6 @@ export const STYLE_COLOR = {
   BLACK: "#2D2D2D",
   COMMON: "#F0FDFF",
   MAIN: "#00E5FF",
+  BORDER: "#BFDBFE",
+  SUCCESS: "#16A34A",
 };
