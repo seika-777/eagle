@@ -11,13 +11,13 @@ const ALLOWED_ROLES: readonly UserRoleType[] = ["general", "admin"];
 const LOGIN_PATH = "/login";
 const MYPAGE_PATH = "/mypage";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const response = NextResponse.next();
   const pathname = request.nextUrl.pathname;
   const isApiRoute = pathname.startsWith("/api/");
   const isLoginPath = pathname === LOGIN_PATH;
 
-  // Edge Runtime: anon key 経由でセッション・role を検証する。Service Role Key は使用しない。
+  // anon key 経由でセッション・role を検証する。Service Role Key は使用しない。
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

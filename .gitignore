@@ -1,1 +1,9 @@
+# env files (実値はコミットしない。サンプル/例は除外しない)
+.env
+.env.*.local
+.env.local
+!.env.sample
+!.env.local.example
 
+# 共通 env（frontend 直下で共通化したもの）
+/application/frontend/.env.local
