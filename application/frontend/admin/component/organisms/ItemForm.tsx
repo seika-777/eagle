@@ -8,9 +8,11 @@ import CheckboxField from "@/component/molecules/field/CheckboxField";
 import CheckboxGroupField from "@/component/molecules/field/CheckboxGroupField";
 import DateInputField from "@/component/molecules/field/DateInputField";
 import LevelCapScheduleSection from "@/component/molecules/field/LevelCapScheduleSection";
+import GuideListSection from "@/component/molecules/field/GuideListSection";
 import EpiloguePeriodField from "@/component/molecules/field/EpiloguePeriodField";
 import type { FormItemType } from "@/const/type/form/FormItemType";
 import type { FormRecord, LevelCapScheduleItem } from "@/const/type/config/EntityConfigType";
+import type { GuideItemType } from "@/const/type/option/GuideItemType";
 
 type Props = {
   formItems: FormItemType[];
@@ -46,6 +48,7 @@ export default function ItemForm({ formItems, form, onChange, dynamicOptions }: 
               value={String(value ?? "")}
               onChange={(v) => onChange(item.column, v)}
               required={item.rule?.required}
+              rows={item.rows}
             />
           );
         }
@@ -115,6 +118,17 @@ export default function ItemForm({ formItems, form, onChange, dynamicOptions }: 
               values={(form[item.column] as LevelCapScheduleItem[]) ?? []}
               onChange={(v) => onChange(item.column, v)}
               epilogueStartDate={String(form["epilogueStartDate"] ?? "")}
+            />
+          );
+        }
+
+        if (item.type === "guide-list") {
+          return (
+            <GuideListSection
+              key={item.column}
+              label={item.label}
+              values={(form[item.column] as GuideItemType[]) ?? []}
+              onChange={(v) => onChange(item.column, v)}
             />
           );
         }

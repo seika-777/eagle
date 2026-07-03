@@ -1,5 +1,6 @@
 import type { TableColumnType, TableRow } from "@/const/type/table/TableColumnType";
 import type { FormItemType } from "@/const/type/form/FormItemType";
+import type { GuideItemType } from "@/const/type/option/GuideItemType";
 
 export type LevelCapScheduleItem = {
   levelCapId: number;
@@ -18,6 +19,7 @@ export type FormRecord = Record<
   | Record<string, string | number | boolean | null>
   | Record<string, string | number | boolean | null>[]
   | LevelCapScheduleItem[]
+  | GuideItemType[]
   | null
 >;
 

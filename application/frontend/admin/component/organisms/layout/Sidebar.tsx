@@ -4,25 +4,26 @@ import NextLink from "next/link";
 import { usePathname } from "next/navigation";
 import { useUser } from "@/app/UserContext";
 
-const MENU_ITEMS = [
-  { label: "ダッシュボード", href: "/", adminOnly: false },
-  { label: "レギュレーション管理", href: "/regulation", adminOnly: true },
-  { label: "神格管理", href: "/god", adminOnly: true },
-  { label: "流派管理", href: "/school", adminOnly: true },
-  { label: "種族管理", href: "/race", adminOnly: true },
-  { label: "ハウスルール管理", href: "/house-rule", adminOnly: true },
-  { label: "禁止事項管理", href: "/prohibition", adminOnly: true },
-  { label: "サプリメント管理", href: "/supplement", adminOnly: true },
-  { label: "オリジナルアイテム管理", href: "/original", adminOnly: true },
-  { label: "語録管理", href: "/word", adminOnly: true },
-  { label: "舞台/用語管理", href: "/stage-term", adminOnly: true },
-  { label: "ロール管理", href: "/user-role", adminOnly: true },
-] as const;
-
 export default function Sidebar() {
   const pathname = usePathname();
   const { user } = useUser();
   const isAdmin = user?.role === "admin";
+
+  const MENU_ITEMS = [
+    { label: "ダッシュボード", href: "/", adminOnly: false },
+    { label: "基本情報変更", href: "/basic-info", adminOnly: true },
+    { label: "レギュレーション管理", href: "/regulation", adminOnly: true },
+    { label: "神格管理", href: "/god", adminOnly: true },
+    { label: "流派管理", href: "/school", adminOnly: true },
+    { label: "種族管理", href: "/race", adminOnly: true },
+    { label: "ハウスルール管理", href: "/house-rule", adminOnly: true },
+    { label: "禁止事項管理", href: "/prohibition", adminOnly: true },
+    { label: "サプリメント管理", href: "/supplement", adminOnly: true },
+    { label: "オリジナルアイテム管理", href: "/original", adminOnly: true },
+    { label: "語録管理", href: "/word", adminOnly: true },
+    { label: "舞台/用語管理", href: "/stage-term", adminOnly: true },
+    { label: "ロール管理", href: "/user-role", adminOnly: true },
+  ] as const;
 
   const visibleItems = MENU_ITEMS.filter((item) => !item.adminOnly || isAdmin);
 
