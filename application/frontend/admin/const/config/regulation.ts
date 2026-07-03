@@ -45,7 +45,7 @@ export const regulationConfig: EntityConfigType = {
     },
     { column: "name", label: "名前", type: "text", rule: { required: true } },
     { column: "description", label: "説明", type: "textarea" },
-    { column: "recruitment", label: "募集内容", type: "textarea" },
+    { column: "recruitment", label: "募集要項", type: "textarea" },
     { column: "stage", label: "舞台設定", type: "textarea" },
     {
       column: "levelCapBelt",
