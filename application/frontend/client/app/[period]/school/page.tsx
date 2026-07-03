@@ -1,15 +1,13 @@
 import SchoolTemplate from "@/component/templates/SchoolTemplate";
-import { COMMON } from "@/const/common/COMMON";
-import { METADATA } from "@/const/common/METADATA";
 import { getItems } from "@/const/function/getItems";
+import { getPageMetadata } from "@/const/function/getPageMetadata";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
 
 export const dynamic = "force-static";
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + METADATA.TITLE.SCHOOL,
-  description: METADATA.DESCRIPTION.SCHOOL,
-};
+export async function generateMetadata() {
+  return await getPageMetadata("SCHOOL");
+}
 
 export async function generateStaticParams() {
   const items = await getRegulationItems("list");

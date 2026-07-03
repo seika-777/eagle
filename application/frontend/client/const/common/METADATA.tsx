@@ -1,4 +1,4 @@
-export const METADATA = {
+export const METADATA = (siteName: string) => ({
   TITLE: {
     HOME: "TOP",
     REGULATION: "レギュレーション",
@@ -15,18 +15,18 @@ export const METADATA = {
     LEVEL_CAP: "レベルキャップ",
   },
   DESCRIPTION: {
-    HOME: "隻翼の大鷲亭 - TRPGコミュニティポータル",
-    REGULATION: "隻翼の大鷲亭 - レギュレーション詳細",
-    RACE: "隻翼の大鷲亭 - 使用可能種族一覧",
-    SUPPLEMENT: "隻翼の大鷲亭 - 使用サプリ一覧",
-    GOD: "隻翼の大鷲亭 - 信仰一覧",
-    SCHOOL: "隻翼の大鷲亭 - 流派一覧",
-    HOUSE_RULE: "隻翼の大鷲亭 - ハウスルール",
-    PROHIBITION: "隻翼の大鷲亭 - 使用禁止アイテム",
-    ORIGINAL: "隻翼の大鷲亭 - オリジナルデータ",
-    PERIOD_LIST: "隻翼の大鷲亭 - レギュレーション一覧",
-    WORD: "隻翼の大鷲亭 - 語録",
-    STAGE_TERM: "隻翼の大鷲亭 - 舞台/用語",
-    LEVEL_CAP: "隻翼の大鷲亭 - レベルキャップ",
+    HOME: `${siteName} - TRPGコミュニティポータル`,
+    REGULATION: `${siteName} - レギュレーション詳細`,
+    RACE: `${siteName} - 使用可能種族一覧`,
+    SUPPLEMENT: `${siteName} - 使用サプリ一覧`,
+    GOD: `${siteName} - 信仰一覧`,
+    SCHOOL: `${siteName} - 流派一覧`,
+    HOUSE_RULE: `${siteName} - ハウスルール`,
+    PROHIBITION: `${siteName} - 使用禁止アイテム`,
+    ORIGINAL: `${siteName} - オリジナルデータ`,
+    PERIOD_LIST: `${siteName} - レギュレーション一覧`,
+    WORD: `${siteName} - 語録`,
+    STAGE_TERM: `${siteName} - 舞台/用語`,
+    LEVEL_CAP: `${siteName} - レベルキャップ`,
   },
-};
+});

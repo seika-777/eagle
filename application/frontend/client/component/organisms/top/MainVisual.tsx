@@ -1,5 +1,6 @@
 "use client";
 import { PATH } from "@/const/common/PATH";
+import { TOP_PAGE } from "@/const/pages/TOP_PAGE";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import { Box, Image, Text } from "@chakra-ui/react";
 
@@ -43,7 +44,7 @@ export default function MainVisual() {
         zIndex={2}
         fontFamily={"var(--font-edu-nsw-act-cursive), var(--font-zen-maru-gothic)"}
       >
-        Per aspera ad astra
+        {TOP_PAGE.TEXT.mainVisualCatch}
       </Text>
     </Box>
   );

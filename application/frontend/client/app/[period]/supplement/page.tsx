@@ -1,15 +1,13 @@
 import SupplementTemplate from "@/component/templates/SupplementTemplate";
-import { COMMON } from "@/const/common/COMMON";
-import { METADATA } from "@/const/common/METADATA";
 import { getItems } from "@/const/function/getItems";
+import { getPageMetadata } from "@/const/function/getPageMetadata";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
 import type { SupplementItemType } from "@/const/type/supplement/SupplementItemType";
 
 export const dynamic = "force-static";
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + METADATA.TITLE.SUPPLEMENT,
-  description: METADATA.DESCRIPTION.SUPPLEMENT,
-};
+export async function generateMetadata() {
+  return await getPageMetadata("SUPPLEMENT");
+}
 
 export async function generateStaticParams() {
   const items = await getRegulationItems("list");

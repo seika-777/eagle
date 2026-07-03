@@ -173,7 +173,78 @@ export const HOME: {
 | `TEXT` | 画面に表示される文言 | タイトル、説明、ボタンラベル |
 | `VALUE` | ロジックで使用する値 | ID、キー、設定値 |
 
-### 3.3 利点
+### 3.3 構造化リストデータの追加キー
+
+`{ [key: string]: string }` に収まらない **構造化リストデータ（オブジェクトの配列）** は、`TEXT` / `VALUE` に加えて **UPPER_CASE の追加キー** として持たせてよい（例: `LEVEL_CAP_PAGE.GUIDE`）。
+
+その際、配列の **要素型は `const/type/` 配下の型ファイルに定義して import** してください。
+
+#### 良い例
+
+**型ファイル**
+
+```typescript
+// application/frontend/client/const/type/levelCap/LevelCapGuideSectionType.ts
+export type LevelCapGuideSection = {
+  title: string;
+  description: string;
+};
+```
+
+**定数ファイル**
+
+```typescript
+// application/frontend/client/const/pages/LEVEL_CAP_PAGE.tsx
+import type { LevelCapGuideSection } from "@/const/type/levelCap/LevelCapGuideSectionType";
+
+export const LEVEL_CAP_PAGE: {
+  TEXT: { [key: string]: string },
+  VALUE: { [key: string]: string },
+  GUIDE: LevelCapGuideSection[],
+} = {
+  TEXT: {
+    title: "レベルキャップ",
+  },
+  VALUE: {
+    typeB: "B",
+  },
+  GUIDE: [
+    {
+      title: "レベルキャップ",
+      description: "そのレベルキャップでは...",
+    },
+  ],
+} as const;
+```
+
+#### 悪い例
+
+```typescript
+// ❌ 要素型を定数ファイル内にインラインで定義している
+export const LEVEL_CAP_PAGE: {
+  TEXT: { [key: string]: string },
+  VALUE: { [key: string]: string },
+  GUIDE: { title: string; description: string }[],
+} = {
+  /* ... */
+} as const;
+
+// ❌ 構造化リストデータを TEXT に無理やり詰め込んでいる
+export const LEVEL_CAP_PAGE: {
+  TEXT: { [key: string]: string },
+  VALUE: { [key: string]: string },
+} = {
+  TEXT: {
+    guideTitle1: "レベルキャップ",
+    guideDescription1: "そのレベルキャップでは...",
+    guideTitle2: "上限経験点と下限経験値",
+    guideDescription2: "新たなキャップ開放時に...",
+  },
+  VALUE: {},
+} as const;
+```
+
+### 3.4 利点
 
 - **一貫性**: すべての画面定数が同じ構造を持つ
 - **予測可能性**: 開発者が定数の構造を事前に把握できる

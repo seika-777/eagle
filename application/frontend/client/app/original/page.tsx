@@ -1,7 +1,6 @@
 import OriginalTemplate from "@/component/templates/OriginalTemplate";
-import { COMMON } from "@/const/common/COMMON";
-import { METADATA } from "@/const/common/METADATA";
 import { getItems } from "@/const/function/getItems";
+import { getPageMetadata } from "@/const/function/getPageMetadata";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
 import type { GodItemType } from "@/const/type/god/GodItemType";
 import type { SchoolItemType } from "@/const/type/school/SchoolItemType";
@@ -9,10 +8,9 @@ import type { OriginalItemType } from "@/const/type/original/OriginalItemType";
 
 export const dynamic = "force-static";
 
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + METADATA.TITLE.ORIGINAL,
-  description: METADATA.DESCRIPTION.ORIGINAL,
-};
+export async function generateMetadata() {
+  return await getPageMetadata("ORIGINAL");
+}
 
 export default async function Original() {
   const [raceItems, godItems, schoolItems, originalItems] = await Promise.all([

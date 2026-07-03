@@ -1,15 +1,13 @@
 import ProhibitionTemplate from "@/component/templates/ProhibitionTemplate";
-import { COMMON } from "@/const/common/COMMON";
-import { METADATA } from "@/const/common/METADATA";
 import { getItems } from "@/const/function/getItems";
+import { getPageMetadata } from "@/const/function/getPageMetadata";
 import type { ProhibitionItemType } from "@/const/type/houseRule/ProhibitionItemType";
 
 export const dynamic = "force-static";
 
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + METADATA.TITLE.PROHIBITION,
-  description: METADATA.DESCRIPTION.PROHIBITION,
-};
+export async function generateMetadata() {
+  return await getPageMetadata("PROHIBITION");
+}
 
 export default async function Prohibition() {
   const items = await getItems<ProhibitionItemType>("prohibition");
