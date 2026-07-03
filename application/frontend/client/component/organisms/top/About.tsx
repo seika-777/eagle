@@ -3,15 +3,19 @@
 import { Box, Text } from "@chakra-ui/react";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import HeadingThird from "@/component/atoms/HeadingThird";
+import { TOP_PAGE } from "@/const/pages/TOP_PAGE";
 
-export default function About() {
+type Props = {
+  siteName: string;
+  aboutText: string;
+};
+
+export default function About({ siteName, aboutText }: Props) {
   return (
     <Box as="section">
-      <HeadingSecond title="ABOUT" />
-      <HeadingThird title="隻翼の大鷲亭" />
-      <Text>
-        隻翼の大鷲亭はソード・ワールド2.5のコミュニティになります。当コミュニティはオープンCP方式で、初心者が安心して参加できるハウスルールを採用しております。
-      </Text>
+      <HeadingSecond title={TOP_PAGE.TEXT.aboutTitle} />
+      <HeadingThird title={siteName} />
+      <Text whiteSpace="pre-line">{aboutText}</Text>
     </Box>
   );
 }

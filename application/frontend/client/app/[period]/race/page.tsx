@@ -1,15 +1,13 @@
 import RaceTemplate from "@/component/templates/RaceTemplate";
-import { COMMON } from "@/const/common/COMMON";
-import { METADATA } from "@/const/common/METADATA";
 import { getItems } from "@/const/function/getItems";
+import { getPageMetadata } from "@/const/function/getPageMetadata";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
 import type { RaceItemType } from "@/const/type/race/RaceItemType";
 
 export const dynamic = "force-static";
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + METADATA.TITLE.RACE,
-  description: METADATA.DESCRIPTION.RACE,
-};
+export async function generateMetadata() {
+  return await getPageMetadata("RACE");
+}
 
 export async function generateStaticParams() {
   const items = await getRegulationItems("list");

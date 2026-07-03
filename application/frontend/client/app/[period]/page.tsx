@@ -1,14 +1,12 @@
 import RegulationTemplate from "@/component/templates/RegulationTemplate";
-import { COMMON } from "@/const/common/COMMON";
-import { METADATA } from "@/const/common/METADATA";
+import { getPageMetadata } from "@/const/function/getPageMetadata";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-static";
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + METADATA.TITLE.REGULATION,
-  description: METADATA.DESCRIPTION.REGULATION,
-};
+export async function generateMetadata() {
+  return await getPageMetadata("REGULATION");
+}
 
 export async function generateStaticParams() {
   const items = await getRegulationItems("list");

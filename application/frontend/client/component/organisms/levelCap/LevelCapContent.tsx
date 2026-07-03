@@ -3,18 +3,19 @@ import type { ReactNode } from "react";
 import { Box, SimpleGrid, TableRoot, TableHeader, TableBody, TableRow, TableColumnHeader, TableCell, Text } from "@chakra-ui/react";
 import HeadingSecond from "@/component/atoms/HeadingSecond";
 import { LEVEL_CAP_PAGE } from "@/const/pages/LEVEL_CAP_PAGE";
-import type { LevelCapGuideSection } from "@/const/pages/LEVEL_CAP_PAGE";
+import type { LevelCapGuideSection } from "@/const/type/levelCap/LevelCapGuideSectionType";
 import { STYLE_COLOR } from "@/const/style/STYLE_COLOR";
 import type { LevelCapItemType } from "@/const/type/levelCap/LevelCapType";
 
 type Props = {
   items: LevelCapItemType[];
   beltType: string;
+  guide: LevelCapGuideSection[];
+  gmRewardDescription: string;
+  processFootnote: string;
 };
 
-const COL_BORDER = "#BFDBFE";
-
-export default function LevelCapContent({ items, beltType }: Props) {
+export default function LevelCapContent({ items, beltType, guide, gmRewardDescription, processFootnote }: Props) {
   const th = {
     bg: STYLE_COLOR.PRIMARY,
     color: STYLE_COLOR.WHITE,
@@ -40,7 +41,7 @@ export default function LevelCapContent({ items, beltType }: Props) {
 
   const SectionTable = ({ headers, rows, footnote }: { headers: string[]; rows: ReactNode[]; footnote?: string }) => (
     <Box>
-      <Box width="100%" minWidth="0" border={`1px solid ${COL_BORDER}`} borderRadius="md" overflowX="auto">
+      <Box width="100%" minWidth="0" border={`1px solid ${STYLE_COLOR.BORDER}`} borderRadius="md" overflowX="auto">
         <TableRoot size="sm">
           <TableHeader>
             <TableRow>
@@ -59,7 +60,7 @@ export default function LevelCapContent({ items, beltType }: Props) {
         </TableRoot>
       </Box>
       {footnote && (
-        <Text fontSize="xs" color="gray.500" mt={1}>{footnote}</Text>
+        <Text fontSize="xs" color="gray.500" mt={1} whiteSpace="pre-line">{footnote}</Text>
       )}
     </Box>
   );
@@ -73,7 +74,7 @@ export default function LevelCapContent({ items, beltType }: Props) {
       py={2}
       color={isLv ? STYLE_COLOR.PRIMARY : STYLE_COLOR.BLACK}
       fontWeight={isLv ? "bold" : "normal"}
-      borderRight={isLast ? "none" : `1px solid ${COL_BORDER}`}
+      borderRight={isLast ? "none" : `1px solid ${STYLE_COLOR.BORDER}`}
       borderBottom={`1px solid ${STYLE_COLOR.LIGHT}`}
     >
       {value}
@@ -113,7 +114,7 @@ export default function LevelCapContent({ items, beltType }: Props) {
     <Box as="section" textAlign="left" width="100%">
       <HeadingSecond title={`${LEVEL_CAP_PAGE.TEXT.title} ${beltType}`} />
       <SimpleGrid gap={3} mt={4} mb={8}>
-        {(LEVEL_CAP_PAGE.GUIDE as readonly LevelCapGuideSection[]).map((section) => (
+        {guide.map((section) => (
           <Box key={section.title}>
             <Text fontSize="sm" fontWeight="bold" color={STYLE_COLOR.PRIMARY}>【{section.title}】</Text>
             <Text fontSize="sm" color={STYLE_COLOR.BLACK} whiteSpace="pre-line">{section.description}</Text>
@@ -141,7 +142,7 @@ export default function LevelCapContent({ items, beltType }: Props) {
 
         <Box minWidth="0">
           <Text fontSize="md" fontWeight="bold" mb={2}>{LEVEL_CAP_PAGE.TEXT.gmRewardTitle}</Text>
-          <Text fontSize="sm" color={STYLE_COLOR.BLACK} mb={3} whiteSpace="pre-line">{LEVEL_CAP_PAGE.TEXT.gmRewardDescription}</Text>
+          <Text fontSize="sm" color={STYLE_COLOR.BLACK} mb={3} whiteSpace="pre-line">{gmRewardDescription}</Text>
           <SectionTable
             headers={gmHeaders}
             rows={items.map((item, i) => (
@@ -159,7 +160,7 @@ export default function LevelCapContent({ items, beltType }: Props) {
           <Text fontSize="md" fontWeight="bold" mb={2}>{LEVEL_CAP_PAGE.TEXT.sessionRewardTitle}</Text>
           <SectionTable
             headers={sessionHeaders}
-            footnote={LEVEL_CAP_PAGE.TEXT.processFootnote}
+            footnote={processFootnote}
             rows={items.map((item, i) => (
               <TableRow key={`session-${item.id}`} bg={rowBg(i)}>
                 {cell(i === items.length - 1 ? `${item.level}※` : item.level, i, 0, false, true)}

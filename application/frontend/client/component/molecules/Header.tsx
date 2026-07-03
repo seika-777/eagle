@@ -12,7 +12,11 @@ import { NAV_ITEMS } from "@/const/common/NAV_ITEMS";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
 import { supabase } from "@/lib/supabase";
 
-export default function Header() {
+type Props = {
+  siteName: string;
+};
+
+export default function Header({ siteName }: Props) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [period, setPeriod] = useState("");
@@ -91,7 +95,7 @@ export default function Header() {
           px={6}
           height={"100%"}
         >
-          <Link href="/">{COMMON.SITE_NAME}</Link>
+          <Link href="/">{siteName}</Link>
           {!isOpen && (
             <Box
               as="button"

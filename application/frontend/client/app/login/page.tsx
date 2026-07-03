@@ -1,10 +1,13 @@
 import LoginTemplate from "@/component/templates/LoginTemplate";
-import { COMMON } from "@/const/common/COMMON";
+import { getOptions } from "@/const/function/getOptions";
 import { LOGIN } from "@/const/pages/LOGIN";
 
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + LOGIN.TEXT.TITLE,
-};
+export async function generateMetadata() {
+  const options = await getOptions();
+  return {
+    title: options.siteName + "|" + LOGIN.TEXT.TITLE,
+  };
+}
 
 export default function LoginPage() {
   return <LoginTemplate />;

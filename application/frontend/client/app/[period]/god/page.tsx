@@ -1,15 +1,13 @@
 import GodTemplate from "@/component/templates/GodTemplate";
-import { COMMON } from "@/const/common/COMMON";
-import { METADATA } from "@/const/common/METADATA";
 import { getItems } from "@/const/function/getItems";
+import { getPageMetadata } from "@/const/function/getPageMetadata";
 import { getRegulationItems } from "@/const/function/getRegulationItems";
 import type { GodItemType } from "@/const/type/god/GodItemType";
 
 export const dynamic = "force-static";
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + METADATA.TITLE.GOD,
-  description: METADATA.DESCRIPTION.GOD,
-};
+export async function generateMetadata() {
+  return await getPageMetadata("GOD");
+}
 
 export async function generateStaticParams() {
   const items = await getRegulationItems("list");

@@ -1,10 +1,13 @@
 import MyPageTemplate from "@/component/templates/MyPageTemplate";
-import { COMMON } from "@/const/common/COMMON";
+import { getOptions } from "@/const/function/getOptions";
 import { MYPAGE } from "@/const/pages/MYPAGE";
 
-export const metadata = {
-  title: COMMON.SITE_NAME + "|" + MYPAGE.TEXT.TITLE,
-};
+export async function generateMetadata() {
+  const options = await getOptions();
+  return {
+    title: options.siteName + "|" + MYPAGE.TEXT.TITLE,
+  };
+}
 
 export default function MyPage() {
   return <MyPageTemplate />;

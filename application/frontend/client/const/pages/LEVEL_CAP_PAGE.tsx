@@ -1,7 +1,4 @@
-export type LevelCapGuideSection = {
-  title: string;
-  description: string;
-};
+import type { LevelCapGuideSection } from "@/const/type/levelCap/LevelCapGuideSectionType";
 
 export const LEVEL_CAP_PAGE: {
   TEXT: { [key: string]: string };
