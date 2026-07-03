@@ -8,9 +8,9 @@ export default function About() {
   return (
     <Box as="section">
       <HeadingSecond title="ABOUT" />
-      <HeadingThird title="片翼の大鷲亭" />
+      <HeadingThird title="隻翼の大鷲亭" />
       <Text>
-        片翼の大鷲亭はソード・ワールド2.5のコミュニティになります。当コミュニティはオープンCP方式で、初心者が安心して参加できるハウスルールを採用しております。
+        隻翼の大鷲亭はソード・ワールド2.5のコミュニティになります。当コミュニティはオープンCP方式で、初心者が安心して参加できるハウスルールを採用しております。
       </Text>
     </Box>
   );

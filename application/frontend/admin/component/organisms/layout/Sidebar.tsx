@@ -28,7 +28,9 @@ export default function Sidebar() {
 
   return (
     <Box as="nav" w="240px" minH="100vh" bg="gray.800" color="white" p={4}>
-      <Text fontWeight="bold" fontSize="lg" mb={6} whiteSpace="pre-line">{"片翼の大鷲亭\n管理画面"}</Text>
+      <Text fontWeight="bold" fontSize="lg" mb={6} whiteSpace="pre-line">
+        {"隻翼の大鷲亭\n管理画面"}
+      </Text>
       <VStack align="stretch" gap={1}>
         {visibleItems.map((item) => (
           <Link

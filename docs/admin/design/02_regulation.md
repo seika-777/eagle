@@ -10,32 +10,32 @@
 
 ### regulation_items
 
-| カラム | 型 | 説明 |
-|--------|-----|------|
-| id | integer (PK, SERIAL) | レギュレーションID（自動採番） |
-| name | text | 名前 |
-| description | text | 説明 |
-| recruitment | text | 募集内容 |
-| stage | text | 舞台設定 |
-| race | text | 種族に関する自由記述テキスト（`item_regulations` の `raceIds` による紐付けとは独立した補足説明欄） |
-| supplement | text | サプリメントに関する自由記述テキスト（`item_regulations` の `supplementIds` による紐付けとは独立した補足説明欄） |
-| notes | text | 備考 |
-| level_cap_belt | text | レベルキャップ・ベルト情報（"B" = 標準キャップ / "C" = 上限解放キャップ。必須。CHECK制約あり） |
-| char_creation_start_date | date (nullable) | キャラ作成開始日 |
-| level_cap_start_date | date (nullable) | レベルキャップ開始日（Lv.2の日付） |
-| epilogue_end_date | date (nullable) | エピローグ終了日 |
-| level_cap_schedule | jsonb | レベルキャップ日程（`[{"levelCapId":number,"level":string,"date":"YYYY-MM-DD"}]`）。デフォルト: `[]` |
-| publish_type | text | 公開状態（"public"=公開 / "draft"=下書き） |
-| updated_by | uuid (nullable) | 最終更新者ID（auth.users.id） |
-| updated_at | timestamptz (nullable) | 最終更新日時 |
+| カラム                   | 型                     | 説明                                                                                                             |
+| ------------------------ | ---------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| id                       | integer (PK, SERIAL)   | レギュレーションID（自動採番）                                                                                   |
+| name                     | text                   | 名前                                                                                                             |
+| description              | text                   | 説明                                                                                                             |
+| recruitment              | text                   | 募集要項                                                                                                         |
+| stage                    | text                   | 舞台設定                                                                                                         |
+| race                     | text                   | 種族に関する自由記述テキスト（`item_regulations` の `raceIds` による紐付けとは独立した補足説明欄）               |
+| supplement               | text                   | サプリメントに関する自由記述テキスト（`item_regulations` の `supplementIds` による紐付けとは独立した補足説明欄） |
+| notes                    | text                   | 備考                                                                                                             |
+| level_cap_belt           | text                   | レベルキャップ・ベルト情報（"B" = 標準キャップ / "C" = 上限解放キャップ。必須。CHECK制約あり）                   |
+| char_creation_start_date | date (nullable)        | キャラ作成開始日                                                                                                 |
+| level_cap_start_date     | date (nullable)        | レベルキャップ開始日（Lv.2の日付）                                                                               |
+| epilogue_end_date        | date (nullable)        | エピローグ終了日                                                                                                 |
+| level_cap_schedule       | jsonb                  | レベルキャップ日程（`[{"levelCapId":number,"level":string,"date":"YYYY-MM-DD"}]`）。デフォルト: `[]`             |
+| publish_type             | text                   | 公開状態（"public"=公開 / "draft"=下書き）                                                                       |
+| updated_by               | uuid (nullable)        | 最終更新者ID（auth.users.id）                                                                                    |
+| updated_at               | timestamptz (nullable) | 最終更新日時                                                                                                     |
 
 ### item_regulations（関連テーブル）
 
-| カラム | 型 | 説明 |
-|--------|-----|------|
-| item_type | text (PK) | アイテム種別（"god" / "school" / "race" / "supplement"） |
-| item_id | integer (PK) | 対象アイテムのID |
-| regulation_id | integer (PK, FK → regulation_items.id ON DELETE CASCADE) | レギュレーションID |
+| カラム        | 型                                                       | 説明                                                     |
+| ------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| item_type     | text (PK)                                                | アイテム種別（"god" / "school" / "race" / "supplement"） |
+| item_id       | integer (PK)                                             | 対象アイテムのID                                         |
+| regulation_id | integer (PK, FK → regulation_items.id ON DELETE CASCADE) | レギュレーションID                                       |
 
 主キーは `(item_type, item_id, regulation_id)` の複合 PK。独立した `id` カラムは存在しない。
 
@@ -45,11 +45,11 @@
 
 ## 画面構成
 
-| 画面 | パス | 説明 |
-|------|------|------|
-| 一覧画面 | `/regulation` | レギュレーション一覧テーブル |
-| 追加画面 | `/regulation/new` | 新規追加フォーム（`[id]/page.tsx` で id="new" として処理） |
-| 編集画面 | `/regulation/[id]` | 既存レコード編集フォーム |
+| 画面     | パス               | 説明                                                       |
+| -------- | ------------------ | ---------------------------------------------------------- |
+| 一覧画面 | `/regulation`      | レギュレーション一覧テーブル                               |
+| 追加画面 | `/regulation/new`  | 新規追加フォーム（`[id]/page.tsx` で id="new" として処理） |
+| 編集画面 | `/regulation/[id]` | 既存レコード編集フォーム                                   |
 
 ---
 
@@ -78,21 +78,21 @@ component/
 
 ### 表示カラム
 
-| カラム | 表示名 |
-|--------|--------|
-| id | ID |
-| name | 名前 |
-| stage | 舞台 |
-| recruitment | 募集 |
+| カラム       | 表示名                    |
+| ------------ | ------------------------- |
+| id           | ID                        |
+| name         | 名前                      |
+| stage        | 舞台                      |
+| recruitment  | 募集                      |
 | publish_type | 公開状態（公開 / 下書き） |
-| 操作 | 編集ボタン / 削除ボタン |
+| 操作         | 編集ボタン / 削除ボタン   |
 
 ### アクション
 
-| アクション | 処理 |
-|-----------|------|
-| 追加ボタン | `/regulation/new` へ遷移 |
-| 編集ボタン | `/regulation/[id]` へ遷移 |
+| アクション | 処理                        |
+| ---------- | --------------------------- |
+| 追加ボタン | `/regulation/new` へ遷移    |
+| 編集ボタン | `/regulation/[id]` へ遷移   |
 | 削除ボタン | 確認ダイアログ → DELETE処理 |
 
 ---
@@ -101,26 +101,26 @@ component/
 
 ### 入力フィールド
 
-| フィールド名 | コンポーネント | バリデーション |
-|-------------|--------------|--------------|
-| id | 表示のみ（編集時）/ 非表示（新規時・自動採番） | - |
-| name | `TextInputField` | 必須 |
-| description | `TextareaField` | - |
-| recruitment | `TextareaField` | - |
-| stage | `TextareaField` | - |
-| race | `TextareaField` | - |
-| supplement | `TextareaField` | - |
-| notes | `TextareaField` | - |
-| level_cap_belt | `SelectField` | 必須（B / C） |
-| char_creation_start_date | `DateInputField` | - |
-| level_cap_start_date | `DateInputField` | - |
-| level_cap_schedule | `LevelCapScheduleSection` | - |
-| epilogue_end_date | `DateInputField` | - |
-| publish_type | `SelectField` | 必須（"public"=公開 / "draft"=下書き）デフォルト: "draft"。公開後も自由に変更可 |
-| 使用可能神格 | `CheckboxGroupField` | `is_always = false` の god_items を選択肢に表示 |
-| 使用可能流派 | `CheckboxGroupField` | `is_always = false` の school_items を選択肢に表示 |
-| 使用可能種族 | `CheckboxGroupField` | `is_always = false` の race_items を選択肢に表示 |
-| 使用可能サプリメント | `CheckboxGroupField` | `is_always = false` の supplement_items を選択肢に表示 |
+| フィールド名             | コンポーネント                                 | バリデーション                                                                  |
+| ------------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------- |
+| id                       | 表示のみ（編集時）/ 非表示（新規時・自動採番） | -                                                                               |
+| name                     | `TextInputField`                               | 必須                                                                            |
+| description              | `TextareaField`                                | -                                                                               |
+| recruitment              | `TextareaField`                                | -                                                                               |
+| stage                    | `TextareaField`                                | -                                                                               |
+| race                     | `TextareaField`                                | -                                                                               |
+| supplement               | `TextareaField`                                | -                                                                               |
+| notes                    | `TextareaField`                                | -                                                                               |
+| level_cap_belt           | `SelectField`                                  | 必須（B / C）                                                                   |
+| char_creation_start_date | `DateInputField`                               | -                                                                               |
+| level_cap_start_date     | `DateInputField`                               | -                                                                               |
+| level_cap_schedule       | `LevelCapScheduleSection`                      | -                                                                               |
+| epilogue_end_date        | `DateInputField`                               | -                                                                               |
+| publish_type             | `SelectField`                                  | 必須（"public"=公開 / "draft"=下書き）デフォルト: "draft"。公開後も自由に変更可 |
+| 使用可能神格             | `CheckboxGroupField`                           | `is_always = false` の god_items を選択肢に表示                                 |
+| 使用可能流派             | `CheckboxGroupField`                           | `is_always = false` の school_items を選択肢に表示                              |
+| 使用可能種族             | `CheckboxGroupField`                           | `is_always = false` の race_items を選択肢に表示                                |
+| 使用可能サプリメント     | `CheckboxGroupField`                           | `is_always = false` の supplement_items を選択肢に表示                          |
 
 ### LevelCapScheduleSection の動作仕様
 
@@ -138,15 +138,16 @@ component/
 
 ### アクション
 
-| アクション | 処理 |
-|-----------|------|
+| アクション         | 処理                                                                                               |
+| ------------------ | -------------------------------------------------------------------------------------------------- |
 | 保存ボタン（新規） | INSERT regulation_items → item_regulations 同期（god/school/race/supplement） → 一覧へリダイレクト |
 | 保存ボタン（編集） | UPDATE regulation_items → item_regulations 同期（god/school/race/supplement） → 一覧へリダイレクト |
-| キャンセル | 一覧へ戻る |
+| キャンセル         | 一覧へ戻る                                                                                         |
 
 > **注意（実装時）** item_regulations の同期は Supabase RPC `sync_item_regulations` を使いトランザクション内で実行すること。
+>
 > ```typescript
-> await supabaseAdmin.rpc('sync_item_regulations', {
+> await supabaseAdmin.rpc("sync_item_regulations", {
 >   p_regulation_id: regulationId,
 >   p_god_ids: godIds,
 >   p_school_ids: schoolIds,
@@ -154,6 +155,7 @@ component/
 >   p_supplement_ids: supplementIds,
 > });
 > ```
+>
 > 関数定義は `supabase/migrations/002_add_audit_and_publish.sql` を参照。
 
 ### API リクエストボディ
@@ -163,7 +165,7 @@ component/
 ```typescript
 // POST /api/items?type=regulation（新規）
 // PUT  /api/items?type=regulation&id={id}（編集）
-body: RegulationFormType
+body: RegulationFormType;
 ```
 
 ---
@@ -201,7 +203,7 @@ export const REGULATION_FORM_ITEM: { [key: string]: FormItemType } = {
   },
   RECRUITMENT: {
     column: "recruitment",
-    label: "募集内容",
+    label: "募集要項",
     type: "textarea",
   },
   STAGE: {
