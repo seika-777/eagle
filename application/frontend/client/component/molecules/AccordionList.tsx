@@ -8,6 +8,7 @@ type AccordionItemType = {
   title: string;
   description?: string | null;
   footer?: string | null;
+  label?: string | null;
 };
 
 type Props = {
@@ -41,6 +42,24 @@ export default function AccordionList({ items, descriptionClassName, htmlDescrip
             disabled={!item.description && !item.footer}
             transition="background 0.15s"
           >
+            {item.label && (
+              <Text
+                as="span"
+                fontSize="xs"
+                fontWeight="bold"
+                color={STYLE_COLOR.SECONDARY}
+                borderWidth="1px"
+                borderColor={STYLE_COLOR.SECONDARY}
+                borderRadius="md"
+                px={2}
+                py={0.5}
+                mr={2}
+                flexShrink={0}
+                whiteSpace="nowrap"
+              >
+                {item.label}
+              </Text>
+            )}
             {item.title}
             {(item.description || item.footer) && (
               <Accordion.ItemIndicator ml="auto" color={STYLE_COLOR.SECONDARY}>

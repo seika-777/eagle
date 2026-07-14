@@ -24,7 +24,6 @@ export const PATH = {
     },
     HOUSE_RULE: {
       ROOT: "/house-rule",
-      PROHIBITION: "/house-rule/prohibition",
     },
     WORD: "/word",
     STAGE_TERM: "/stage-term",

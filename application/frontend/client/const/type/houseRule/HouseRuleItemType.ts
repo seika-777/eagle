@@ -6,4 +6,6 @@ export type HouseRuleItemType = {
   supplementId: number | null;
   about: string;
   description: string;
+  isProhibition: boolean;
+  sortOrder: number | null;
 };
