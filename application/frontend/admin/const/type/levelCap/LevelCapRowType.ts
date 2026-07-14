@@ -1,0 +1,23 @@
+export type LevelCapRowType = {
+  id: number;
+  belt_type: string;
+  level: string;
+  sort_order: number;
+  min_exp: number;
+  min_growth: number | null;
+  min_reward: number;
+  min_honor: number | null;
+  exp_diff: number | null;
+  max_adventurer_rank: string;
+  reward_amount: number;
+  off_balance_reward: number;
+  honor: number;
+  distribution: number | null;
+  reward_per_session: string;
+  sword_fragments: string;
+  growth_count: number;
+  growth_limit: number;
+  f_count_limit: number;
+  reward_limit: number;
+  excess_growth: string;
+};
