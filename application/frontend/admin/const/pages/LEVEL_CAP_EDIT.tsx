@@ -1,0 +1,41 @@
+export const LEVEL_CAP_EDIT: {
+  TEXT: { [key: string]: string };
+  VALUE: { [key: string]: string };
+} = {
+  TEXT: {
+    TITLE: "レベルキャップ変更",
+    SAVE: "保存",
+    SAVED: "保存しました。閲覧サイトへ反映するにはダッシュボードの「変更を反映」を実行してください。",
+    TAB_B: "レベルキャップ B",
+    TAB_C: "レベルキャップ C",
+    SECTION_PROCESS: "レベルキャップ処理",
+    SECTION_GM_REWARD: "GM報酬",
+    SECTION_SESSION_REWARD: "セッション報酬",
+    LABEL_MIN_EXP: "下限Exp.(点)",
+    LABEL_EXP_DIFF: "Exp.差分(点)",
+    NOTE_EXP_DIFF: "※Exp.差分(点)は自動計算されません。下限Exp.(点)を変更した場合は手動で更新してください。",
+    LABEL_MIN_GROWTH: "下限成長(回)",
+    LABEL_MIN_REWARD: "下限報酬(G)",
+    LABEL_MIN_HONOR: "下限名誉(点)",
+    LABEL_MAX_ADVENTURER_RANK: "上限冒険者ランク",
+    LABEL_REWARD_AMOUNT: "報酬金額",
+    LABEL_OFF_BALANCE_REWARD: "収支外報酬",
+    LABEL_HONOR: "名誉点",
+    LABEL_DISTRIBUTION: "配給",
+    LABEL_REWARD_PER_SESSION: "1卓の報酬目安",
+    LABEL_SWORD_FRAGMENTS: "剣の欠片目安",
+    LABEL_GROWTH_COUNT: "成長回数",
+    LABEL_GROWTH_LIMIT: "成長上限",
+    LABEL_F_COUNT_LIMIT: "F回数上限",
+    LABEL_REWARD_LIMIT: "報酬上限",
+    LABEL_EXCESS_GROWTH: "超過成長(1/4)",
+    LEVEL_PREFIX: "Lv.",
+    ERROR_REQUIRED_INT: "は整数で入力してください",
+    ERROR_NULLABLE_INT: "は空欄または整数で入力してください",
+    ERROR_INT_RANGE: "は-2147483647〜2147483647の範囲で入力してください",
+  },
+  VALUE: {
+    BELT_B: "B",
+    BELT_C: "C",
+  },
+} as const;

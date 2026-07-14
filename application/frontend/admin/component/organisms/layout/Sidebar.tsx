@@ -12,6 +12,7 @@ export default function Sidebar() {
   const MENU_ITEMS = [
     { label: "ダッシュボード", href: "/", adminOnly: false },
     { label: "基本情報変更", href: "/basic-info", adminOnly: true },
+    { label: "レベルキャップ変更", href: "/level-cap", adminOnly: true },
     { label: "レギュレーション管理", href: "/regulation", adminOnly: true },
     { label: "神格管理", href: "/god", adminOnly: true },
     { label: "流派管理", href: "/school", adminOnly: true },
