@@ -1,9 +1,10 @@
 "use client";
-import { VStack, Box, Text, Separator } from "@chakra-ui/react";
+import { VStack, Box, Text, Separator, Field } from "@chakra-ui/react";
 import TextInputField from "@/component/molecules/field/TextInputField";
 import TextareaField from "@/component/molecules/field/TextareaField";
 import RichTextField from "@/component/molecules/field/RichTextField";
 import SelectField from "@/component/molecules/field/SelectField";
+import SelectRadioField from "@/component/molecules/field/SelectRadioField";
 import CheckboxField from "@/component/molecules/field/CheckboxField";
 import CheckboxGroupField from "@/component/molecules/field/CheckboxGroupField";
 import DateInputField from "@/component/molecules/field/DateInputField";
@@ -74,6 +75,21 @@ export default function ItemForm({ formItems, form, onChange, dynamicOptions }: 
               required={item.rule?.required}
               placeholder={item.placeholder}
             />
+          );
+        }
+        if (item.type === "radio") {
+          return (
+            <Field.Root key={item.column} required={item.rule?.required}>
+              <Field.Label>
+                {item.label}
+                {item.rule?.required && <Field.RequiredIndicator />}
+              </Field.Label>
+              <SelectRadioField
+                options={options.map((opt) => ({ label: opt.label, value: String(opt.value) }))}
+                value={String(value ?? "")}
+                onChange={(v) => onChange(item.column, v)}
+              />
+            </Field.Root>
           );
         }
         if (item.type === "checkbox") {

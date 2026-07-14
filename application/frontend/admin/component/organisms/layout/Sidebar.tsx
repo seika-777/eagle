@@ -18,7 +18,6 @@ export default function Sidebar() {
     { label: "流派管理", href: "/school", adminOnly: true },
     { label: "種族管理", href: "/race", adminOnly: true },
     { label: "ハウスルール管理", href: "/house-rule", adminOnly: true },
-    { label: "禁止事項管理", href: "/prohibition", adminOnly: true },
     { label: "サプリメント管理", href: "/supplement", adminOnly: true },
     { label: "オリジナルアイテム管理", href: "/original", adminOnly: true },
     { label: "語録管理", href: "/word", adminOnly: true },

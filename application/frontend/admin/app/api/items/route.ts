@@ -41,7 +41,6 @@ const TABLE_MAP: Record<string, string> = {
   school: "school_items",
   race: "race_items",
   "house-rule": "house_rule_items",
-  prohibition: "prohibition_items",
   supplement: "supplement_items",
   original: "original_items",
   word: "word_items",
@@ -118,6 +117,7 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabaseAdmin
       .from(table)
       .select("*, supplement_items(name)")
+      .order("sort_order", { ascending: true, nullsFirst: false })
       .order("id", { ascending: true });
     if (error) return errorResponse("データ取得に失敗しました", "INTERNAL_ERROR", 500);
     return NextResponse.json(data);
@@ -411,10 +411,7 @@ function buildInsertData(
     return { name: fields.name, race_type: fields.raceType ?? [], url: fields.url ?? "", is_always: fields.isAlways ?? false, ...base };
   }
   if (type === "house-rule") {
-    return { rule_type: fields.ruleType, supplement_id: fields.supplementId ?? null, about: fields.about, description: fields.description, ...base };
-  }
-  if (type === "prohibition") {
-    return { about: fields.about, name: fields.name, ...base };
+    return { rule_type: fields.ruleType, supplement_id: fields.supplementId ?? null, about: fields.about, description: fields.description, is_prohibition: fields.isProhibition ?? false, ...base };
   }
   if (type === "supplement") {
     return { name: fields.name, is_always: fields.isAlways ?? false, notes: fields.notes ?? "", ...base };

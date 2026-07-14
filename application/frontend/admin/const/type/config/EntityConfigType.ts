@@ -40,4 +40,5 @@ export type EntityConfigType = {
   toForm: (data: TableRow) => FormRecord;
   toBody: (form: FormRecord) => FormRecord;
   previewBasePath?: string;
+  sortable?: boolean;
 };

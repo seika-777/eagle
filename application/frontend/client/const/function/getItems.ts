@@ -11,7 +11,6 @@ const TABLE_MAP: Record<string, string> = {
   word: "word_items",
   original: "original_items",
   "house-rule": "house_rule_items",
-  prohibition: "prohibition_items",
   "stage-term": "stage_term_items",
 };
 
@@ -22,8 +21,7 @@ const SELECT_MAP: Record<string, string> = {
   supplement: "id, name, is_always, notes",
   word: "id, title, description",
   original: "id, type, name, url",
-  "house-rule": "id, rule_type, supplement_id, about, description",
-  prohibition: "id, about, name",
+  "house-rule": "id, rule_type, supplement_id, about, description, is_prohibition, sort_order",
 };
 
 const PERIOD_TYPES = new Set(["race", "god", "school", "supplement"]);
@@ -38,8 +36,7 @@ const mapRow = (type: string, row: RawRow): RawRow => {
   if (type === "supplement") return { id: row.id, name: row.name, isAlways: row.is_always, notes: row.notes };
   if (type === "word") return { id: row.id, title: row.title, description: row.description };
   if (type === "original") return { id: row.id, type: row.type, name: row.name, url: row.url };
-  if (type === "house-rule") return { id: row.id, ruleType: row.rule_type, supplementId: row.supplement_id, about: row.about, description: row.description };
-  if (type === "prohibition") return { id: row.id, about: row.about, name: row.name };
+  if (type === "house-rule") return { id: row.id, ruleType: row.rule_type, supplementId: row.supplement_id, about: row.about, description: row.description, isProhibition: row.is_prohibition, sortOrder: row.sort_order };
   return row;
 };
 
@@ -100,11 +97,12 @@ export const getItems = async <T extends RawRow>(
       .filter((item) => (item.isAlways as boolean) || allowedIds.has(item.id as number)) as T[];
   }
 
-  const { data, error } = await supabase
-    .from(TABLE_MAP[type])
-    .select(SELECT_MAP[type])
-    .order("id", { ascending: true })
-    .returns<RawRow[]>();
+  const query = supabase.from(TABLE_MAP[type]).select(SELECT_MAP[type]);
+  const orderedQuery =
+    type === "house-rule"
+      ? query.order("sort_order", { ascending: true, nullsFirst: false }).order("id", { ascending: true })
+      : query.order("id", { ascending: true });
+  const { data, error } = await orderedQuery.returns<RawRow[]>();
   if (error) throw error;
 
   return (data ?? []).map((row) => mapRow(type, row)) as T[];

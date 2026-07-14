@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AdminLayoutTemplate from "@/component/templates/AdminLayoutTemplate";
 import ItemTable from "@/component/organisms/ItemTable";
+import SortableItemTable from "@/component/organisms/SortableItemTable";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { configMap } from "@/const/config/index";
 import { getItems } from "@/const/function/getItems";
 import { deleteItem } from "@/const/function/deleteItem";
 import { updateItem } from "@/const/function/updateItem";
+import { sortItems } from "@/const/function/sortItems";
 import type { TableRow, RowValue } from "@/const/type/table/TableColumnType";
 
 type Props = {
@@ -55,6 +57,22 @@ export default function ItemListTemplate({ type }: Props) {
     }
   };
 
+  const handleReorder = async (orderedIds: number[]) => {
+    const prevRows = rows;
+    const rowById = new Map(prevRows.map((r) => [Number(r.id), r]));
+    const orderedRows = orderedIds
+      .map((id) => rowById.get(id))
+      .filter((r): r is TableRow => r !== undefined);
+    if (orderedRows.length !== prevRows.length) return;
+    setRows(orderedRows);
+    try {
+      await sortItems(config.apiType, orderedIds);
+    } catch (err) {
+      setRows(prevRows);
+      handleError(err);
+    }
+  };
+
   return (
     <AdminLayoutTemplate title={config.listTitle}>
       <Flex justify="space-between" align="center" mb={4}>
@@ -76,15 +94,27 @@ export default function ItemListTemplate({ type }: Props) {
         </Alert.Root>
       )}
       <Box bg="white" borderRadius="md" shadow="sm" overflow="hidden">
-        <ItemTable
-          columns={config.columns}
-          spColumns={config.spColumns}
-          rows={rows}
-          editBasePath={`/${config.apiType}`}
-          onDelete={handleDelete}
-          onCellChange={config.inlineCellChange ? handleCellChange : undefined}
-          hideDelete={config.hideDelete}
-        />
+        {config.sortable ? (
+          <SortableItemTable
+            columns={config.columns}
+            spColumns={config.spColumns}
+            rows={rows}
+            editBasePath={`/${config.apiType}`}
+            onDelete={handleDelete}
+            onReorder={handleReorder}
+            hideDelete={config.hideDelete}
+          />
+        ) : (
+          <ItemTable
+            columns={config.columns}
+            spColumns={config.spColumns}
+            rows={rows}
+            editBasePath={`/${config.apiType}`}
+            onDelete={handleDelete}
+            onCellChange={config.inlineCellChange ? handleCellChange : undefined}
+            hideDelete={config.hideDelete}
+          />
+        )}
       </Box>
     </AdminLayoutTemplate>
   );

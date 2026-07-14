@@ -4,7 +4,6 @@ import { godConfig } from "@/const/config/god";
 import { schoolConfig } from "@/const/config/school";
 import { raceConfig } from "@/const/config/race";
 import { houseRuleConfig } from "@/const/config/houseRule";
-import { prohibitionConfig } from "@/const/config/prohibition";
 import { supplementConfig } from "@/const/config/supplement";
 import { originalConfig } from "@/const/config/original";
 import { wordConfig } from "@/const/config/word";
@@ -17,7 +16,6 @@ export const configMap: Record<string, EntityConfigType> = {
   school: schoolConfig,
   race: raceConfig,
   "house-rule": houseRuleConfig,
-  prohibition: prohibitionConfig,
   supplement: supplementConfig,
   original: originalConfig,
   word: wordConfig,
