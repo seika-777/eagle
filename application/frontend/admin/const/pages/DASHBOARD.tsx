@@ -14,7 +14,6 @@ export const DASHBOARD_CARDS = [
   { label: "流派管理", href: "/school", description: "流派の追加・編集・削除" },
   { label: "種族管理", href: "/race", description: "種族の追加・編集・削除" },
   { label: "ハウスルール管理", href: "/house-rule", description: "ハウスルールの追加・編集・削除" },
-  { label: "禁止事項管理", href: "/prohibition", description: "禁止事項の追加・編集・削除" },
   { label: "サプリメント管理", href: "/supplement", description: "サプリメントの追加・編集・削除" },
   { label: "オリジナルアイテム管理", href: "/original", description: "オリジナルアイテムの追加・編集・削除" },
   { label: "語録管理", href: "/word", description: "語録の追加・編集・削除" },

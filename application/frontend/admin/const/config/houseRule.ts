@@ -7,7 +7,8 @@ export const houseRuleConfig: EntityConfigType = {
   addLabel: "ハウスルールを追加",
   editTitle: "ハウスルールを編集",
   deleteConfirm: "このハウスルールを削除しますか？",
-  initialForm: { ruleType: "common", supplementId: null, about: "", description: "" },
+  initialForm: { isProhibition: "false", ruleType: "common", supplementId: null, about: "", description: "" },
+  sortable: true,
   columns: [
     { key: "id", label: "ID" },
     {
@@ -33,6 +34,16 @@ export const houseRuleConfig: EntityConfigType = {
   ],
   formItems: [
     {
+      column: "isProhibition",
+      label: "区分",
+      type: "radio",
+      rule: { required: true },
+      option: [
+        { label: "ハウスルール", value: "false" },
+        { label: "禁止事項", value: "true" },
+      ],
+    },
+    {
       column: "ruleType",
       label: "ルール種別",
       type: "select",
@@ -49,12 +60,14 @@ export const houseRuleConfig: EntityConfigType = {
     { column: "description", label: "詳細説明", type: "textarea", rule: { required: true } },
   ],
   toForm: (data) => ({
+    isProhibition: data.is_prohibition === true ? "true" : "false",
     ruleType: data.rule_type,
     supplementId: data.supplement_id ?? null,
     about: data.about,
     description: data.description,
   }),
   toBody: (form) => ({
+    isProhibition: form.isProhibition === "true",
     ruleType: form.ruleType,
     supplementId: form.supplementId === "" ? null : form.supplementId,
     about: form.about,
